@@ -1,6 +1,6 @@
 <?php
 
-return [
+$config = [
 
     /*
     |--------------------------------------------------------------------------
@@ -174,7 +174,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        Silber\Bouncer\BouncerServiceProvider::class,
+        EloquentFilter\ServiceProvider::class,
     ],
 
     /*
@@ -223,7 +224,15 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Bouncer' => Silber\Bouncer\BouncerFacade::class,
 
     ],
 
 ];
+
+if(env('APP_ENV') != 'production') {
+    $config['providers'][] = Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class;
+    $config['providers'][] = Mpociot\LaravelTestFactoryHelper\TestFactoryHelperServiceProvider::class;
+}
+
+return $config;
