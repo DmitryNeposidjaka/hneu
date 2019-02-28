@@ -1,5 +1,5 @@
 <template>
-<div :class="{root: true, chatOpen, sidebarClose, sidebarStatic}">
+<div :class="{root: true, sidebarClose, sidebarStatic}">
   <Sidebar />
   <Helper />
   <div class="wrap">

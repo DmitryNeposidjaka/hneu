@@ -62,6 +62,7 @@ export default {
         '#dd5826',
       ],
     ];
+    console.log($calendar);
     $calendar.calendar({
       months: monthNames,
       days: dayNames,
