@@ -18,7 +18,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
-    //  Route::post();
+    Route::post('/login', 'LoginController@login');
+
+    Route::group(['middleware' => 'jwt.auth'], function () {
+        Route::group(['prefix' => 'user'], function () {
+            Route::get('/me', 'UserController@getMe');
+            Route::get('/all', 'UserController@getAll');
+            Route::get('/{user}', 'UserController@getUser');
+            Route::post('/', 'UserController@create');
+            Route::patch('/{user}', 'UserController@update');
+        });
+    });
 });
 
 Route::group(['namespace' => 'Student', 'prefix' => 'student'], function () {
