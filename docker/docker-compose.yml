@@ -307,3 +307,29 @@ services:
         - backend
       depends_on:
         - mongo
+
+### Web Admin ##################################################
+    web-admin:
+      image: node:8
+      networks:
+        - backend
+      volumes:
+      - ../web/admin:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+      ports:
+        - "8050:8080"
+      tty: true
+      working_dir: /var/www
+      command: yarn run serve
+
+### Web Student ##################################################
+    web-student:
+      image: node:8
+      networks:
+        - backend
+      volumes:
+      - ../web/student:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+      ports:
+        - "8051:8080"
+      tty: true
+      working_dir: /var/www
+      command: yarn run serve
