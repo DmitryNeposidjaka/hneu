@@ -5,7 +5,7 @@
     @mouseleave="sidebarMouseLeave"
   >
     <header class="logo">
-      <router-link to="/app"><span class="text-warning">Sing</span> App</router-link>
+      <router-link to="/app"><span class="text-warning">Admin</span></router-link>
     </header>
     <ul class="nav">
       <NavLink
