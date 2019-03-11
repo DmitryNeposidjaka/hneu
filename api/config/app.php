@@ -176,6 +176,7 @@ $config = [
         App\Providers\RouteServiceProvider::class,
         Silber\Bouncer\BouncerServiceProvider::class,
         EloquentFilter\ServiceProvider::class,
+        \Tymon\JWTAuth\Providers\LaravelServiceProvider::class
     ],
 
     /*
