@@ -6,6 +6,7 @@ import TypographyPage from '@/pages/Typography/Typography';
 import TablesBasicPage from '@/pages/Basic/Basic';
 import GoogleMapPage from '@/pages/Google/Google';
 import AnalyticsPage from '@/pages/Dashboard/Dashboard';
+import UsersPage from '@/pages/Users/Users';
 import ChartsPage from '@/pages/Charts/Charts';
 import Login from '@/pages/Login/Login';
 import ErrorPage from '@/pages/Error/Error';
@@ -32,6 +33,11 @@ export default new Router({
       name: 'Layout',
       component: Layout,
       children: [
+        {
+          path: 'users',
+          name: 'UsersPage',
+          component: UsersPage,
+        },
         {
           path: 'dashboard',
           name: 'AnalyticsPage',
