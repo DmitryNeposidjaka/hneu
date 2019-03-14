@@ -28,6 +28,11 @@ import './Layout.scss';
 export default {
   name: 'Layout',
   components: { Sidebar, Header, Helper },
+    data() {
+      return {
+          chatOpen: false
+      }
+    },
   methods: {
     ...mapActions(
       'layout', ['switchSidebar', 'handleSwipe', 'changeSidebarActive'],

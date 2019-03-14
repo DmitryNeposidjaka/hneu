@@ -12,7 +12,7 @@
                 customHeader settings close
         >
           <div class="table-resposive">
-            <b-table striped hover :items="users" />
+            <b-table striped hover :items="data" />
           </div>
         </Widget>
       </b-col>
@@ -31,7 +31,7 @@
         components: { Widget },
         data() {
             return {
-                users: [],
+                data: [],
             };
         },
         methods: {
@@ -70,11 +70,16 @@
             },
 
             getData() {
-                this.$axios
+                let vm = this;
+                this.axios.get('/user/all')
+                    .then(function (response) {
+                        vm.data = response.data
+                    })
             }
         },
         mounted() {
             this.initCharts();
+            this.getData();
         },
     };
 </script>

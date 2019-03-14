@@ -29,6 +29,10 @@ export default new Router({
       component: ErrorPage,
     },
     {
+      path: '/home',
+      redirect: to => { 'UsersPage' },
+    },
+    {
       path: '/app',
       name: 'Layout',
       component: Layout,

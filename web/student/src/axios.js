@@ -3,9 +3,9 @@ import Vue from 'vue';
 
 
 const instance = axios.create({
-    baseURL: '/admin/api/',
+    baseURL: 'http://localhost:88/api/student',
 });
-/*instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 instance.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
@@ -14,5 +14,5 @@ instance.interceptors.response.use(function (response) {
     document.cookie = "rememberMe=true";
   }
   return error.response
-});*/
+});
 export default instance;

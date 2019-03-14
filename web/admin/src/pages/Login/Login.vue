@@ -3,16 +3,16 @@
     <b-container>
       <h5 class="logo">
         <i class="fa fa-circle text-gray" />
-        Sing App
+        Admin App
         <i class="fa fa-circle text-warning" />
       </h5>
       <Widget class="mx-auto" title="<h3 class='mt-0'>Login to your Web App</h3>" customHeader>
-        <p class="text-muted mb-0 mt fs-sm">
+<!--        <p class="text-muted mb-0 mt fs-sm">
           Use Facebook, Twitter or your email to sign in.
         </p>
         <p class="text-muted fs-sm">
           Don't have an account? Sign up now!
-        </p>
+        </p>-->
         <form class="mt" @submit.prevent="login">
           <b-alert class="alert-sm" variant="danger" :show="!!errorMessage">
             {{errorMessage}}
@@ -27,7 +27,6 @@
           </div>
           <div class="clearfix">
             <div class="btn-toolbar float-right">
-              <b-button type="reset" size="sm" variant="default">Create an Account</b-button>
               <b-button type="submit" size="sm" variant="inverse">Login</b-button>
             </div>
           </div>
@@ -67,13 +66,23 @@ export default {
   },
   methods: {
     login() {
-      const username = this.$refs.username.value;
-      const password = this.$refs.password.value;
-
-      if (username.length !== 0 && password.length !== 0) {
-        window.localStorage.setItem('authenticated', true);
-        this.$router.push('/app/dashboard');
-      }
+      const vm = this;
+      this.axios({
+        method: 'post',
+        url: '/login',
+        data: this.getFormData()
+      }).then(function (response) {
+        if(response.status == 200){
+            sessionStorage.setItem('_token', response.data.token);
+          vm.$router.push({name: 'UsersPage'})
+        }
+      })
+    },
+    getFormData(){
+      const formData = new FormData();
+      formData.append('email', this.$refs.username.value);
+      formData.append('password', this.$refs.password.value);
+      return formData;
     },
   },
   created() {

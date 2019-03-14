@@ -11,10 +11,10 @@ import Trend from 'vuetrend';
 import store from './store';
 import router from './Routes';
 import App from './App';
-import axios from 'axios'
+import axios from './axios'
 import VueAxios from 'vue-axios'
 
-Vue.use(VueAxios, axios)
+Vue.use(VueAxios, axios);
 Vue.use(BootstrapVue);
 Vue.use(VueTouch);
 Vue.use(Trend);
