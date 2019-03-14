@@ -176,6 +176,8 @@ $config = [
         App\Providers\RouteServiceProvider::class,
         Silber\Bouncer\BouncerServiceProvider::class,
         EloquentFilter\ServiceProvider::class,
+        \Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        \App\Providers\MoodleClientServiceProvider::class
     ],
 
     /*
@@ -225,6 +227,7 @@ $config = [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Bouncer' => Silber\Bouncer\BouncerFacade::class,
+        'MoodleClient' => \App\Facades\MoodleClient::class
 
     ],
 
