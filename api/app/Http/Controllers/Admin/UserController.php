@@ -7,11 +7,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminUserCreateRequest;
 use App\Http\Requests\AdminUserUpdateRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    protected $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
     public function getMe()
     {
         return Auth::user();
@@ -19,7 +27,7 @@ class UserController extends Controller
 
     public function getAll()
     {
-        return User::all();
+        return User::paginate($this->request->input('per_page', 50));
     }
 
     public function getUser(User $user)

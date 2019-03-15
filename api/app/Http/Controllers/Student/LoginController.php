@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\JWTAuth;
 
 class LoginController extends Controller
 {
@@ -61,7 +62,9 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
-            return $this->sendLoginResponse($request);
+
+            $user = $this->checkIfStudentExists($request);
+            return $this->sendLoginResponse($user);
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
@@ -85,22 +88,31 @@ class LoginController extends Controller
      */
     protected function attemptLogin(Request $request)
     {
-/*        return $this->guard()->attempt(
-            $this->credentials($request), $request->filled('remember')
-        );*/
+        $username = $request->input('username');
+        $password = $request->input('password');
 
-        $client = new Client();
-        $response = $client->request('POST','http://142.93.204.113/moodle/login/token.php', [
-            'form_params' => [
-                'username' => $request->input('username'),
-                'password' => $request->input('password'),
-                'service' => 'moodle_mobile_app',
-            ],
+        $result = \MoodleClient::loginStudent($username, $password);
+
+        return isset($result['token']);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    protected function checkIfStudentExists(Request $request)
+    {
+        $username = $request->input('username');
+
+        $user = User::firstOrCreate([
+            'username' => $username,
         ]);
-        $content = $response->getBody()->getContents();
 
-        $data = json_decode($content, true);
+        return $user;
+    }
 
-        return isset($data['token']);
+    protected function sendLoginResponse(User $user)
+    {
+        return response()->json(['token' =>  auth()->login($user)]);
     }
 }

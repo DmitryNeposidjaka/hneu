@@ -4,8 +4,8 @@ return [
     'default_connection' => 'test',
     'connections' => [
         'test' => [
-            'url' => 'http://142.93.204.113',
-            'token' => ''
+            'url' => 'http://slavishgermany.com/',
+            'token' => 'fbac07195fada5d5d28f35af7deab681'
         ]
     ]
 ];

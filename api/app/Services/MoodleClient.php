@@ -16,7 +16,7 @@ class MoodleClient
 
     public function __construct()
     {
-        self::use(config('moddleClient.default_connection'));
+        self::use(config('moodleClient.default_connection'));
     }
 
     /**
@@ -31,12 +31,16 @@ class MoodleClient
 
     public static function loginStudent($username, $password)
     {
-        $ch = curl_init(self::$url.'/api/admin/login');
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, compact($username,$password));
-        $result = curl_exec($ch);
+        $service = 'moodle_mobile_app';
 
-        return $result;
+        $ch = curl_init(self::$url.'/login/token.php');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, compact('username','password', 'service'));
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        return json_decode($result, true, JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -47,8 +51,8 @@ class MoodleClient
     {
         self::$connection = $connection;
         self::registerClient(
-            config("salesforce.connections.{$connection}.url"),
-            config("salesforce.connections.{$connection}.token"));
+            config("moodleClient.connections.{$connection}.url"),
+            config("moodleClient.connections.{$connection}.token"));
 
     }
 

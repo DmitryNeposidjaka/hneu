@@ -78,7 +78,6 @@ services:
           - TZ=${WORKSPACE_TIMEZONE}
           - BLACKFIRE_CLIENT_ID=${BLACKFIRE_CLIENT_ID}
           - BLACKFIRE_CLIENT_TOKEN=${BLACKFIRE_CLIENT_TOKEN}
-      hostname: hneu.server
       volumes:
         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
       extra_hosts:
@@ -294,26 +293,26 @@ services:
     web-admin:
       image: node:8
       networks:
-        - backend
-      hostname: web.admin
+         backend:
+          aliases:
+            - web.admin
       volumes:
       - ../web/admin:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
       ports:
         - "8050:8080"
       tty: true
       working_dir: /var/www
-      command: yarn run serve
+      command: npm run serve
 
 ### Web Student ##################################################
     web-student:
       image: node:8
       networks:
         - backend
-      hostname: web.student
       volumes:
       - ../web/student:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
       ports:
         - "8051:8080"
       tty: true
       working_dir: /var/www
-      command: yarn run serve
+      command: npm run serve

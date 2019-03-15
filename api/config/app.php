@@ -177,7 +177,8 @@ $config = [
         Silber\Bouncer\BouncerServiceProvider::class,
         EloquentFilter\ServiceProvider::class,
         \Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        \App\Providers\MoodleClientServiceProvider::class
+        \App\Providers\MoodleClientServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
     ],
 
     /*
