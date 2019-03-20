@@ -4,12 +4,12 @@
             <div style="height: 100%">
                 <img src=""
                      style="height: -webkit-fill-available; float: left; display: block">
-                <span style="display: block; float: left; margin-left: 20px">Keller CRM</span>
+                <span style="display: block; float: left; margin-left: 20px">Student Panel</span>
             </div>
         </div>
         <div style="text-align: right; width: 70%; float: right;">
             <div style="padding: 0px 50px">
-                <span>Tom</span>
+                <span>{{user.username}}</span>
                 <el-button type="text" icon="el-icon-arrow-right" @click="logout" style="color: floralwhite;">Logout</el-button>
             </div>
         </div>
@@ -18,11 +18,12 @@
 
 <script>
     export default {
+        props: ['user'],
         name: 'Header',
         methods: {
             logout() {
-                /*localStorage.clear();
-                this.$router.push({name: 'home'})*/
+                sessionStorage.clear();
+                this.$router.push({name: 'home'})
             }
         }
     }
@@ -39,7 +40,7 @@
 
     .el-header {
         border-bottom: 2px solid #FFFD00;
-        color: #495057;
+        color: #f4f4f5;
         line-height: 60px;
         padding: 0px 0px;
     }

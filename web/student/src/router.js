@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './templates/Home'
 import Login from './templates/Logint'
-import Users from './pages/Users'
+import Dashbord from './pages/Dashbord'
 
 Vue.use(Router);
 
@@ -19,12 +19,13 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
+      redirect: to => {return {name: 'dashbord'}},
       children: [
-        {
-            path: '/users',
-            name: 'users',
-            component: Users,
-        }
+          {
+              path: '/dashbord',
+              name: 'dashbord',
+              component: Dashbord,
+          }
       ]
     },
   ]

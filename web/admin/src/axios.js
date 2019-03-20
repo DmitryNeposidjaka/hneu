@@ -6,7 +6,10 @@ const instance = axios.create({
     baseURL: 'http://localhost:88/api/admin',
 });
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-instance.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('_token');
+
+if(!instance.defaults.headers.common['Authorization']) {
+    instance.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('_token');
+}
 
 instance.interceptors.request.use(function (request) {
     instance.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('_token');

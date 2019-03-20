@@ -25,7 +25,9 @@ class AdminUserUpdateRequest extends FormRequest
     {
         $userId = \Request::instance()->user->id;
         return [
-            'name' => 'required|string|min:3|max:255',
+            'firstname' => 'required|string|min:3|max:255',
+            'lastname' => 'required|string|min:3|max:255',
+            'username' => 'required|string|min:3|max:255',
             'email' => 'required|email|min:3|max:255|unique:users,email,' . $userId . ',id',
         ];
     }

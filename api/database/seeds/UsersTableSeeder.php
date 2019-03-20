@@ -12,7 +12,6 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $admin = \App\Models\User::firstOrCreate([
-            'name' => 'Admin',
             'email' => 'dmitryneposidjaka@gmail.com',
             'password' => \Hash::make('secret'),
             'username' => 'adminster',

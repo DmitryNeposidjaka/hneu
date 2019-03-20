@@ -4,7 +4,7 @@
             <div style="height: 100%">
                 <img src=""
                      style="height: -webkit-fill-available; float: left; display: block">
-                <span style="display: block; float: left; margin-left: 20px">Keller CRM</span>
+                <span style="display: block; float: left; margin-left: 20px">Admin Panel</span>
             </div>
         </div>
         <div style="text-align: right; width: 70%; float: right;">

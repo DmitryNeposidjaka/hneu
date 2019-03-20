@@ -5,7 +5,7 @@ return [
     'connections' => [
         'test' => [
             'url' => 'http://slavishgermany.com/',
-            'token' => 'fbac07195fada5d5d28f35af7deab681'
+            'token' => '0561a3ea928f3d1a459d110d6edfa1cd'
         ]
     ]
 ];

@@ -46,6 +46,31 @@
                 <el-button type="success" icon="el-icon-search" @click="getData">Search</el-button>
             </el-col>
         </el-row>-->
+        <el-dialog
+                title="Create user"
+                :visible.sync="createUserVisible"
+                width="40%">
+            <create-user style="padding: 0px 100px 0px 50px"  v-on:userCreated="userCreated"></create-user>
+        </el-dialog>
+        <el-dialog
+                title="Edit user"
+                :visible.sync="editUserVisible"
+                width="40%">
+            <edit-user ref="edit-user-form" style="padding: 0px 100px 0px 50px"  v-on:userEdited="userEdited" v-bind:user="userOnEdit" v-on:userEditClose="editUserVisible = false"></edit-user>
+        </el-dialog>
+        <el-dialog
+                title="Delete user"
+                :visible.sync="deleteUserVisible"
+                width="40%">
+            <delete-user ref="edit-user-form" style="padding: 0px 100px 0px 50px"  v-on:userDeleted="userDeleted" v-bind:user="userOnDelete" v-on:userDeleteClose="deleteUserVisible = false"></delete-user>
+        </el-dialog>
+        <el-row>
+            <div style="text-align: right; width: 70%; float: right;">
+                <div style="padding: 0px 50px">
+                    <el-button type="primary" icon="el-icon-plus" circle title="Add user" @click="editUserVisible = true"></el-button>
+                </div>
+            </div>
+        </el-row>
         <el-table
                 v-loading="loading"
                 :data="data"
@@ -54,23 +79,33 @@
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <div style="overflow: auto;">
-                        <p title="ID">{{ props.row.username }}</p>
-                        <p title="Name">{{ props.row.name }} </p>
+                        <p title="Username">{{ props.row.username }}</p>
+                        <p title="Name">{{ props.row.firstname + ' ' + props.row.lastname }} </p>
                         <p title="Email">{{ props.row.email }}</p>
+                        <p title="Created">{{ props.row.created_at }}</p>
                     </div>
                 </template>
+            </el-table-column>
+            <el-table-column
+                    prop="firstname"
+                    label="Name">
             </el-table-column>
             <el-table-column
                     prop="username"
                     label="Username">
             </el-table-column>
             <el-table-column
-                    prop="name"
-                    label="Name">
-            </el-table-column>
-            <el-table-column
                     prop="email"
                     label="Email">
+            </el-table-column>
+            <el-table-column
+                    align="right">
+                <template slot-scope="scope">
+
+                    <!--<el-button type="text" style="color: cornflowerblue" title="view"><i class="el-icon-view"></i></el-button>-->
+                    <el-button type="text" style="color: darkorange" title="edit" @click="openEditUser(scope.row)"><i class="el-icon-edit"></i></el-button>
+                    <el-button type="text" style="color: orangered" title="delete" @click="openDeleteUser(scope.row)"><i class="el-icon-delete"></i></el-button>
+                </template>
             </el-table-column>
         </el-table>
         <el-pagination
@@ -103,9 +138,19 @@
 </style>
 
 <script>
+    import CreateUser from '../components/CreateUser';
+    import DeleteUser from '../components/DeleteUser';
+    import EditUser from '../components/EditUser';
+
     export default {
+        components: {CreateUser, EditUser, DeleteUser},
         data() {
             return {
+                userOnEdit: null,
+                userOnDelete: null,
+                createUserVisible: false,
+                editUserVisible: false,
+                deleteUserVisible: false,
 /*                filters: {
                     email_address: '',
                     mobile_number: '',
@@ -124,7 +169,32 @@
                 data: []
             }
         },
+        computed: {
+            firstname() {
+                return this.data.firstname + ' ' + this.data.lastname
+            }
+        },
         methods: {
+            openDeleteUser(user) {
+                this.userOnDelete = user;
+                this.deleteUserVisible = true;
+            },
+            openEditUser(user) {
+                this.userOnEdit = user;
+                this.editUserVisible = true;
+            },
+            userCreated() {
+                this.createUserVisible = false;
+                this.getData();
+            },
+            userEdited() {
+                this.editUserVisible = false;
+                this.getData();
+            },
+            userDeleted() {
+                this.deleteUserVisible = false;
+                this.getData();
+            },
             clearRefresh() {
                 this.filters = {
                     email_address: '',

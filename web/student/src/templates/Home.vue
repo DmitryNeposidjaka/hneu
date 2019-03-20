@@ -1,10 +1,12 @@
 <template>
   <el-container>
-    <el-header><m-header/></el-header>
+    <el-header><m-header :user="user"/></el-header>
     <el-container>
-      <navigation/>
-      <el-main>
-        <div class="m-content">
+      <el-main style="border-radius: 8px;
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 80vh;">
+        <div class="m-content" style="border-radius: 5px;">
           <router-view/>
         </div>
       </el-main>
@@ -17,8 +19,32 @@
     import MHeader from '../components/Header'
     export default {
         name: 'home',
+        data() {
+            return {
+                user: {
+                    username: 'default'
+                }
+            }
+        },
+        methods: {
+          getUser() {
+              const vm = this;
+              this.loading = true;
+              this.axios({
+                  method: 'get',
+                  url: 'user/me',
+              }).then(function (response) {
+                  if (response.status == 200) {
+                      vm.user = response.data;
+                  }
+              })
+          }
+        },
         components: {
             Navigation, MHeader
+        },
+        created() {
+          this.getUser();
         }
     }
 </script>
@@ -37,14 +63,19 @@
     padding: 20px;
     background: white;
   }
-
+  .el-main::-webkit-scrollbar {
+      display: none;
+  }
   .el-main {
-    background-color: #f4f4f5;
+    background-color: #4a4c4e;
     color: #333;
     text-align: center;
+    padding: 100px;
     /* line-height: 160px; */
   }
-
+.el-container {
+  padding: 50px;
+}
   body > .el-container {
     margin-bottom: 40px;
   }

@@ -24,7 +24,9 @@ class AdminUserCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|min:3|max:255',
+            'firstname' => 'required|string|min:3|max:255',
+            'lastname' => 'required|string|min:3|max:255',
+            'username' => 'required|string|min:3|max:255',
             'email' => 'required|email|min:3|max:255',
             'password' => 'required|confirmed|min:3|max:255',
         ];

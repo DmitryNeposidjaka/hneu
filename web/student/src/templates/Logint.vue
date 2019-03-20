@@ -14,23 +14,22 @@
         <div class='icon'>
           <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/user_icon_copy.png'>
         </div>
-        <input placeholder='Username' type='text' value="{{form.username}}">
+        <input placeholder='Username' type='text' v-model="form.username">
         <div class='validation'>
           <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
         </div>
-        </input>
       </div>
       <div class='login_fields__password'>
         <div class='icon'>
           <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/lock_icon_copy.png'>
         </div>
-        <input placeholder='Password' type='password'>
+        <input placeholder='Password' type='password'  v-model="form.password">
         <div class='validation'>
           <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
         </div>
       </div>
       <div class='login_fields__submit'>
-        <input type='submit' value='Log In'>
+        <input type='submit' value='Log In' v-on:click="login">
         <div class='forgot'>
           <a href='#'>Forgotten password?</a>
         </div>

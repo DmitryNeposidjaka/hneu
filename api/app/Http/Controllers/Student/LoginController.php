@@ -43,7 +43,7 @@ class LoginController extends Controller
     /**
      * Handle a login request to the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -83,7 +83,7 @@ class LoginController extends Controller
     /**
      * Attempt to log the user into the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return bool
      */
     protected function attemptLogin(Request $request)
@@ -102,17 +102,26 @@ class LoginController extends Controller
      */
     protected function checkIfStudentExists(Request $request)
     {
-        $username = $request->input('username');
-
-        $user = User::firstOrCreate([
-            'username' => $username,
-        ]);
+        $username = $request->input('username');    //  TODO переделать
+        $moodleUser = \MoodleClient::getUser($username);
+        $user = null;
+        if (!empty($moodleUser)) {
+            $user = User::updateOrCreate([
+                'username' => $moodleUser['username'],
+                'firstname' => $moodleUser['firstname'],
+                'lastname' => $moodleUser['lastname'],
+                'email' => $moodleUser['email'],
+                'lang' => $moodleUser['lang'],
+                'moodleId' => $moodleUser['id'],
+                'thumbnail' => $moodleUser['profileimageurl']
+            ]);
+        }
 
         return $user;
     }
 
     protected function sendLoginResponse(User $user)
     {
-        return response()->json(['token' =>  auth()->login($user)]);
+        return response()->json(['token' => auth()->login($user)]);
     }
 }
