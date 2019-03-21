@@ -1,7 +1,7 @@
 <template>
 <el-row>
     <p>
-        Are u sure u want to delete {{ user.username}}
+        Are u sure u want to delete <strong>{{ user.username}}</strong>
     </p>
     <el-button type="danger" @click="getData">Confirm</el-button>
     <el-button type="info" @click="$emit('userDeleted')">Reject</el-button>
@@ -22,7 +22,7 @@
 
                 }).then(function (response) {
                     if (response.status == 200) {
-                        vm.$emit('userDeleted');
+                        vm.$emit('userDeleted', vm.user);
                     }
                 })
             }

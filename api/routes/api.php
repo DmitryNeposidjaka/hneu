@@ -24,7 +24,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
             Route::get('/all', 'UserController@getAll');
             Route::get('/{user}', 'UserController@getUser');
             Route::post('/', 'UserController@create');
-            Route::patch('/{user}', 'UserController@update');
+            Route::delete('/{user}', 'UserController@delete');
+            Route::post('/{user}', 'UserController@update');
         });
     });
 });
@@ -36,6 +37,7 @@ Route::group(['namespace' => 'Student', 'prefix' => 'student'], function () {
     Route::group(['middleware' => 'jwt.auth'], function () {
         Route::group(['prefix' => 'user'], function () {
             Route::get('/me', 'UserController@getMe');
+            Route::get('/courses', 'UserController@getCourses');
         });
     });
 });

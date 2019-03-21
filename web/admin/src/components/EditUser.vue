@@ -79,7 +79,7 @@
                     url: 'user/' + vm.user.id,
                     data: this.getFormData(this.user),
                 }).then(function (response) {
-                    if (response.status == 201) {
+                    if (response.status == 200) {
                         vm.$emit('userEdited');
                     }
                 })

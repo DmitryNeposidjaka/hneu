@@ -27,7 +27,7 @@ class UserController extends Controller
 
     public function getAll()
     {
-        return User::paginate($this->request->input('per_page', 50));
+        return User::filter(json_decode($this->request->input('filters'), true))->paginate($this->request->input('per_page', 50));
     }
 
     public function getUser(User $user)
@@ -51,6 +51,6 @@ class UserController extends Controller
 
     public function delete(User $user)
     {
-        return $user->delete();
+        return (string) $user->delete();
     }
 }

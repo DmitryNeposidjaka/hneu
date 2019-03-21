@@ -42,6 +42,7 @@
                 }).then(function (response) {
                     if(response.status == 200){
                         sessionStorage.setItem('_token', response.data.token)
+                        vm.axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('_token');
                     }
                 }).then(function () {
                     vm.$router.push({name: 'home'})

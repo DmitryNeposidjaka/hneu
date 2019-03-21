@@ -179,6 +179,7 @@ $config = [
         \Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         \App\Providers\MoodleClientServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
+        EloquentFilter\ServiceProvider::class
     ],
 
     /*
