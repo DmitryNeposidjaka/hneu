@@ -27,6 +27,20 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
             Route::delete('/{user}', 'UserController@delete');
             Route::post('/{user}', 'UserController@update');
         });
+        Route::group(['prefix' => 'news'], function () {
+            Route::get('/all', 'NewsController@getAll');
+            Route::get('/{item}', 'NewsController@getItem');
+            Route::post('/', 'NewsController@create');
+            Route::delete('/{item}', 'NewsController@delete');
+            Route::post('/{item}', 'NewsController@update');
+        });
+        Route::group(['prefix' => 'product'], function () {
+            Route::get('/all', 'ProductController@getAll');
+            Route::get('/{product}', 'ProductController@getProduct');
+            Route::post('/', 'ProductController@create');
+            Route::delete('/{product}', 'ProductController@delete');
+            Route::post('/{product}', 'ProductController@update');
+        });
     });
 });
 

@@ -8,6 +8,14 @@
             <i class="far fa-address-card"></i>
             <span>Admins</span>
         </el-menu-item>
+        <el-menu-item index="2" :route="{name: 'news'}">
+            <i class="far fa-newspaper"></i>
+            <span>News</span>
+        </el-menu-item>
+        <el-menu-item index="3" :route="{name: 'products'}">
+            <i class="fas fa-shopping-basket"></i>
+            <span>Products</span>
+        </el-menu-item>
     </el-menu>
 </template>
 
