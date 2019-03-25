@@ -15,6 +15,14 @@ use Illuminate\Http\Request;
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
+    Route::post('/temporary', function (Request $request) {
+        $store_path = storage_path('app/public/'.$request->type.'/'.$request->entity);
+
+        $path = $request->file('image')->storeAs('app/public/'.$request->type.'/'.$request->entity, uniqid().'.'.\Carbon\Carbon::now()->format('Y-m-d_H:i:s').'.');
+
+        return $path;
+    });
+
     Route::post('/login', 'LoginController@login');
     Route::get('/refresh', function () {})->middleware('jwt.refresh');
 

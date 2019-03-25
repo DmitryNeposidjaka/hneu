@@ -9,8 +9,9 @@
         </div>
         <div style="text-align: right; width: 70%; float: right;">
             <div style="padding: 0px 50px">
-                <span>Tom</span>
-                <el-button type="text" icon="el-icon-arrow-right" @click="logout" style="color: floralwhite;">Logout</el-button>
+                <span>{{user.username}}</span>
+                <el-button type="text" icon="el-icon-arrow-right" @click="logout" >Logout
+                </el-button>
             </div>
         </div>
     </el-header>
@@ -18,13 +19,14 @@
 
 <script>
     export default {
+        props: ['user'],
         name: 'Header',
         methods: {
             logout() {
                 /*localStorage.clear();
                 this.$router.push({name: 'home'})*/
             }
-        }
+        },
     }
 </script>
 
