@@ -9,7 +9,9 @@
                       :autosize="{ minRows: 2, maxRows: 4}"></el-input>
         </el-form-item>
         <el-form-item label="Content" prop="content">
-            <el-input v-model="ruleForm.content"></el-input>
+            <el-input v-model="ruleForm.content"
+                      type="textarea"
+                      :autosize="{ minRows: 5, maxRows: 10}"></el-input>
         </el-form-item>
         <el-upload
                 ref="newsThumb"
@@ -20,7 +22,7 @@
                 :on-success="handleAvatarSuccess"
                 :http-request="uploadFile"
                 :before-upload="beforeAvatarUpload">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <img v-if="imageUrl" :src="defaultUrl + imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
         <el-form-item>
@@ -70,19 +72,19 @@
                     title: '',
                     description: '',
                     content: '',
+                    thumbnail: '',
                 },
                 rules: {
                     title: [
-                        {required: true, message: 'Please input Activity firstname', trigger: 'blur'},
+                        {required: true, message: 'Please input Activity title', trigger: 'blur'},
                         {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
                     ],
                     description: [
-                        {required: true, message: 'Please input Activity lastname', trigger: 'blur'},
+                        {required: true, message: 'Please input Activity description', trigger: 'blur'},
                         {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
                     ],
                     content: [
-                        {required: true, message: 'Please input Activity username', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
+                        {required: true, message: 'Please input Activity content', trigger: 'blur'},
                     ],
                 }
             };
@@ -91,16 +93,18 @@
             uploadFile() {
                 var vm = this;
                 var formData = new FormData();
-                var imagefile = document.querySelector('#file input');
                 var files = this.$refs.newsThumb.uploadFiles;
-                console.log(files);
-                formData.append("image", new Blob([files[0]]));
+                var image = files.pop().raw;
+                formData.append("image", image);
+                this.ruleForm.thumbnail = image;
                 this.axios.post('/temporary?type=images&entity=news', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(function (response) {
-                    vm.imageUrl = response
+                    if(response.status == 200) {
+                        vm.imageUrl = response.data
+                    }
                 })
             },
             handleAvatarSuccess(res, file) {
@@ -147,7 +151,7 @@
                     data: this.getFormData(this.ruleForm)
                 }).then(function (response) {
                     if (response.status == 201) {
-                        vm.$emit('userCreated');
+                        vm.$emit('newsCreated');
                     }
                 }).then(function () {
                     vm.resetForm('ruleForm');

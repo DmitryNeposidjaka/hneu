@@ -4,19 +4,21 @@
                 title="Create news"
                 :visible.sync="createUserVisible"
                 width="40%">
-            <create-news style="padding: 0px 100px 0px 50px"  v-on:userCreated="userCreated"></create-news>
+            <create-news style="padding: 0px 100px 0px 50px" v-on:newsCreated="userCreated"></create-news>
         </el-dialog>
         <el-dialog
                 title="Edit news"
                 :visible.sync="editUserVisible"
-                width="40%">
-            <edit-news ref="edit-user-form" style="padding: 0px 100px 0px 50px"  v-on:userEdited="userEdited" v-bind:user="userOnEdit" v-on:userEditClose="editUserVisible = false"></edit-news>
+                width="60%">
+            <edit-news ref="edit-user-form" style="padding: 0px 100px 0px 50px" v-on:newsEdited="userEdited"
+                       v-bind:news="userOnEdit" v-on:userEditClose="editUserVisible = false"></edit-news>
         </el-dialog>
         <el-dialog
                 title="Delete news"
                 :visible.sync="deleteUserVisible"
                 width="40%">
-            <delete-news ref="edit-user-form" style="padding: 0px 100px 0px 50px"  v-on:userDeleted="userDeleted" v-bind:user="userOnDelete" v-on:userDeleteClose="deleteUserVisible = false"></delete-news>
+            <delete-news ref="edit-user-form" style="padding: 0px 100px 0px 50px" v-on:userDeleted="userDeleted"
+                         v-bind:user="userOnDelete" v-on:userDeleteClose="deleteUserVisible = false"></delete-news>
         </el-dialog>
         <el-row>
             <el-col :span="4">
@@ -35,7 +37,8 @@
             </el-col>
             <div style="text-align: right; width: 70%; float: right;">
                 <div style="padding: 0px 50px">
-                    <el-button type="primary" icon="el-icon-plus" circle title="Add user" @click="createUserVisible = true"></el-button>
+                    <el-button type="primary" icon="el-icon-plus" circle title="Add user"
+                               @click="createUserVisible = true"></el-button>
                 </div>
             </div>
         </el-row>
@@ -58,12 +61,17 @@
                 :row-class-name="tableRowClassName">
             <el-table-column type="expand">
                 <template slot-scope="props">
-                    <div style="overflow: auto;">
-                        <p title="Created">{{ props.row.created_at }}</p>
-                        <p title="Title">{{ props.row.title }}</p>
+                    <el-card class="box-card">
+                        <div slot="header" class="clearfix">
+                            <span class="news-card-title">{{ props.row.title }}</span>
+                            <span class="news-card-date">{{ props.row.created_at }}</span>
+                        </div>
+                        <div class="news-card-image-place">
+                            <img :src="props.row.thumbnail"/>
+                        </div>
                         <p title="Description">{{ props.row.description }} </p>
-                        <p title="Content">{{ props.row.content }}</p>
-                    </div>
+                        <p title="Content" v-html="props.row.content">{{ props.row.content }}</p>
+                    </el-card>
                 </template>
             </el-table-column>
             <el-table-column
@@ -83,8 +91,10 @@
                 <template slot-scope="scope">
 
                     <!--<el-button type="text" style="color: cornflowerblue" title="view"><i class="el-icon-view"></i></el-button>-->
-                    <el-button type="text" style="color: darkorange" title="edit" @click="openEditUser(scope.row)"><i class="el-icon-edit"></i></el-button>
-                    <el-button type="text" style="color: orangered" title="delete" @click="openDeleteUser(scope.row)"><i class="el-icon-delete"></i></el-button>
+                    <el-button type="text" style="color: darkorange" title="edit" @click="openEditUser(scope.row)"><i
+                            class="el-icon-edit"></i></el-button>
+                    <el-button type="text" style="color: orangered" title="delete" @click="openDeleteUser(scope.row)"><i
+                            class="el-icon-delete"></i></el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -98,6 +108,26 @@
 </template>
 
 <style>
+    .news-card-date {
+        float: right;
+        padding: 3px;
+        color: grey;
+    }
+    .news-card-image-place {
+        text-align: center;
+    }
+    .news-card-image-place img{
+        width: 200px;
+        border: 4px solid #f4f4f5;
+        border-radius: 1px;
+    }
+
+    .news-card-title {
+        color: #1b1e21;
+        font-weight: bolder;
+        font-size: 18px;
+    }
+
     .el-dialog {
         line-height: 30px
     }

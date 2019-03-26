@@ -1,55 +1,127 @@
 <template>
-    <el-form :model="user" :rules="rules" :ref="'ruleForm' + user.id" label-width="120px" class="demo-ruleForm">
-        <el-form-item label="Name" prop="firstname">
-            <el-input v-model="user.firstname"></el-input>
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
+        <el-form-item label="Title" prop="title">
+            <el-input v-model="ruleForm.title"></el-input>
         </el-form-item>
-        <el-form-item label="Last Name" prop="lastname">
-            <el-input v-model="user.lastname"></el-input>
+        <el-form-item label="Description" prop="description">
+            <el-input v-model="ruleForm.description"
+                      type="textarea"
+                      :autosize="{ minRows: 2, maxRows: 4}"></el-input>
         </el-form-item>
-        <el-form-item label="Username" prop="username">
-            <el-input v-model="user.username"></el-input>
+        <el-form-item label="Content" prop="content">
+            <el-input v-model="ruleForm.content"
+                      type="textarea"
+                      :autosize="{ minRows: 5, maxRows: 10}"></el-input>
         </el-form-item>
-        <el-form-item label="Email" prop="email">
-            <el-input v-model="user.email"></el-input>
-        </el-form-item>
+        <el-upload
+                ref="newsThumb"
+                id="file"
+                class="avatar-uploader"
+                :action="defaultUrl + '/api'"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :http-request="uploadFile"
+                :before-upload="beforeAvatarUpload">
+            <img v-if="imageUrl" :src="defaultUrl + imageUrl" class="avatar">
+            <img v-else :src="news.thumbnail" class="avatar">
+        </el-upload>
         <el-form-item>
-            <el-button @click="getData" type="success">Save</el-button>
-            <el-button @click="resetForm('ruleForm' + user.id)">Reset</el-button>
-            <el-button @click="editClose" type="warning">Close</el-button>
+            <el-button type="primary" @click="getData">Create</el-button>
+            <el-button @click="resetForm('ruleForm')">Reset</el-button>
         </el-form-item>
     </el-form>
 </template>
 
+<style>
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
+
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
+</style>
+
+
 <script>
     export default {
-        props: ['user'],
+        props: ['news'],
         data() {
             return {
+                imageUrl: '',
+                defaultUrl: '',
+                ruleForm: {
+                    title: '',
+                    description: '',
+                    content: '',
+                    thumbnail: '',
+                },
                 rules: {
-                    firstname: [
+                    title: [
                         {required: true, message: 'Please input Activity firstname', trigger: 'blur'},
                         {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
                     ],
-                    lastname: [
+                    description: [
                         {required: true, message: 'Please input Activity lastname', trigger: 'blur'},
                         {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
                     ],
-                    username: [
+                    content: [
                         {required: true, message: 'Please input Activity username', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
-                    ],
-                    email: [
-                        {required: true, message: 'Please input Activity email', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'},
-                        { type: 'email', message: 'Please enter a valid email address', trigger: 'blur' },
                     ],
                 }
             };
         },
         methods: {
-            editClose() {
-              this.resetForm('ruleForm' + this.user.id)
-                this.$emit('userEditClose');
+            uploadFile() {
+                var vm = this;
+                var formData = new FormData();
+                var files = this.$refs.newsThumb.uploadFiles;
+                var image = files.pop().raw;
+                formData.append("image", image);
+                this.ruleForm.thumbnail = image;
+                this.axios.post('/temporary?type=images&entity=news', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(function (response) {
+                    if(response.status == 200) {
+                        vm.imageUrl = response.data
+                    }
+                })
+            },
+            handleAvatarSuccess(res, file) {
+                this.ruleForm.thumbnail = URL.createObjectURL(file.raw);
+            },
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                    this.$message.error('Avatar picture must be JPG or PNG format!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('Avatar picture size can not exceed 2MB!');
+                }
+                return isJPG && isLt2M;
             },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
@@ -64,9 +136,10 @@
             resetForm(formName) {
                 this.$refs[formName].resetFields();
             },
-            getFormData(data = {}){
+            getFormData(data = {}) {
                 const formData = new FormData();
-                for(var key in data){
+                for (var key in data) {
+                    console.log(data[key])
                     formData.append(key, data[key]);
                 }
                 return formData;
@@ -76,14 +149,20 @@
                 this.loading = true;
                 this.axios({
                     method: 'post',
-                    url: 'user/' + vm.user.id,
-                    data: this.getFormData(this.user),
+                    url: 'news/'+ vm.news.id,
+                    data: this.getFormData(this.ruleForm)
                 }).then(function (response) {
                     if (response.status == 200) {
-                        vm.$emit('userEdited');
+                        vm.$emit('newsEdited');
                     }
+                }).then(function () {
+                //    vm.resetForm('ruleForm');
                 })
             }
         },
+        mounted() {
+            this.defaultUrl = process.env.VUE_APP_SERVER_URL;
+            this.ruleForm = this.news;
+        }
     }
 </script>

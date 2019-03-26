@@ -55,6 +55,20 @@ return [
             'visibility' => 'public',
         ],
 
+        'temporary' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/temporary'),
+            'url' => env('APP_URL').'/storage/temporary',
+            'visibility' => 'public',
+        ],
+
+        'news-img' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/images/news'),
+            'url' => env('APP_URL').'/storage/images/news',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

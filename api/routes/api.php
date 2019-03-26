@@ -15,12 +15,14 @@ use Illuminate\Http\Request;
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
-    Route::post('/temporary', function (Request $request) {
-        $store_path = storage_path('app/public/'.$request->type.'/'.$request->entity);
+    Route::post('/temporary', function (\App\Http\Requests\TemporaryStorageImageRequest $request) {
+        $path = $request->file('image')
+            ->storeAs(
+                $request->type.'/'.$request->entity,
+                uniqid().'.'.\Carbon\Carbon::now()->format('Y-m-d_H:i:s').'.'.$request->image->extension(),
+                'temporary');
 
-        $path = $request->file('image')->storeAs('app/public/'.$request->type.'/'.$request->entity, uniqid().'.'.\Carbon\Carbon::now()->format('Y-m-d_H:i:s').'.');
-
-        return $path;
+        return '/storage/temporary/'.$path;
     });
 
     Route::post('/login', 'LoginController@login');

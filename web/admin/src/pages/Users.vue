@@ -226,7 +226,7 @@
                 this.deleteUserVisible = false;
                 this.$message({
                     dangerouslyUseHTMLString: true,
-                    message: 'The user <strong>user.username</strong> has been deleted!'
+                    message: 'The user <strong>'+ user.username +'</strong> has been deleted!'
                 });
                 this.getData();
             },
