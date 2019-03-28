@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AdminUserCreateRequest;
+
 use App\Http\Requests\AdminUserUpdateRequest;
+use App\Http\Requests\NewsCreateRequest;
+use App\Http\Requests\NewsUpdateRequest;
 use App\Models\News;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -30,21 +33,40 @@ class NewsController extends Controller
         return $item;
     }
 
-    public function create(AdminUserCreateRequest $request)
+    public function create(NewsCreateRequest $request)
     {
-        $item = new News($request->all());
+        $item = new News($request->only(['title', 'description', 'content']));
+        $path = $request->file('thumbnail')
+            ->storeAs(
+                'images/news',
+                uniqid() . '.' . \Carbon\Carbon::now()->format('Y-m-d_H:i:s') . '.' . $request->thumbnail->extension(),
+                'news-img');
+        $item->thumbnail = $path;
+        $item->creator_id = Auth::id();
+        $item->entity = User::class;
         $item->save();
         return $item;
     }
 
-    public function update(AdminUserUpdateRequest $request, News $item)
+    public function update(NewsUpdateRequest $request, News $item)
     {
-        $item->update($request->all());
+        $item->update($request->only(['title', 'description', 'content']));
+
+        if ($request->hasFile('thumbnail')) {
+            $path = $request->file('thumbnail')
+                ->storeAs(
+                    'images/news',
+                    uniqid() . '.' . \Carbon\Carbon::now()->format('Y-m-d_H:i:s') . '.' . $request->thumbnail->extension(),
+                    'news-img');
+            $item->thumbnail = $path;
+        }
+
+        $item->save();
         return $item;
     }
 
     public function delete(News $item)
     {
-        return (string) $item->delete();
+        return (string)$item->delete();
     }
 }

@@ -9,9 +9,7 @@
                       :autosize="{ minRows: 2, maxRows: 4}"></el-input>
         </el-form-item>
         <el-form-item label="Content" prop="content">
-            <el-input v-model="ruleForm.content"
-                      type="textarea"
-                      :autosize="{ minRows: 5, maxRows: 10}"></el-input>
+            <vue-editor v-model="ruleForm.content"></vue-editor>
         </el-form-item>
         <el-upload
                 ref="newsThumb"
@@ -25,14 +23,19 @@
             <img v-if="imageUrl" :src="defaultUrl + imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
-        <el-form-item>
-            <el-button type="primary" @click="getData">Create</el-button>
-            <el-button @click="resetForm('ruleForm')">Reset</el-button>
-        </el-form-item>
+        <el-form-it class="form-buttons">
+            <div>
+                <el-button type="primary" @click="getData">Create</el-button>
+                <el-button @click="resetForm('ruleForm')">Reset</el-button>
+            </div>
+        </el-form-it>
     </el-form>
 </template>
 
 <style>
+    .form-buttons div {
+        margin: 50px;
+    }
     .avatar-uploader .el-upload {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;
@@ -63,7 +66,10 @@
 
 
 <script>
+import { VueEditor } from 'vue2-editor'
+
     export default {
+        components: {VueEditor},
         data() {
             return {
                 imageUrl: '',

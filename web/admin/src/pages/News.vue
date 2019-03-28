@@ -3,13 +3,13 @@
         <el-dialog
                 title="Create news"
                 :visible.sync="createUserVisible"
-                width="40%">
+                width="80%">
             <create-news style="padding: 0px 100px 0px 50px" v-on:newsCreated="userCreated"></create-news>
         </el-dialog>
         <el-dialog
                 title="Edit news"
                 :visible.sync="editUserVisible"
-                width="60%">
+                width="80%">
             <edit-news ref="edit-user-form" style="padding: 0px 100px 0px 50px" v-on:newsEdited="userEdited"
                        v-bind:news="userOnEdit" v-on:userEditClose="editUserVisible = false"></edit-news>
         </el-dialog>
