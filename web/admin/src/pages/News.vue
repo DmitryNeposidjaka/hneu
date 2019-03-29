@@ -37,7 +37,7 @@
             </el-col>
             <div style="text-align: right; width: 70%; float: right;">
                 <div style="padding: 0px 50px">
-                    <el-button type="primary" icon="el-icon-plus" circle title="Add user"
+                    <el-button type="primary" icon="el-icon-plus" circle title="Add News"
                                @click="createUserVisible = true"></el-button>
                 </div>
             </div>
@@ -148,9 +148,9 @@
 </style>
 
 <script>
-    import CreateNews from '../components/CreateNews';
-    import DeleteNews from '../components/DeleteNews';
-    import EditNews from '../components/EditNews';
+    import CreateNews from '../components/news/CreateNews';
+    import DeleteNews from '../components/news/DeleteNews';
+    import EditNews from '../components/news/EditNews';
 
     export default {
         components: {CreateNews, EditNews, DeleteNews},
@@ -198,11 +198,11 @@
                 this.editUserVisible = false;
                 this.getData();
             },
-            userDeleted(user) {
+            userDeleted(news) {
                 this.deleteUserVisible = false;
                 this.$message({
                     dangerouslyUseHTMLString: true,
-                    message: 'The user <strong>user.username</strong> has been deleted!'
+                    message: '<strong>news.title</strong> has been deleted!'
                 });
                 this.getData();
             },

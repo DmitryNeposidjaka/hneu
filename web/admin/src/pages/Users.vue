@@ -170,9 +170,9 @@
 </style>
 
 <script>
-    import CreateUser from '../components/CreateUser';
-    import DeleteUser from '../components/DeleteUser';
-    import EditUser from '../components/EditUser';
+    import CreateUser from '../components/users/CreateUser';
+    import DeleteUser from '../components/users/DeleteUser';
+    import EditUser from '../components/users/EditUser';
 
     export default {
         components: {CreateUser, EditUser, DeleteUser},

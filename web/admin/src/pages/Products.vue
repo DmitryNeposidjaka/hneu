@@ -3,13 +3,13 @@
         <el-dialog
                 title="Create product"
                 :visible.sync="createUserVisible"
-                width="40%">
+                width="60%">
             <create-product style="padding: 0px 100px 0px 50px"  v-on:userCreated="userCreated"></create-product>
         </el-dialog>
         <el-dialog
                 title="Edit product"
                 :visible.sync="editUserVisible"
-                width="40%">
+                width="60%">
             <edit-product ref="edit-user-form" style="padding: 0px 100px 0px 50px"  v-on:userEdited="userEdited" v-bind:user="userOnEdit" v-on:userEditClose="editUserVisible = false"></edit-product>
         </el-dialog>
         <el-dialog
@@ -117,9 +117,9 @@
 </style>
 
 <script>
-    import CreateProduct from '../components/CreateProduct';
-    import DeleteProduct from '../components/DeleteProduct';
-    import EditProduct from '../components/EditProduct';
+    import CreateProduct from '../components/products/CreateProduct';
+    import DeleteProduct from '../components/products/DeleteProduct';
+    import EditProduct from '../components/products/EditProduct';
 
     export default {
         components: {CreateProduct, EditProduct, DeleteProduct},
