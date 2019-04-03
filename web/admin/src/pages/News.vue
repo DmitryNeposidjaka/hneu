@@ -1,15 +1,16 @@
 <template>
     <div>
+
         <el-dialog
                 title="Create news"
                 :visible.sync="createUserVisible"
-                width="80%">
+                width="60%">
             <create-news style="padding: 0px 100px 0px 50px" v-on:newsCreated="userCreated"></create-news>
         </el-dialog>
         <el-dialog
                 title="Edit news"
                 :visible.sync="editUserVisible"
-                width="80%">
+                width="60%">
             <edit-news ref="edit-user-form" style="padding: 0px 100px 0px 50px" v-on:newsEdited="userEdited"
                        v-bind:news="userOnEdit" v-on:userEditClose="editUserVisible = false"></edit-news>
         </el-dialog>
@@ -70,7 +71,7 @@
                             <img :src="props.row.thumbnail"/>
                         </div>
                         <p title="Description">{{ props.row.description }} </p>
-                        <p title="Content" v-html="props.row.content">{{ props.row.content }}</p>
+                        <div title="Content" v-html="props.row.content" class="ql-editor">{{ props.row.content }}</div>
                     </el-card>
                 </template>
             </el-table-column>
@@ -79,12 +80,8 @@
                     label="Title">
             </el-table-column>
             <el-table-column
-                    prop="username"
-                    label="Username">
-            </el-table-column>
-            <el-table-column
-                    prop="email"
-                    label="Email">
+                    prop="created_at"
+                    label="Created at">
             </el-table-column>
             <el-table-column
                     align="right">

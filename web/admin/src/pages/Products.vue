@@ -10,13 +10,13 @@
                 title="Edit product"
                 :visible.sync="editUserVisible"
                 width="60%">
-            <edit-product ref="edit-user-form" style="padding: 0px 100px 0px 50px"  v-on:userEdited="userEdited" v-bind:user="userOnEdit" v-on:userEditClose="editUserVisible = false"></edit-product>
+            <edit-product ref="edit-user-form" style="padding: 0px 100px 0px 50px"  v-on:userEdited="userEdited" v-bind:product="userOnEdit" v-on:userEditClose="editUserVisible = false"></edit-product>
         </el-dialog>
         <el-dialog
                 title="Delete product"
                 :visible.sync="deleteUserVisible"
                 width="40%">
-            <delete-product ref="edit-user-form" style="padding: 0px 100px 0px 50px"  v-on:userDeleted="userDeleted" v-bind:user="userOnDelete" v-on:userDeleteClose="deleteUserVisible = false"></delete-product>
+            <delete-product ref="edit-user-form" style="padding: 0px 100px 0px 50px"  v-on:userDeleted="userDeleted" v-bind:product="userOnDelete" v-on:userDeleteClose="deleteUserVisible = false"></delete-product>
         </el-dialog>
         <el-row>
             <el-col :span="4">
@@ -58,24 +58,25 @@
                 :row-class-name="tableRowClassName">
             <el-table-column type="expand">
                 <template slot-scope="props">
-                    <div style="overflow: auto;">
-                        <p title="Username">{{ props.row.title }}</p>
-                        <p title="Name">{{ props.row.description }} </p>
-                        <p title="Created">{{ props.row.created_at }}</p>
-                    </div>
+                    <el-card class="box-card">
+                        <div slot="header" class="clearfix">
+                            <span class="product-card-title">{{ props.row.title }}</span>
+                            <span class="product-card-date">{{ props.row.created_at }}</span>
+                        </div>
+                        <p title="Content" v-html="props.row.description">{{ props.row.description }}</p>
+                        <div class="product-card-image-place">
+                            <img v-for="image in props.row.images" :src="image"/>
+                        </div>
+                    </el-card>
                 </template>
             </el-table-column>
             <el-table-column
-                    prop="firstname"
-                    label="Name">
+                    prop="title"
+                    label="Title">
             </el-table-column>
             <el-table-column
-                    prop="username"
-                    label="Username">
-            </el-table-column>
-            <el-table-column
-                    prop="email"
-                    label="Email">
+                    prop="created_at"
+                    label="Created at">
             </el-table-column>
             <el-table-column
                     align="right">
@@ -97,6 +98,25 @@
 </template>
 
 <style>
+    .product-card-date {
+        float: right;
+        padding: 3px;
+        color: grey;
+    }
+    .product-card-image-place {
+        text-align: center;
+    }
+    .product-card-image-place img{
+        width: 200px;
+        border: 4px solid #f4f4f5;
+        border-radius: 1px;
+    }
+
+    .product-card-title {
+        color: #1b1e21;
+        font-weight: bolder;
+        font-size: 18px;
+    }
     .el-dialog {
         line-height: 30px
     }

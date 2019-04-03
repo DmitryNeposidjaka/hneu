@@ -4,23 +4,27 @@
             <el-input v-model="ruleForm.title"></el-input>
         </el-form-item>
         <el-form-item label="Description" prop="description">
-            <el-input v-model="ruleForm.description"
-                      type="textarea"
-                      :autosize="{ minRows: 4, maxRows: 8}"></el-input>
+            <vue-editor v-model="ruleForm.description"></vue-editor>
         </el-form-item>
         <el-upload
                 ref="newsThumb"
                 id="file"
                 class="avatar-uploader"
+                multiple
+                :limit="8"
                 :action="defaultUrl + '/api'"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
                 :http-request="uploadFile"
                 :before-upload="beforeAvatarUpload">
-            <i class="el-icon-plus"></i>
+            <el-button size="small" type="primary">Upload photo</el-button>
         </el-upload>
         <div class="images-block">
-            <img v-for="img in thumbnailsUrl" width="100%" :src="defaultUrl + img" alt="" class="avatar">
+            <div class="img-content" v-for="(img, i) in thumbnailsUrl">
+                <img width="100%" :src="defaultUrl + img" alt="" class="avatar">
+                <el-button class="cancel-button" @click="handleRemove(i)" type="danger"
+                           icon="el-icon-circle-close-outline" circle size="mini"></el-button>
+            </div>
         </div>
         <el-form-item>
             <el-button type="primary" @click="getData">Create</el-button>
@@ -28,10 +32,28 @@
         </el-form-item>
     </el-form>
 </template>
-<style>
+<style scoped>
+    .cancel-button {
+        position: relative;
+        right: -75px;
+        bottom: 190px;
+    }
+
+    .images-block {
+        width: 100%;
+    }
+
+    .img-content {
+        width: 200px;
+        height: 200px;
+        margin: 0px 5px;
+        display: inline-block;
+    }
+
     .form-buttons div {
         margin: 50px;
     }
+
     .avatar-uploader .el-upload {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;
@@ -54,13 +76,14 @@
     }
 
     .avatar {
-        width: 178px;
-        height: 178px;
-        display: block;
+        border-radius: 4px;
     }
 </style>
 <script>
+    import { VueEditor } from 'vue2-editor'
+
     export default {
+        components: {VueEditor},
         data() {
             return {
                 imageUrl: '',
@@ -85,6 +108,10 @@
             };
         },
         methods: {
+            handleRemove(item) {
+                this.thumbnailsUrl.splice(item, 1);
+                this.ruleForm.thumbnails.splice(item, 1);
+            },
             uploadFile() {
                 var vm = this;
                 var formData = new FormData();
@@ -98,7 +125,7 @@
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(function (response) {
-                    if(response.status == 200) {
+                    if (response.status == 200) {
                         vm.thumbnailsUrl.push(response.data);
                     }
                 })
@@ -131,11 +158,18 @@
             resetForm(formName) {
                 this.$refs[formName].resetFields();
             },
-            getFormData(data = {}){
+            getFormData(data = {}) {
                 const formData = new FormData();
-                for(var key in data){
-                    formData.append(key, data[key]);
+                for (var key in data) {
+                    if (Array.isArray(data[key])) {
+                        data[key].forEach(function (item, i, arr) {
+                            formData.append(key + "[" + i + "]", item);
+                        });
+                    } else {
+                        formData.append(key, data[key]);
+                    }
                 }
+
                 return formData;
             },
             getData() {
@@ -144,7 +178,10 @@
                 this.axios({
                     method: 'post',
                     url: 'product',
-                    data: this.getFormData(this.ruleForm)
+                    data: this.getFormData(this.ruleForm),
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
                 }).then(function (response) {
                     if (response.status == 201) {
                         vm.$emit('userCreated');

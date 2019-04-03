@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->integer('creator_id');
             $table->string('entity');
+            $table->json('images');
             $table->timestamps();
         });
     }

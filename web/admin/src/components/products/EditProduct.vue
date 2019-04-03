@@ -1,55 +1,151 @@
 <template>
-    <el-form :model="user" :rules="rules" :ref="'ruleForm' + user.id" label-width="120px" class="demo-ruleForm">
-        <el-form-item label="Name" prop="firstname">
-            <el-input v-model="user.firstname"></el-input>
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
+        <el-form-item label="Title" prop="title">
+            <el-input v-model="ruleForm.title"></el-input>
         </el-form-item>
-        <el-form-item label="Last Name" prop="lastname">
-            <el-input v-model="user.lastname"></el-input>
+        <el-form-item label="Description" prop="description">
+            <vue-editor v-model="ruleForm.description"></vue-editor>
         </el-form-item>
-        <el-form-item label="Username" prop="username">
-            <el-input v-model="user.username"></el-input>
-        </el-form-item>
-        <el-form-item label="Email" prop="email">
-            <el-input v-model="user.email"></el-input>
-        </el-form-item>
+        <el-upload
+                ref="newsThumb"
+                id="file"
+                class="avatar-uploader"
+                multiple
+                :limit="8"
+                :action="defaultUrl + '/api'"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :http-request="uploadFile"
+                :before-upload="beforeAvatarUpload">
+            <el-button size="small" type="primary">Upload photo</el-button>
+        </el-upload>
+        <div class="images-block">
+            <div class="img-content" v-for="(img, i) in thumbnailsUrl">
+                <img width="100%" :src="defaultUrl + img" alt="" class="avatar">
+                <el-button class="cancel-button" @click="handleRemove(i)" type="danger"
+                           icon="el-icon-circle-close-outline" circle size="mini"></el-button>
+            </div>
+        </div>
         <el-form-item>
-            <el-button @click="getData" type="success">Save</el-button>
-            <el-button @click="resetForm('ruleForm' + user.id)">Reset</el-button>
-            <el-button @click="editClose" type="warning">Close</el-button>
+            <el-button type="primary" @click="getData">Create</el-button>
+            <el-button @click="resetForm('ruleForm')">Reset</el-button>
         </el-form-item>
     </el-form>
 </template>
 
+<style scoped>
+    .cancel-button {
+        position: relative;
+        right: -75px;
+        bottom: 190px;
+    }
+
+    .images-block {
+        width: 100%;
+    }
+
+    .img-content {
+        width: 200px;
+        height: 200px;
+        margin: 0px 5px;
+        display: inline-block;
+    }
+
+    .form-buttons div {
+        margin: 50px;
+    }
+
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
+
+    .avatar {
+        border-radius: 4px;
+    }
+</style>
+
 <script>
+    import { VueEditor } from 'vue2-editor'
     export default {
-        props: ['user'],
+        components: {VueEditor},
+        props: ['product'],
         data() {
             return {
+                imageUrl: '',
+                thumbnailsUrl: [],
+                defaultUrl: '',
+                dialogVisible: false,
+                ruleForm: {
+                    title: '',
+                    description: '',
+                    thumbnails: [],
+                },
                 rules: {
-                    firstname: [
-                        {required: true, message: 'Please input Activity firstname', trigger: 'blur'},
+                    title: [
+                        {required: true, message: 'Please input Activity title', trigger: 'blur'},
                         {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
                     ],
-                    lastname: [
-                        {required: true, message: 'Please input Activity lastname', trigger: 'blur'},
+                    description: [
+                        {required: true, message: 'Please input Activity description', trigger: 'blur'},
                         {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
-                    ],
-                    username: [
-                        {required: true, message: 'Please input Activity username', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
-                    ],
-                    email: [
-                        {required: true, message: 'Please input Activity email', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'},
-                        { type: 'email', message: 'Please enter a valid email address', trigger: 'blur' },
                     ],
                 }
             };
         },
         methods: {
-            editClose() {
-              this.resetForm('ruleForm' + this.user.id)
-                this.$emit('userEditClose');
+            handleRemove(item) {
+                this.thumbnailsUrl.splice(item, 1);
+                this.ruleForm.thumbnails.splice(item, 1);
+            },
+            uploadFile() {
+                var vm = this;
+                var formData = new FormData();
+                var files = this.$refs.newsThumb.uploadFiles;
+                var image = files.pop().raw;
+                formData.append("image", image);
+                this.imageUrl = image;
+                this.ruleForm.thumbnails.push(image);
+                this.axios.post('/temporary?type=images&entity=products', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        vm.thumbnailsUrl.push(response.data);
+                    }
+                })
+            },
+            handleAvatarSuccess(res, file) {
+                this.imageUrl = URL.createObjectURL(file.raw);
+            },
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                    this.$message.error('Avatar picture must be JPG or PNG format!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('Avatar picture size can not exceed 2MB!');
+                }
+                return isJPG && isLt2M;
             },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
@@ -64,11 +160,18 @@
             resetForm(formName) {
                 this.$refs[formName].resetFields();
             },
-            getFormData(data = {}){
+            getFormData(data = {}) {
                 const formData = new FormData();
-                for(var key in data){
-                    formData.append(key, data[key]);
+                for (var key in data) {
+                    if (Array.isArray(data[key])) {
+                        data[key].forEach(function (item, i, arr) {
+                            formData.append(key + "[" + i + "]", item);
+                        });
+                    } else {
+                        formData.append(key, data[key]);
+                    }
                 }
+
                 return formData;
             },
             getData() {
@@ -76,14 +179,23 @@
                 this.loading = true;
                 this.axios({
                     method: 'post',
-                    url: 'user/' + vm.user.id,
-                    data: this.getFormData(this.user),
-                }).then(function (response) {
-                    if (response.status == 200) {
-                        vm.$emit('userEdited');
+                    url: 'product/' + this.product.id,
+                    data: this.getFormData(this.ruleForm),
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
                     }
+                }).then(function (response) {
+                    if (response.status == 201) {
+                        vm.$emit('userCreated');
+                    }
+                }).then(function () {
+                    vm.resetForm('ruleForm');
                 })
             }
         },
+        mounted() {
+            this.defaultUrl = process.env.VUE_APP_SERVER_URL;
+            this.ruleForm = this.product;
+        }
     }
 </script>
