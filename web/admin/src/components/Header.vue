@@ -23,8 +23,8 @@
         name: 'Header',
         methods: {
             logout() {
-                /*localStorage.clear();
-                this.$router.push({name: 'home'})*/
+                sessionStorage.clear();
+                this.$router.push({name: 'login'})
             }
         },
     }

@@ -5,6 +5,7 @@ import Login from './templates/Logint'
 import Users from './pages/Users'
 import News from './pages/News'
 import Products from './pages/Products'
+import Permissions from './pages/Permissions'
 
 Vue.use(Router);
 
@@ -26,6 +27,11 @@ export default new Router({
             path: '/users',
             name: 'users',
             component: Users,
+        },
+        {
+            path: '/permissions',
+            name: 'permissions',
+            component: Permissions,
         },
         {
             path: '/news',

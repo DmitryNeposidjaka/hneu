@@ -18,6 +18,16 @@
         <el-form-item label="Password confirm" prop="password_confirmation">
             <el-input v-model="ruleForm.password_confirmation" type="password"></el-input>
         </el-form-item>
+        <el-form-item label="Role" prop="role">
+            <el-select v-model="ruleForm.role" placeholder="Select">
+                <el-option
+                        v-for="role in roles"
+                        :key="role.id"
+                        :label="role.title"
+                        :value="role.name">
+                </el-option>
+            </el-select>
+        </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="getData">Create</el-button>
             <el-button @click="resetForm('ruleForm')">Reset</el-button>
@@ -27,6 +37,7 @@
 
 <script>
     export default {
+        props: ['roles'],
         data() {
             return {
                 ruleForm: {
@@ -36,6 +47,7 @@
                     username: '',
                     password: '',
                     password_confirmation: '',
+                    role: ''
                 },
                 rules: {
                     firstname: [
@@ -49,6 +61,9 @@
                     username: [
                         {required: true, message: 'Please input Activity username', trigger: 'blur'},
                         {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
+                    ],
+                    role: [
+                        {required: true, message: 'Please input Activity Role', trigger: 'blur'},
                     ],
                     email: [
                         {required: true, message: 'Please input Activity email', trigger: 'blur'},

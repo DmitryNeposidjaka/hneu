@@ -8,11 +8,15 @@
             <i class="far fa-address-card"></i>
             <span>Admins</span>
         </el-menu-item>
-        <el-menu-item index="2" :route="{name: 'news'}">
+        <el-menu-item index="2" :route="{name: 'permissions'}">
+            <i class="fas fa-user-tag"></i>
+            <span>Permissions</span>
+        </el-menu-item>
+        <el-menu-item index="3" :route="{name: 'news'}">
             <i class="far fa-newspaper"></i>
             <span>News</span>
         </el-menu-item>
-        <el-menu-item index="3" :route="{name: 'products'}">
+        <el-menu-item index="4" :route="{name: 'products'}">
             <i class="fas fa-shopping-basket"></i>
             <span>Products</span>
         </el-menu-item>

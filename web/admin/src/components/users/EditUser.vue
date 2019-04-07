@@ -12,6 +12,16 @@
         <el-form-item label="Email" prop="email">
             <el-input v-model="user.email"></el-input>
         </el-form-item>
+        <el-form-item label="Role" prop="role">
+            <el-select v-model="user.role" placeholder="Select">
+                <el-option
+                        v-for="role in roles"
+                        :key="role.id"
+                        :label="role.title"
+                        :value="role.name">
+                </el-option>
+            </el-select>
+        </el-form-item>
         <el-form-item>
             <el-button @click="getData" type="success">Save</el-button>
             <el-button @click="resetForm('ruleForm' + user.id)">Reset</el-button>
@@ -22,7 +32,7 @@
 
 <script>
     export default {
-        props: ['user'],
+        props: ['user', 'roles'],
         data() {
             return {
                 rules: {

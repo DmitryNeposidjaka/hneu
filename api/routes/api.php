@@ -51,6 +51,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
             Route::delete('/{product}', 'ProductController@delete');
             Route::post('/{product}', 'ProductController@update');
         });
+        Route::group(['prefix' => 'permissions'], function () {
+            Route::get('/roles', 'PermissionsController@getRoles');
+            Route::get('/abilities', 'PermissionsController@getAbilities');
+            Route::get('/user/{user}', 'PermissionsController@getUserPermissions');
+            Route::get('/role/{role}', 'PermissionsController@getRolePermissions');
+            Route::post('/user/{user}', 'PermissionsController@applyPermissions');
+            Route::post('/role/{role}', 'PermissionsController@applyRolePermissions');
+        });
     });
 });
 

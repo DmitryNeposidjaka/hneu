@@ -50,13 +50,13 @@
                 title="Create user"
                 :visible.sync="createUserVisible"
                 width="40%">
-            <create-user style="padding: 0px 100px 0px 50px"  v-on:userCreated="userCreated"></create-user>
+            <create-user style="padding: 0px 100px 0px 50px"  v-on:userCreated="userCreated" :roles="roles"></create-user>
         </el-dialog>
         <el-dialog
                 title="Edit user"
                 :visible.sync="editUserVisible"
                 width="40%">
-            <edit-user ref="edit-user-form" style="padding: 0px 100px 0px 50px"  v-on:userEdited="userEdited" v-bind:user="userOnEdit" v-on:userEditClose="editUserVisible = false"></edit-user>
+            <edit-user ref="edit-user-form" style="padding: 0px 100px 0px 50px"  v-on:userEdited="userEdited" v-bind:user="userOnEdit" v-on:userEditClose="editUserVisible = false" :roles="roles"></edit-user>
         </el-dialog>
         <el-dialog
                 title="Delete user"
@@ -197,7 +197,8 @@
                 loading: false,
                 detail: false,
                 detailData: {},
-                data: []
+                data: [],
+                roles: [],
             }
         },
         computed: {
@@ -275,9 +276,21 @@
                 }).then(function () {
                     vm.loading = false;
                 })
+            },
+            getRoles() {
+                const vm = this;
+                this.axios({
+                    method: 'get',
+                    url: 'permissions/roles',
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        vm.roles = response.data;
+                    }
+                })
             }
         },
         mounted() {
+            this.getRoles();
             this.getData();
         }
     }

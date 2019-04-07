@@ -23,7 +23,7 @@
         </el-dialog>
         <el-row>
             <el-col :span="4">
-                <el-dropdown @command="chengePerPage">
+                <el-dropdown @command="changePerPage">
               <span class="el-dropdown-link">
                 Perpage<i class="el-icon-arrow-down el-icon--right"></i>
               </span>
@@ -209,7 +209,7 @@
                 };
                 this.getData();
             },
-            chengePerPage(command) {
+            changePerPage(command) {
                 this.pagination.per_page = command;
                 this.getData();
             },

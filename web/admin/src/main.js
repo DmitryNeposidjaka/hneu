@@ -6,6 +6,11 @@ import axios from './axios'
 import VueAxios from 'vue-axios'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import lang from 'element-ui/lib/locale/lang/en'
+import locale from 'element-ui/lib/locale'
+
+// configure language
+locale.use(lang);
 
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios);
