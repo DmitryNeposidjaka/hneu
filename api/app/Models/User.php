@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Silber\Bouncer\Bouncer;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable, SoftDeletes, Filterable;
+    use Notifiable, SoftDeletes, Filterable, HasRolesAndAbilities;
 
     /**
      * The attributes that are mass assignable.
@@ -19,8 +21,10 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'lang', 'thumbnail', 'email', 'username', 'moodleId', 'thumbnail'
+        'firstname', 'lastname', 'lang', 'thumbnail', 'email', 'username', 'moodleId', 'thumbnail', 'role'
     ];
+
+    protected $appends = ['fullname', 'role'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -50,5 +54,23 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function getFullnameAttribute()
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
+    public function setRoleAttribute($value)
+    {
+        if ($this->id) {
+            $this->roles()->sync([]);
+            $this->assign($value);
+        }
+    }
+
+    public function getRoleAttribute()
+    {
+        $roles = $this->getRoles()->toArray();
+        return is_array($roles) && !empty($roles) ? array_pop($roles) : null;
+    }
 
 }

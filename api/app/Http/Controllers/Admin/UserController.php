@@ -40,6 +40,7 @@ class UserController extends Controller
         $user = new User($request->all());
         $user->password = Hash::make($request->password);
         $user->save();
+        \Bouncer::assign($request->role)->to($user);
         return $user;
     }
 

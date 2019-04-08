@@ -26,4 +26,11 @@ class UserFilter extends ModelFilter
     {
         return $this->where('username', 'like', "%{$username}%");
     }
+
+    public function fullname($username)
+    {
+        return  $this->where('firstname', 'like', "%{$username}%")
+            ->orWhere('lastname', 'like', "%{$username}%")
+            ->orWhereRaw("CONCAT( firstname, ' ', lastname) like '%{$username}%'");
+    }
 }

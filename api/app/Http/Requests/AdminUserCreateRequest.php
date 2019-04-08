@@ -29,6 +29,7 @@ class AdminUserCreateRequest extends FormRequest
             'username' => 'required|string|min:3|max:255',
             'email' => 'required|email|min:3|max:255',
             'password' => 'required|confirmed|min:3|max:255',
+            'role' => 'required|string',
         ];
     }
 }
