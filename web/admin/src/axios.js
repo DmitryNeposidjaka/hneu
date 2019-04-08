@@ -3,7 +3,7 @@ import Vue from 'vue';
 import Router from './router'
 
 const instance = axios.create({
-    baseURL: 'http://localhost:88/api/admin',
+    baseURL: process.env.VUE_APP_SERVER_URL + '/api/admin',
 });
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
