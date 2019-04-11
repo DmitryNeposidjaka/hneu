@@ -10,7 +10,7 @@
                     <el-input placeholder="Title" v-model="filters.fullname"></el-input>
                 </el-col>
                 <el-col :span="4">
-                    <el-button type="success" icon="el-icon-search" @click="getData">Search</el-button>
+                    <el-button type="success" icon="el-icon-search" @click="getData">{{ $t('common.search') }}</el-button>
                 </el-col>
             </el-row>
             <el-table

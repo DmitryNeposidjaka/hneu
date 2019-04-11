@@ -10,7 +10,7 @@
         <div style="text-align: right; width: 70%; float: right;">
             <div style="padding: 0px 50px">
                 <span>{{user.username}}</span>
-                <el-button type="text" icon="el-icon-arrow-right" @click="logout" >Logout
+                <el-button type="text" icon="el-icon-arrow-right" @click="logout" >{{ $t('header.logout') }}
                 </el-button>
             </div>
         </div>

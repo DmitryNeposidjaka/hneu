@@ -27,7 +27,9 @@ class UserController extends Controller
 
     public function getAll()
     {
-        return User::filter(json_decode($this->request->input('filters'), true))->paginate($this->request->input('per_page', 50));
+        return User::whereHas('roles', function ($query) {
+            $query->whereIn('name', ['admin', 'superadmin']);
+        })->filter(json_decode($this->request->input('filters'), true))->paginate($this->request->input('per_page', 50));
     }
 
     public function getUser(User $user)

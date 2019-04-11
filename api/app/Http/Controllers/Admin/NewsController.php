@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminUserUpdateRequest;
 use App\Http\Requests\NewsCreateRequest;
 use App\Http\Requests\NewsUpdateRequest;
+use App\Models\Category;
 use App\Models\News;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,6 +34,11 @@ class NewsController extends Controller
         return $item;
     }
 
+    public function getAllCategories()
+    {
+        return Category::where(['type' => 'news'])->get();
+    }
+
     public function create(NewsCreateRequest $request)
     {
         $item = new News($request->only(['title', 'description', 'content']));
@@ -45,6 +51,7 @@ class NewsController extends Controller
         $item->creator_id = Auth::id();
         $item->entity = User::class;
         $item->save();
+        $item->setCategories($request->categories);
         return $item;
     }
 
@@ -60,8 +67,8 @@ class NewsController extends Controller
                     'news-img');
             $item->thumbnail = $path;
         }
-
         $item->save();
+        $item->setCategories($request->categories);
         return $item;
     }
 

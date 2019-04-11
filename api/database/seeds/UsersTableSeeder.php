@@ -16,6 +16,7 @@ class UsersTableSeeder extends Seeder
             'password' => \Hash::make('secret'),
             'username' => 'adminster',
         ]);
-        factory(\App\Models\User::class, 10)->create();
+
+        \Bouncer::assign('admin')->to($admin);
     }
 }

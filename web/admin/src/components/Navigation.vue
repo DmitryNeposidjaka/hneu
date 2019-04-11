@@ -6,19 +6,23 @@
 
         <el-menu-item index="1" :route="{name: 'users'}">
             <i class="far fa-address-card"></i>
-            <span>Admins</span>
+            <span>{{ $t('nav.admins') }}</span>
         </el-menu-item>
-        <el-menu-item index="2" :route="{name: 'permissions'}">
+        <el-menu-item index="2" :route="{name: 'students'}">
+            <i class="fas fa-user-graduate"></i>
+            <span>{{ $t('nav.students') }}</span>
+        </el-menu-item>
+        <el-menu-item index="3" :route="{name: 'permissions'}">
             <i class="fas fa-user-tag"></i>
-            <span>Permissions</span>
+            <span>{{ $t('nav.permissions') }}</span>
         </el-menu-item>
-        <el-menu-item index="3" :route="{name: 'news'}">
+        <el-menu-item index="4" :route="{name: 'news'}">
             <i class="far fa-newspaper"></i>
-            <span>News</span>
+            <span>{{ $t('nav.news') }}</span>
         </el-menu-item>
-        <el-menu-item index="4" :route="{name: 'products'}">
+        <el-menu-item index="5" :route="{name: 'products'}">
             <i class="fas fa-shopping-basket"></i>
-            <span>Products</span>
+            <span>{{ $t('nav.products') }}</span>
         </el-menu-item>
     </el-menu>
 </template>
@@ -34,6 +38,7 @@
     i {
         margin: 0px 10px;
     }
+
     .el-menu {
         color: #6c757d !important;
         min-width: 200px;

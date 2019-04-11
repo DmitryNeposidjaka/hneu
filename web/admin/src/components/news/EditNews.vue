@@ -11,6 +11,22 @@
         <el-form-item label="Content" prop="content">
             <vue-editor v-model="ruleForm.content"></vue-editor>
         </el-form-item>
+        <el-form-item label="Categories" prop="categories">
+            <el-select
+                    v-model="ruleForm.categories"
+                    multiple
+                    filterable
+                    allow-create
+                    default-first-option
+                    placeholder="Choose tags for your article">
+                <el-option
+                        v-for="category in categories"
+                        :key="category.id"
+                        :label="category.name"
+                        :value="category.id">
+                </el-option>
+            </el-select>
+        </el-form-item>
         <el-upload
                 ref="newsThumb"
                 id="file"
@@ -69,7 +85,7 @@
     import { VueEditor } from 'vue2-editor'
     export default {
         components: {VueEditor},
-        props: ['news'],
+        props: ['news', 'categories'],
         data() {
             return {
                 imageUrl: '',
@@ -79,6 +95,7 @@
                     description: '',
                     content: '',
                     thumbnail: '',
+                    categories: []
                 },
                 rules: {
                     title: [
@@ -144,9 +161,15 @@
             getFormData(data = {}) {
                 const formData = new FormData();
                 for (var key in data) {
-                    console.log(data[key])
-                    formData.append(key, data[key]);
+                    if (Array.isArray(data[key])) {
+                        data[key].forEach(function (item, i, arr) {
+                            formData.append(key + "[" + i + "]", item);
+                        });
+                    } else {
+                        formData.append(key, data[key]);
+                    }
                 }
+
                 return formData;
             },
             getData() {
@@ -168,6 +191,9 @@
         mounted() {
             this.defaultUrl = process.env.VUE_APP_SERVER_URL;
             this.ruleForm = this.news;
+            this.ruleForm.categories = this.news.categories.map(function (item, i, arr) {
+                if(item.id) return item.id;
+            });
         }
     }
 </script>

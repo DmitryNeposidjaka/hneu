@@ -29,6 +29,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('/refresh', function () {})->middleware('jwt.refresh');
 
     Route::group(['middleware' => 'jwt.auth'], function () {
+        Route::group(['prefix' => 'student'], function () {
+            Route::get('/all', 'CommonController@getAllStudents');
+        });
         Route::group(['prefix' => 'user'], function () {
             Route::get('/me', 'UserController@getMe');
             Route::get('/all', 'UserController@getAll');
@@ -39,6 +42,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         });
         Route::group(['prefix' => 'news'], function () {
             Route::get('/all', 'NewsController@getAll');
+            Route::get('/categories/all', 'NewsController@getAllCategories');
             Route::get('/{item}', 'NewsController@getItem');
             Route::post('/', 'NewsController@create');
             Route::delete('/{item}', 'NewsController@delete');
@@ -46,6 +50,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         });
         Route::group(['prefix' => 'product'], function () {
             Route::get('/all', 'ProductController@getAll');
+            Route::get('/categories/all', 'ProductController@getAllCategories');
             Route::get('/{product}', 'ProductController@getProduct');
             Route::post('/', 'ProductController@create');
             Route::delete('/{product}', 'ProductController@delete');

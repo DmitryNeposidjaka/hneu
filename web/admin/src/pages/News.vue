@@ -2,20 +2,22 @@
     <div>
 
         <el-dialog
-                title="Create news"
+                :title="$t('news.create')"
                 :visible.sync="createUserVisible"
                 width="60%">
-            <create-news style="padding: 0px 100px 0px 50px" v-on:newsCreated="userCreated"></create-news>
+            <create-news style="padding: 0px 100px 0px 50px" v-on:newsCreated="userCreated"
+                         :categories="categories"></create-news>
         </el-dialog>
         <el-dialog
-                title="Edit news"
+                :title="$t('news.edit')"
                 :visible.sync="editUserVisible"
                 width="60%">
             <edit-news ref="edit-user-form" style="padding: 0px 100px 0px 50px" v-on:newsEdited="userEdited"
-                       v-bind:news="userOnEdit" v-on:userEditClose="editUserVisible = false"></edit-news>
+                       v-bind:news="userOnEdit" v-on:userEditClose="editUserVisible = false"
+                       :categories="categories"></edit-news>
         </el-dialog>
         <el-dialog
-                title="Delete news"
+                :title="$t('news.delete')"
                 :visible.sync="deleteUserVisible"
                 width="40%">
             <delete-news ref="edit-user-form" style="padding: 0px 100px 0px 50px" v-on:userDeleted="userDeleted"
@@ -38,21 +40,21 @@
             </el-col>
             <div style="text-align: right; width: 70%; float: right;">
                 <div style="padding: 0px 50px">
-                    <el-button type="primary" icon="el-icon-plus" circle title="Add News"
+                    <el-button type="primary" icon="el-icon-plus" circle :title="$t('news.add')"
                                @click="createUserVisible = true"></el-button>
                 </div>
             </div>
         </el-row>
         <el-row style="text-align: right; line-height: 30px; margin: 20px;" :gutter=10>
             <el-col :span="1">
-                <el-button type="primary" icon="el-icon-refresh" circle title="Refresh"
+                <el-button type="primary" icon="el-icon-refresh" circle :title="$t('common.refresh')"
                            @click="clearRefresh"></el-button>
             </el-col>
             <el-col :span="4">
-                <el-input placeholder="Title" v-model="filters.title"></el-input>
+                <el-input :placeholder="$t('news.table.title')" v-model="filters.title"></el-input>
             </el-col>
             <el-col :span="4">
-                <el-button type="success" icon="el-icon-search" @click="getData">Search</el-button>
+                <el-button type="success" icon="el-icon-search" @click="getData">{{ $t('common.search') }}</el-button>
             </el-col>
         </el-row>
         <el-table
@@ -77,20 +79,20 @@
             </el-table-column>
             <el-table-column
                     prop="title"
-                    label="Title">
+                    :label="$t('news.table.title')">
             </el-table-column>
             <el-table-column
                     prop="created_at"
-                    label="Created at">
+                    :label="$t('news.table.created_at')">
             </el-table-column>
             <el-table-column
                     align="right">
                 <template slot-scope="scope">
 
                     <!--<el-button type="text" style="color: cornflowerblue" title="view"><i class="el-icon-view"></i></el-button>-->
-                    <el-button type="text" style="color: darkorange" title="edit" @click="openEditUser(scope.row)"><i
+                    <el-button type="text" style="color: darkorange" :title="$t('common.edit')" @click="openEditUser(scope.row)"><i
                             class="el-icon-edit"></i></el-button>
-                    <el-button type="text" style="color: orangered" title="delete" @click="openDeleteUser(scope.row)"><i
+                    <el-button type="text" style="color: orangered" :title="$t('common.delete')" @click="openDeleteUser(scope.row)"><i
                             class="el-icon-delete"></i></el-button>
                 </template>
             </el-table-column>
@@ -110,10 +112,12 @@
         padding: 3px;
         color: grey;
     }
+
     .news-card-image-place {
         text-align: center;
     }
-    .news-card-image-place img{
+
+    .news-card-image-place img {
         width: 200px;
         border: 4px solid #f4f4f5;
         border-radius: 1px;
@@ -170,7 +174,8 @@
                 loading: false,
                 detail: false,
                 detailData: {},
-                data: []
+                data: [],
+                categories: []
             }
         },
         computed: {
@@ -199,7 +204,7 @@
                 this.deleteUserVisible = false;
                 this.$message({
                     dangerouslyUseHTMLString: true,
-                    message: '<strong>news.title</strong> has been deleted!'
+                    message: '<strong>' + news.title + '</strong> has been deleted!'
                 });
                 this.getData();
             },
@@ -246,10 +251,23 @@
                 }).then(function () {
                     vm.loading = false;
                 })
+            },
+
+            getCategories() {
+                const vm = this;
+                this.axios({
+                    method: 'get',
+                    url: 'news/categories/all'
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        vm.categories = response.data;
+                    }
+                })
             }
         },
         mounted() {
             this.getData();
+            this.getCategories();
         }
     }
 </script>

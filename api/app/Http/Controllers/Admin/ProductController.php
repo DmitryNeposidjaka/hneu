@@ -8,6 +8,7 @@ use App\Http\Requests\AdminUserCreateRequest;
 use App\Http\Requests\AdminUserUpdateRequest;
 use App\Http\Requests\ProductCreateRequest;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,13 +34,19 @@ class ProductController extends Controller
         return $product;
     }
 
+    public function getAllCategories()
+    {
+        return Category::where(['type' => 'product'])->get();
+    }
+
     public function create(ProductCreateRequest $request)
     {
         $product = new Product($request->only(['title', 'description']));
         $product->creator_id = Auth::id();
         $product->entity = User::class;
-        $product->images = $this->setImages($request->file('thumbnails'));
+        $product->setImages($request->file('thumbnails', []));
         $product->save();
+        $product->setCategories($request->categories);
 
         return $product;
     }
@@ -47,8 +54,9 @@ class ProductController extends Controller
     public function update(ProductUpdateRequest $request, Product $product)
     {
         $product->update($request->only(['title', 'description']));
-        $product->images = $this->setImages($request->file('thumbnails'));
+        $product->setImages($request->file('thumbnails', []));
         $product->save();
+        $product->setCategories($request->categories);
 
         return $product;
     }
@@ -56,24 +64,5 @@ class ProductController extends Controller
     public function delete(Product $product)
     {
         return (string)$product->delete();
-    }
-
-    /**
-     * @param $images
-     * @return false|null|string
-     */
-    private function setImages($images)
-    {
-        $result = [];
-
-        foreach ($images as $image) {
-            $path = $image->storeAs(
-                'images/products',
-                uniqid() . '.' . \Carbon\Carbon::now()->format('Y-m-d_H:i:s') . '.' . $image->extension(),
-                'products-img');
-            $result[] = $path;
-        }
-
-        return !empty($result) ? json_encode($result) : null;
     }
 }

@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('entity');
             $table->json('images');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

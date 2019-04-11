@@ -6,6 +6,22 @@
         <el-form-item label="Description" prop="description">
             <vue-editor v-model="ruleForm.description"></vue-editor>
         </el-form-item>
+        <el-form-item label="Categories" prop="categories">
+            <el-select
+                    v-model="ruleForm.categories"
+                    multiple
+                    filterable
+                    allow-create
+                    default-first-option
+                    placeholder="Choose tags for your article">
+                <el-option
+                        v-for="category in categories"
+                        :key="category.id"
+                        :label="category.name"
+                        :value="category.id">
+                </el-option>
+            </el-select>
+        </el-form-item>
         <el-upload
                 ref="newsThumb"
                 id="file"
@@ -84,6 +100,7 @@
 
     export default {
         components: {VueEditor},
+        props: ['categories'],
         data() {
             return {
                 imageUrl: '',
@@ -94,6 +111,7 @@
                     title: '',
                     description: '',
                     thumbnails: [],
+                    categories: [],
                 },
                 rules: {
                     title: [

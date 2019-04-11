@@ -4,19 +4,24 @@
                 title="Create product"
                 :visible.sync="createUserVisible"
                 width="60%">
-            <create-product style="padding: 0px 100px 0px 50px"  v-on:userCreated="userCreated"></create-product>
+            <create-product style="padding: 0px 100px 0px 50px" v-on:userCreated="userCreated"
+                            :categories="categories"></create-product>
         </el-dialog>
         <el-dialog
                 title="Edit product"
                 :visible.sync="editUserVisible"
                 width="60%">
-            <edit-product ref="edit-user-form" style="padding: 0px 100px 0px 50px"  v-on:userEdited="userEdited" v-bind:product="userOnEdit" v-on:userEditClose="editUserVisible = false"></edit-product>
+            <edit-product ref="edit-user-form" style="padding: 0px 100px 0px 50px" v-on:userEdited="userEdited"
+                          v-bind:product="userOnEdit" v-on:userEditClose="editUserVisible = false"
+                          :categories="categories"></edit-product>
         </el-dialog>
         <el-dialog
                 title="Delete product"
                 :visible.sync="deleteUserVisible"
                 width="40%">
-            <delete-product ref="edit-user-form" style="padding: 0px 100px 0px 50px"  v-on:userDeleted="userDeleted" v-bind:product="userOnDelete" v-on:userDeleteClose="deleteUserVisible = false"></delete-product>
+            <delete-product ref="edit-user-form" style="padding: 0px 100px 0px 50px" v-on:userDeleted="userDeleted"
+                            v-bind:product="userOnDelete"
+                            v-on:userDeleteClose="deleteUserVisible = false"></delete-product>
         </el-dialog>
         <el-row>
             <el-col :span="4">
@@ -35,7 +40,8 @@
             </el-col>
             <div style="text-align: right; width: 70%; float: right;">
                 <div style="padding: 0px 50px">
-                    <el-button type="primary" icon="el-icon-plus" circle title="Add user" @click="createUserVisible = true"></el-button>
+                    <el-button type="primary" icon="el-icon-plus" circle title="Add product"
+                               @click="createUserVisible = true"></el-button>
                 </div>
             </div>
         </el-row>
@@ -48,7 +54,7 @@
                 <el-input placeholder="Title" v-model="filters.title"></el-input>
             </el-col>
             <el-col :span="4">
-                <el-button type="success" icon="el-icon-search" @click="getData">Search</el-button>
+                <el-button type="success" icon="el-icon-search" @click="getData">{{ $t('common.search') }}</el-button>
             </el-col>
         </el-row>
         <el-table
@@ -83,8 +89,10 @@
                 <template slot-scope="scope">
 
                     <!--<el-button type="text" style="color: cornflowerblue" title="view"><i class="el-icon-view"></i></el-button>-->
-                    <el-button type="text" style="color: darkorange" title="edit" @click="openEditUser(scope.row)"><i class="el-icon-edit"></i></el-button>
-                    <el-button type="text" style="color: orangered" title="delete" @click="openDeleteUser(scope.row)"><i class="el-icon-delete"></i></el-button>
+                    <el-button type="text" style="color: darkorange" :title="$t('common.edit')" @click="openEditUser(scope.row)"><i
+                            class="el-icon-edit"></i></el-button>
+                    <el-button type="text" style="color: orangered" :title="$t('common.delete')" @click="openDeleteUser(scope.row)"><i
+                            class="el-icon-delete"></i></el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -103,10 +111,12 @@
         padding: 3px;
         color: grey;
     }
+
     .product-card-image-place {
         text-align: center;
     }
-    .product-card-image-place img{
+
+    .product-card-image-place img {
         width: 200px;
         border: 4px solid #f4f4f5;
         border-radius: 1px;
@@ -117,6 +127,7 @@
         font-weight: bolder;
         font-size: 18px;
     }
+
     .el-dialog {
         line-height: 30px
     }
@@ -164,7 +175,8 @@
                 loading: false,
                 detail: false,
                 detailData: {},
-                data: []
+                data: [],
+                categories: []
             }
         },
         computed: {
@@ -193,7 +205,7 @@
                 this.deleteUserVisible = false;
                 this.$message({
                     dangerouslyUseHTMLString: true,
-                    message: 'The user <strong>user.username</strong> has been deleted!'
+                    message: 'The user <strong>' + user.title + '</strong> has been deleted!'
                 });
                 this.getData();
             },
@@ -242,10 +254,22 @@
                 }).then(function () {
                     vm.loading = false;
                 })
+            },
+            getCategories() {
+                const vm = this;
+                this.axios({
+                    method: 'get',
+                    url: 'product/categories/all'
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        vm.categories = response.data;
+                    }
+                })
             }
         },
         mounted() {
             this.getData();
+            this.getCategories();
         }
     }
 </script>

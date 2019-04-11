@@ -11,6 +11,22 @@
         <el-form-item label="Content" prop="content">
             <vue-editor v-model="ruleForm.content"></vue-editor>
         </el-form-item>
+        <el-form-item label="Categories" prop="categories">
+            <el-select
+                    v-model="ruleForm.categories"
+                    multiple
+                    filterable
+                    allow-create
+                    default-first-option
+                    placeholder="Choose tags for your article">
+                <el-option
+                        v-for="category in categories"
+                        :key="category.id"
+                        :label="category.name"
+                        :value="category.id">
+                </el-option>
+            </el-select>
+        </el-form-item>
         <el-upload
                 ref="newsThumb"
                 id="file"
@@ -23,12 +39,12 @@
             <img v-if="imageUrl" :src="defaultUrl + imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
-        <el-form-it class="form-buttons">
+        <el-form-item class="form-buttons">
             <div>
                 <el-button type="primary" @click="getData">Create</el-button>
                 <el-button @click="resetForm('ruleForm')">Reset</el-button>
             </div>
-        </el-form-it>
+        </el-form-item>
     </el-form>
 </template>
 
@@ -70,6 +86,7 @@ import { VueEditor } from 'vue2-editor'
 
     export default {
         components: {VueEditor},
+        props: ['categories'],
         data() {
             return {
                 imageUrl: '',
@@ -79,6 +96,7 @@ import { VueEditor } from 'vue2-editor'
                     description: '',
                     content: '',
                     thumbnail: '',
+                    categories: []
                 },
                 rules: {
                     title: [
@@ -144,8 +162,15 @@ import { VueEditor } from 'vue2-editor'
             getFormData(data = {}) {
                 const formData = new FormData();
                 for (var key in data) {
-                    formData.append(key, data[key]);
+                    if (Array.isArray(data[key])) {
+                        data[key].forEach(function (item, i, arr) {
+                            formData.append(key + "[" + i + "]", item);
+                        });
+                    } else {
+                        formData.append(key, data[key]);
+                    }
                 }
+
                 return formData;
             },
             getData() {

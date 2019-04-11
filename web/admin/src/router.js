@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './templates/Home'
 import Login from './templates/Logint'
 import Users from './pages/Users'
+import Students from './pages/Students'
 import News from './pages/News'
 import Products from './pages/Products'
 import Permissions from './pages/Permissions'
@@ -27,6 +28,11 @@ export default new Router({
             path: '/users',
             name: 'users',
             component: Users,
+        },
+        {
+            path: '/students',
+            name: 'students',
+            component: Students,
         },
         {
             path: '/permissions',
