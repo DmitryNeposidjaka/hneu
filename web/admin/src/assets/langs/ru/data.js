@@ -13,7 +13,8 @@ var data = {
         search: 'Поиск',
         refresh: 'Обновить',
         edit: 'редактировать',
-        delete: 'удалить'
+        delete: 'удалить',
+        perpage: 'Отобразить'
     },
     news: {
         create: 'Создать Новость',
@@ -32,7 +33,10 @@ var data = {
         add: 'Добавить Пользователя',
         table: {
             name: 'Имя',
-            created_at: 'Создан в'
+            created_at: 'Создан в',
+            name_username: 'Имя/Фамилия',
+            last_name: 'Фамилия',
+            role: 'Роль',
         }
     }
 };

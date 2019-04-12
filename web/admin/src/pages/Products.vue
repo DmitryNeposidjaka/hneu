@@ -4,22 +4,24 @@
                 title="Create product"
                 :visible.sync="createUserVisible"
                 width="60%">
-            <create-product style="padding: 0px 100px 0px 50px" v-on:userCreated="userCreated"
-                            :categories="categories"></create-product>
+            <create-product style="padding: 0px 100px 0px 50px" v-on:productCreated="productCreated"
+                            :categories="categories">
+            </create-product>
         </el-dialog>
         <el-dialog
                 title="Edit product"
                 :visible.sync="editUserVisible"
                 width="60%">
-            <edit-product ref="edit-user-form" style="padding: 0px 100px 0px 50px" v-on:userEdited="userEdited"
+            <edit-product ref="edit-user-form" style="padding: 0px 100px 0px 50px" v-on:productEdited="productEdited"
                           v-bind:product="userOnEdit" v-on:userEditClose="editUserVisible = false"
-                          :categories="categories"></edit-product>
+                          :categories="categories" v-if="editUserVisible">
+            </edit-product>
         </el-dialog>
         <el-dialog
                 title="Delete product"
                 :visible.sync="deleteUserVisible"
                 width="40%">
-            <delete-product ref="edit-user-form" style="padding: 0px 100px 0px 50px" v-on:userDeleted="userDeleted"
+            <delete-product ref="edit-user-form" style="padding: 0px 100px 0px 50px" v-on:productDeleted="productDeleted"
                             v-bind:product="userOnDelete"
                             v-on:userDeleteClose="deleteUserVisible = false"></delete-product>
         </el-dialog>
@@ -193,19 +195,19 @@
                 this.userOnEdit = user;
                 this.editUserVisible = true;
             },
-            userCreated() {
+            productCreated() {
                 this.createUserVisible = false;
                 this.getData();
             },
-            userEdited() {
+            productEdited() {
                 this.editUserVisible = false;
                 this.getData();
             },
-            userDeleted(user) {
+            productDeleted(user) {
                 this.deleteUserVisible = false;
                 this.$message({
                     dangerouslyUseHTMLString: true,
-                    message: 'The user <strong>' + user.title + '</strong> has been deleted!'
+                    message: 'The Product <strong>' + user.title + '</strong> has been deleted!'
                 });
                 this.getData();
             },

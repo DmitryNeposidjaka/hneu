@@ -183,12 +183,10 @@
                     if (response.status == 200) {
                         vm.$emit('newsEdited');
                     }
-                }).then(function () {
-                //    vm.resetForm('ruleForm');
                 })
             }
         },
-        mounted() {
+        created() {
             this.defaultUrl = process.env.VUE_APP_SERVER_URL;
             this.ruleForm = this.news;
             this.ruleForm.categories = this.news.categories.map(function (item, i, arr) {

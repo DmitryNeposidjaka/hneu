@@ -1,16 +1,16 @@
 <template>
 <el-row>
     <p>
-        Are u sure u want to delete <strong>{{ user.username}}</strong>
+        Are u sure u want to delete <strong>{{ product.title}}</strong>
     </p>
     <el-button type="danger" @click="getData">Confirm</el-button>
-    <el-button type="info" @click="$emit('userDeleted')">Reject</el-button>
+    <el-button type="info" @click="$emit('productDeleted')">Reject</el-button>
 </el-row>
 </template>
 
 <script>
     export default {
-        props: ['user'],
+        props: ['product'],
 
         methods: {
             getData() {
@@ -18,11 +18,11 @@
                 this.loading = true;
                 this.axios({
                     method: 'delete',
-                    url: 'user/' + vm.user.id,
+                    url: 'product/' + vm.product.id,
 
                 }).then(function (response) {
                     if (response.status == 200) {
-                        vm.$emit('userDeleted', vm.user);
+                        vm.$emit('productDeleted', vm.product);
                     }
                 })
             }

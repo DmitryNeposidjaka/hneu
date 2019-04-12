@@ -43,7 +43,7 @@
             </div>
         </div>
         <el-form-item>
-            <el-button type="primary" @click="getData">Create</el-button>
+            <el-button type="primary" @click="getData">Update</el-button>
             <el-button @click="resetForm('ruleForm')">Reset</el-button>
         </el-form-item>
     </el-form>
@@ -202,15 +202,13 @@
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(function (response) {
-                    if (response.status == 201) {
-                        vm.$emit('userCreated');
+                    if (response.status == 200) {
+                        vm.$emit('productEdited');
                     }
-                }).then(function () {
-                    vm.resetForm('ruleForm');
                 })
             }
         },
-        mounted() {
+        created() {
             this.defaultUrl = process.env.VUE_APP_SERVER_URL;
             this.ruleForm = this.product;
             this.ruleForm.categories = this.product.categories.map(function (item, i, arr) {

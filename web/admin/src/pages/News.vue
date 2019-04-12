@@ -14,7 +14,7 @@
                 width="60%">
             <edit-news ref="edit-user-form" style="padding: 0px 100px 0px 50px" v-on:newsEdited="userEdited"
                        v-bind:news="userOnEdit" v-on:userEditClose="editUserVisible = false"
-                       :categories="categories"></edit-news>
+                       :categories="categories" v-if="editUserVisible"></edit-news>
         </el-dialog>
         <el-dialog
                 :title="$t('news.delete')"

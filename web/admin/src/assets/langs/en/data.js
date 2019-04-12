@@ -13,7 +13,8 @@ var data = {
         search: 'Search',
         refresh: 'Refresh',
         edit: 'edit',
-        delete: 'delete'
+        delete: 'delete',
+        perpage: 'Perpage'
     },
     news: {
         create: 'Create News',
@@ -32,7 +33,10 @@ var data = {
         add: 'Add User',
         table: {
             name: 'Name',
-            created_at: 'Created at'
+            created_at: 'Created at',
+            name_username: 'Name/Lastname',
+            last_name: 'Last Name',
+            role: 'Role',
         }
     }
 };

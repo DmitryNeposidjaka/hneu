@@ -56,7 +56,7 @@
                 :title="$t('user.edit')"
                 :visible.sync="editUserVisible"
                 width="40%">
-            <edit-user ref="edit-user-form" style="padding: 0px 100px 0px 50px"  v-on:userEdited="userEdited" v-bind:user="userOnEdit" v-on:userEditClose="editUserVisible = false" :roles="roles"></edit-user>
+            <edit-user ref="edit-user-form" style="padding: 0px 100px 0px 50px"  v-on:userEdited="userEdited" v-bind:user="userOnEdit" v-on:userEditClose="editUserVisible = false" :roles="roles" v-if="editUserVisible"></edit-user>
         </el-dialog>
         <el-dialog
                 :title="$t('user.delete')"
@@ -67,9 +67,9 @@
         <el-row>
             <el-col :span="4">
                 <el-dropdown @command="chengePerPage">
-              <span class="el-dropdown-link">
-                Perpage<i class="el-icon-arrow-down el-icon--right"></i>
-              </span>
+                    <span class="el-dropdown-link">
+                        {{ $t('common.perpage') }}<i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item :command="10">10</el-dropdown-item>
                         <el-dropdown-item :command="20">20</el-dropdown-item>
@@ -94,7 +94,7 @@
                 <el-input placeholder="Email" v-model="filters.email"></el-input>
             </el-col>
             <el-col :span="4">
-                <el-input placeholder="Name/Lastname" v-model="filters.name"></el-input>
+                <el-input :placeholder="$t('user.table.name_username')" v-model="filters.name"></el-input>
             </el-col>
             <el-col :span="4">
                 <el-input placeholder="Username" v-model="filters.username"></el-input>
@@ -111,10 +111,17 @@
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <div style="overflow: auto;">
-                        <p title="Username">{{ props.row.username }}</p>
-                        <p title="Name">{{ props.row.firstname + ' ' + props.row.lastname }} </p>
-                        <p title="Email">{{ props.row.email }}</p>
-                        <p title="Created">{{ props.row.created_at }}</p>
+                        <div class="table-thumbnail">
+                            <img width="100%" :src="props.row.thumbnail"/>
+                        </div>
+                        <div class="table-data">
+                            <div class="content">
+                                <div class="fullname">{{ props.row.fullname }}</div>
+                                <div class="username">@{{ props.row.username }}</div>
+                            </div>
+                            <p title="Email"><span>Email</span>: <span>{{ props.row.email }}</span></p>
+                            <p title="Created"><span>{{ $t('user.table.created_at') }}</span>: <span>{{ props.row.created_at }}</span></p>
+                        </div>
                     </div>
                 </template>
             </el-table-column>
@@ -146,6 +153,37 @@
 </template>
 
 <style>
+    .table-thumbnail {
+        width: 200px;
+        float: left;
+    }
+    .table-data {
+        float: left;
+        margin: 0px 40px;
+        width: 400px;
+    }
+
+    .table-data .content {
+        margin: 0px auto 40px auto;
+        width: 200px;
+    }
+
+    .table-data .content .fullname{
+        font-size: 18px;
+        font-weight: bold;
+        font-style: italic;
+    }
+
+    .table-data .content .username{
+        font-size: 14px;
+        color: #909399;
+    }
+
+    p>span:first-child{
+        font-weight: bold;
+        width: 50px;
+    }
+
     .el-dialog {
         line-height: 30px
     }

@@ -202,7 +202,7 @@
                     }
                 }).then(function (response) {
                     if (response.status == 201) {
-                        vm.$emit('userCreated');
+                        vm.$emit('productCreated');
                     }
                 }).then(function () {
                     vm.resetForm('ruleForm');
