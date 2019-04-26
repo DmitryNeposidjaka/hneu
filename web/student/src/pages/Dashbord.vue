@@ -1,12 +1,14 @@
 <template>
     <div>
         <h2>Курсы</h2>
-        <el-card class="box-card" v-for="course in data">
-            <div slot="header" class="clearfix">
-                <span>{{course.fullname}}</span>
-            </div>
-            <p v-html="course.summary" >{{course.summary}}</p>
-        </el-card>
+        <el-collapse v-model="opened" accordion="">
+            <el-collapse-item class="box-card" v-for="(course, key) in data" :title="course.fullname" :name="key">
+                <div slot="header" class="clearfix">
+                    <span>{{course.fullname}}</span>
+                </div>
+                <p v-html="course.summary" >{{course.summary}}</p>
+            </el-collapse-item>
+        </el-collapse>
     </div>
 </template>
 
@@ -32,6 +34,7 @@
     export default {
         data() {
             return {
+                opened: 0,
                 loading: false,
                 detail: false,
                 detailData: {},

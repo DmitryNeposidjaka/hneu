@@ -9,7 +9,7 @@
         </div>
         <div style="text-align: right; width: 70%; float: right;">
             <div style="padding: 0px 50px">
-                <span>{{user.username}}</span>
+                <span>{{user.fullname}}</span>
                 <el-button type="text" icon="el-icon-arrow-right" @click="logout" style="color: floralwhite;">Logout</el-button>
             </div>
         </div>
@@ -23,7 +23,7 @@
         methods: {
             logout() {
                 sessionStorage.clear();
-                this.$router.push({name: 'home'})
+                this.$router.push({name: 'login'})
             }
         }
     }

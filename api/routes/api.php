@@ -22,7 +22,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
                 uniqid().'.'.\Carbon\Carbon::now()->format('Y-m-d_H:i:s').'.'.$request->image->extension(),
                 'temporary');
 
-        return '/storage/temporary/'.$path;
+        return \Storage::disk('temporary')->url($path);
     });
 
     Route::post('/login', 'LoginController@login');

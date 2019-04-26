@@ -65,10 +65,10 @@ class MoodleClient
         $service = 'moodle_mobile_app';
         $params = [
             'wstoken' => self::$token,
-            'wsfunction' => 'core_user_get_users',
+            'wsfunction' => 'core_user_get_users_by_field',
             'moodlewsrestformat' => 'json',
-            'criteria[0][key]' => 'username',
-            'criteria[0][value]' => $username,
+            'field' => 'username',
+            'values[0]' => $username,
         ];
         $ch = curl_init(self::$url . '/webservice/rest/server.php?' . http_build_query($params));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -77,7 +77,7 @@ class MoodleClient
 
         $data = json_decode($result, true, JSON_THROW_ON_ERROR);
 
-        return $data['users'][0]?? null;
+        return $data[0] ?? null;
     }
 
     /**
@@ -91,6 +91,19 @@ class MoodleClient
             config("moodleClient.connections.{$connection}.url"),
             config("moodleClient.connections.{$connection}.token"));
 
+    }
+
+    /**
+     * @param string $token
+     */
+    public static function setToken(string $token)
+    {
+        self::$token = $token;
+    }
+
+    public static function getToken()
+    {
+        return self::$token;
     }
 
     /**

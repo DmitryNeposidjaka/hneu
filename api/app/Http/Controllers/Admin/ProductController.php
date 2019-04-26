@@ -46,17 +46,20 @@ class ProductController extends Controller
         $product->entity = User::class;
         $product->setImages($request->file('thumbnails', []));
         $product->save();
-        $product->setCategories($request->categories);
+        $product->setCategories($request->input('categories', []));
 
         return $product;
     }
 
     public function update(ProductUpdateRequest $request, Product $product)
     {
-        $product->update($request->only(['title', 'description']));
-        $product->setImages($request->file('thumbnails', []));
+        $product->update($request->only(['title', 'description', 'images']));
+        $product->setImages(
+            $request->thumbnails?? []
+        );
+
         $product->save();
-        $product->setCategories($request->categories);
+        $product->setCategories($request->input('categories', []));
 
         return $product;
     }

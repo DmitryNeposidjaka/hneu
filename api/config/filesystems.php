@@ -64,15 +64,22 @@ return [
 
         'news-img' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/images/news'),
-            'url' => env('APP_URL').'/storage/images/news',
+            'root' => storage_path('app/public/news'),
+            'url' => env('APP_URL').'/storage/news',
             'visibility' => 'public',
         ],
 
-        'products-img' => [
+        'user-img' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/images/products'),
-            'url' => env('APP_URL').'/storage/images/products',
+            'root' => storage_path('app/public/images/user'),
+            'url' => env('APP_URL').'/storage/images/user',
+            'visibility' => 'public',
+        ],
+
+        'products' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/products'),
+            'url' => env('APP_URL').'/storage/products/',
             'visibility' => 'public',
         ],
 

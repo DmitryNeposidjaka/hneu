@@ -73,7 +73,7 @@
                         </div>
                         <p title="Content" v-html="props.row.description">{{ props.row.description }}</p>
                         <div class="product-card-image-place">
-                            <img v-for="image in props.row.images" :src="image"/>
+                            <img v-for="image in props.row.thumbnails" :src="image"/>
                         </div>
                     </el-card>
                 </template>

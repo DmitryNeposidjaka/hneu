@@ -44,7 +44,7 @@ class NewsController extends Controller
         $item = new News($request->only(['title', 'description', 'content']));
         $path = $request->file('thumbnail')
             ->storeAs(
-                'images/news',
+                'images',
                 uniqid() . '.' . \Carbon\Carbon::now()->format('Y-m-d_H:i:s') . '.' . $request->thumbnail->extension(),
                 'news-img');
         $item->thumbnail = $path;
@@ -62,7 +62,7 @@ class NewsController extends Controller
         if ($request->hasFile('thumbnail')) {
             $path = $request->file('thumbnail')
                 ->storeAs(
-                    'images/news',
+                    'images',
                     uniqid() . '.' . \Carbon\Carbon::now()->format('Y-m-d_H:i:s') . '.' . $request->thumbnail->extension(),
                     'news-img');
             $item->thumbnail = $path;

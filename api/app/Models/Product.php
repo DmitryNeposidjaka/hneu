@@ -5,6 +5,7 @@ namespace App\Models;
 
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
@@ -12,7 +13,7 @@ class Product extends Model
     use Filterable;
 
     protected $fillable = [
-        'title', 'description'
+        'title', 'description',
     ];
 
     protected $casts = [
@@ -22,17 +23,15 @@ class Product extends Model
     protected $with = [
         'categories'
     ];
+    protected $appends = [
+        'thumbnails'
+    ];
 
-    public function getThumbnailAttribute($value)
-    {
-        return Storage::disk('news-img')->url($value);
-    }
-
-    public function getImagesAttribute($value)
+    public function getThumbnailsAttribute($value)
     {
         $result = [];
-        foreach (json_decode($value, true) as $image) {
-            $result[] = Storage::disk('products-img')->url($image);
+        foreach ($this->images as $image) {
+            $result[] = Storage::disk('products')->url($image);
         }
         return $result;
     }
@@ -76,13 +75,34 @@ class Product extends Model
     public function setImages(array $data)
     {
         $new = [];
-        foreach ($data as $image) {
+        $old = $this->images ?? [];
+        $files = array_filter($data, [$this, 'getNewFiles']);
+
+        foreach ($files as $image) {
             $path = $image->storeAs(
-                'images/products',
+                'images',
                 uniqid() . '.' . \Carbon\Carbon::now()->format('Y-m-d_H:i:s') . '.' . $image->extension(),
-                'products-img');
+                'products');
             $new[] = $path;
         }
-        $this->images = array_merge($this->images, $new);
+
+        $stored = $this->syncImages($old, $data);
+        $this->images = array_merge($stored, $new);
     }
+
+    private function getNewFiles($data)
+    {
+        return $data instanceof UploadedFile;
+    }
+
+    private function syncImages($stored, $updated)
+    {
+        return array_filter($stored, function ($image) use ($updated) {
+            return in_array(
+                \Storage::disk('products')->url($image),
+                $updated
+            );
+        } );
+    }
+
 }

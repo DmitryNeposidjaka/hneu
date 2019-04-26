@@ -61,7 +61,8 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        if ($this->attemptLogin($request)) {
+        if ($token = $this->attemptLogin($request)) {
+            \MoodleClient::setToken($token);
 
             $user = $this->checkIfStudentExists($request);
             return $this->sendLoginResponse($user);
@@ -93,7 +94,7 @@ class LoginController extends Controller
 
         $result = \MoodleClient::loginStudent($username, $password);
 
-        return isset($result['token']);
+        return $result['token'] ?? null;
     }
 
     /**
@@ -104,17 +105,26 @@ class LoginController extends Controller
     {
         $username = $request->input('username');    //  TODO переделать
         $moodleUser = \MoodleClient::getUser($username);
+
         $user = null;
         if (!empty($moodleUser)) {
+            list($lastName, $firstName) = explode(' ', $moodleUser['fullname']);
             $user = User::updateOrCreate([
+                'username' => $moodleUser['username']
+            ], [
                 'username' => $moodleUser['username'],
-                'firstname' => $moodleUser['firstname'],
-                'lastname' => $moodleUser['lastname'],
+                'firstname' => $firstName,
+                'lastname' => $lastName,
                 'email' => $moodleUser['email'],
                 'lang' => $moodleUser['lang'],
-                'moodleId' => $moodleUser['id'],
-                'thumbnail' => $moodleUser['profileimageurl']
+                'moodle_id' => $moodleUser['id'],
+                'student_id' => $moodleUser['idnumber'],
+                'thumbnail' => $moodleUser['profileimageurl'],
+                'moodle_token' => \MoodleClient::getToken(),
             ]);
+            if ($user->wasRecentlyCreated) {
+                \Bouncer::assign('student')->to($user);
+            }
         }
 
         return $user;

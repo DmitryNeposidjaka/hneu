@@ -3,11 +3,12 @@
     <el-header><m-header :user="user"/></el-header>
     <el-container>
       <el-main style="border-radius: 8px;
-    overflow: hidden;
-    overflow-y: scroll;
+overflow: hidden;
     height: 80vh;">
-        <div class="m-content" style="border-radius: 5px;">
-          <router-view/>
+        <div class="scroller">
+          <div class="m-content" style="border-radius: 5px;">
+            <router-view/>
+          </div>
         </div>
       </el-main>
     </el-container>
@@ -57,20 +58,27 @@
   .el-icon-arrow-down {
     font-size: 12px;
   }
+  .scroller {
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 76vh;
+    flex-basis: auto;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
   .m-content {
     margin: auto;
     width: 90%;
-    padding: 20px;
+    padding: 30px;
     background: white;
   }
-  .el-main::-webkit-scrollbar {
+  .scroller::-webkit-scrollbar {
       display: none;
   }
   .el-main {
     background-color: #4a4c4e;
     color: #333;
     text-align: center;
-    padding: 100px;
     /* line-height: 160px; */
   }
 .el-container {

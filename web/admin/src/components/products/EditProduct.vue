@@ -36,10 +36,12 @@
             <el-button size="small" type="primary">Upload photo</el-button>
         </el-upload>
         <div class="images-block">
-            <div class="img-content" v-for="(img, i) in thumbnailsUrl">
-                <img width="100%" :src="defaultUrl + img" alt="" class="avatar">
-                <el-button class="cancel-button" @click="handleRemove(i)" type="danger"
-                           icon="el-icon-circle-close-outline" circle size="mini"></el-button>
+            <div>
+                <div class="img-content" v-for="(img, i) in ruleForm.thumbnails" v-if="typeof img === 'string'">
+                    <img width="100%" :src="img" alt="" class="avatar">
+                    <el-button class="cancel-button" @click="handleRemove(i)" type="danger"
+                               icon="el-icon-circle-close-outline" circle size="mini"></el-button>
+                </div>
             </div>
         </div>
         <el-form-item>
@@ -127,6 +129,9 @@
             };
         },
         methods: {
+            handleRemoveImages(item) {
+                this.ruleForm.images.splice(item, 1);
+            },
             handleRemove(item) {
                 this.thumbnailsUrl.splice(item, 1);
                 this.ruleForm.thumbnails.splice(item, 1);
@@ -145,7 +150,7 @@
                     }
                 }).then(function (response) {
                     if (response.status == 200) {
-                        vm.thumbnailsUrl.push(response.data);
+                        vm.ruleForm.thumbnails.push(response.data);
                     }
                 })
             },

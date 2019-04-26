@@ -3,10 +3,13 @@ import Vue from 'vue';
 import Router from './router'
 
 const instance = axios.create({
-    baseURL: 'http://localhost:88/api/student',
+    baseURL: process.env.VUE_APP_SERVER_URL + '/api/student',
 });
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-instance.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('_token');
+
+if(!instance.defaults.headers.common['Authorization']) {
+    instance.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('_token');
+}
 
 instance.interceptors.request.use(function (request) {
     instance.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('_token');

@@ -20,8 +20,9 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array
      */
+
     protected $fillable = [
-        'firstname', 'lastname', 'lang', 'thumbnail', 'email', 'username', 'moodleId', 'thumbnail', 'role'
+        'firstname', 'lastname', 'lang', 'thumbnail', 'email', 'username', 'moodle_id', 'role', 'moodle_token', 'student_id'
     ];
 
     protected $appends = ['fullname', 'role'];
@@ -52,6 +53,11 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function getThumbnailAttribute()
+    {
+        return \Storage::disk('public')->url('images/default/img_avatar.png');
     }
 
     public function getFullnameAttribute()
