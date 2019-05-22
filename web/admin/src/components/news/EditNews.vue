@@ -36,7 +36,7 @@
                 :on-success="handleAvatarSuccess"
                 :http-request="uploadFile"
                 :before-upload="beforeAvatarUpload">
-            <img v-if="imageUrl" :src="defaultUrl + imageUrl" class="avatar">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <img v-else :src="news.thumbnail" class="avatar">
         </el-upload>
         <el-form-item  class="form-buttons">
@@ -95,7 +95,8 @@
                     description: '',
                     content: '',
                     thumbnail: '',
-                    categories: []
+                    categories: [],
+                    lang: ''
                 },
                 rules: {
                     title: [

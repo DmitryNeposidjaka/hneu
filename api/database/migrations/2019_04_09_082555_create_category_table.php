@@ -28,7 +28,7 @@ class CreateCategoryTable extends Migration
         });
     }
 
-    /**
+    /**cth
      * Reverse the migrations.
      *
      * @return void

@@ -25,7 +25,7 @@ class User extends Authenticatable implements JWTSubject
         'firstname', 'lastname', 'lang', 'thumbnail', 'email', 'username', 'moodle_id', 'role', 'moodle_token', 'student_id'
     ];
 
-    protected $appends = ['fullname', 'role'];
+    protected $appends = ['fullname', 'role', 'thumbnail_img'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -55,8 +55,11 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function getThumbnailAttribute()
+    public function getThumbnailImgAttribute()
     {
+        if($this->thumbnail){
+            return \Storage::disk('user-img')->url($this->thumbnail);
+        }
         return \Storage::disk('public')->url('images/default/img_avatar.png');
     }
 

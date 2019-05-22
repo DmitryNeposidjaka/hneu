@@ -41,7 +41,7 @@ class NewsController extends Controller
 
     public function create(NewsCreateRequest $request)
     {
-        $item = new News($request->only(['title', 'description', 'content']));
+        $item = new News($request->only(['title', 'description', 'content', 'lang', 'link', 'type']));
         $path = $request->file('thumbnail')
             ->storeAs(
                 'images',
@@ -57,7 +57,7 @@ class NewsController extends Controller
 
     public function update(NewsUpdateRequest $request, News $item)
     {
-        $item->update($request->only(['title', 'description', 'content']));
+        $item->update($request->only(['title', 'description', 'content', 'lang']));
 
         if ($request->hasFile('thumbnail')) {
             $path = $request->file('thumbnail')

@@ -7,8 +7,9 @@
                 <span style="display: block; float: left; margin-left: 20px">Admin Panel</span>
             </div>
         </div>
-        <div style="text-align: right; width: 70%; float: right;">
+        <div style="text-align: right; width: 70%; float: right; ">
             <div style="padding: 0px 50px">
+                <img height="40px" width="40px" style="border-radius: 50%; margin: 0px 10px; line-height: 60px;" :src="user.thumbnail_img"/>
                 <span>{{user.username}}</span>
                 <el-button type="text" icon="el-icon-arrow-right" @click="logout" >{{ $t('header.logout') }}
                 </el-button>

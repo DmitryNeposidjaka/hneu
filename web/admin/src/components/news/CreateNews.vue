@@ -1,5 +1,34 @@
 <template>
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
+        <el-form-item label="Language" prop="lang">
+            <el-select
+                    v-model="ruleForm.lang"
+                    default-first-option
+                    placeholder="Choose Language">
+                <el-option
+                        v-for="lang in languages"
+                        :key="lang.id"
+                        :label="lang.name"
+                        :value="lang.id">
+                </el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="Type" prop="type">
+            <el-select
+                    v-model="ruleForm.type"
+                    default-first-option
+                    placeholder="Choose Language">
+                <el-option
+                        v-for="type in types"
+                        :key="type.id"
+                        :label="type.name"
+                        :value="type.id">
+                </el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="Link" prop="link">
+            <el-input v-model="ruleForm.link"></el-input>
+        </el-form-item>
         <el-form-item label="Title" prop="title">
             <el-input v-model="ruleForm.title"></el-input>
         </el-form-item>
@@ -36,7 +65,8 @@
                 :on-success="handleAvatarSuccess"
                 :http-request="uploadFile"
                 :before-upload="beforeAvatarUpload">
-            <img v-if="imageUrl" :src="defaultUrl + imageUrl" class="avatar">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <img v-else :src="defaultUrl + '/storage/images/default/News.jpg'" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
         <el-form-item class="form-buttons">
@@ -86,17 +116,33 @@ import { VueEditor } from 'vue2-editor'
 
     export default {
         components: {VueEditor},
-        props: ['categories'],
+        props: ['categories', 'languages'],
         data() {
             return {
                 imageUrl: '',
                 defaultUrl: '',
+                types: [
+                    {
+                        id: 'article',
+                        name: 'Article'
+                    },
+                    {
+                        id: 'advertising',
+                        name: 'Advertising'
+                    },
+                    {
+                        id: 'message',
+                        name: 'Message'
+                    },
+                ],
                 ruleForm: {
+                    link: '',
                     title: '',
                     description: '',
                     content: '',
                     thumbnail: '',
-                    categories: []
+                    categories: [],
+                    lang: ''
                 },
                 rules: {
                     title: [
@@ -109,6 +155,9 @@ import { VueEditor } from 'vue2-editor'
                     ],
                     content: [
                         {required: true, message: 'Please input Activity content', trigger: 'blur'},
+                    ],
+                    type: [
+                        {required: true, message: 'Please select Type', trigger: 'blur'},
                     ],
                 }
             };

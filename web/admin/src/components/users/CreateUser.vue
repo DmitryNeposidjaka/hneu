@@ -28,6 +28,18 @@
                 </el-option>
             </el-select>
         </el-form-item>
+        <el-upload
+                ref="newsThumb"
+                id="file"
+                class="avatar-uploader"
+                :action="defaultUrl + '/api'"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :http-request="uploadFile"
+                :before-upload="beforeAvatarUpload">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <img v-else :src="defaultUrl + '/storage/images/default/img_avatar.png'" class="avatar">
+        </el-upload>
         <el-form-item>
             <el-button type="primary" @click="getData">Create</el-button>
             <el-button @click="resetForm('ruleForm')">Reset</el-button>
@@ -40,6 +52,8 @@
         props: ['roles'],
         data() {
             return {
+                imageUrl: '',
+                defaultUrl: '',
                 ruleForm: {
                     firstname: '',
                     lastname: '',
@@ -101,6 +115,38 @@
             resetForm(formName) {
                 this.$refs[formName].resetFields();
             },
+            uploadFile() {
+                var vm = this;
+                var formData = new FormData();
+                var files = this.$refs.newsThumb.uploadFiles;
+                var image = files.pop().raw;
+                formData.append("image", image);
+                this.ruleForm.thumbnail = image;
+                this.axios.post('/temporary?type=images&entity=users', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(function (response) {
+                    if(response.status == 200) {
+                        vm.imageUrl = response.data
+                    }
+                })
+            },
+            handleAvatarSuccess(res, file) {
+                this.imageUrl = URL.createObjectURL(file.raw);
+            },
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                    this.$message.error('Avatar picture must be JPG or PNG format!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('Avatar picture size can not exceed 2MB!');
+                }
+                return isJPG && isLt2M;
+            },
             getFormData(data = {}){
                 const formData = new FormData();
                 for(var key in data){
@@ -123,6 +169,9 @@
                     vm.resetForm('ruleForm');
                 })
             }
+        },
+        mounted() {
+            this.defaultUrl = process.env.VUE_APP_SERVER_URL;
         }
     }
 </script>

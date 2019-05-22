@@ -78,3 +78,7 @@ Route::group(['namespace' => 'Student', 'prefix' => 'student'], function () {
         });
     });
 });
+
+Route::group(['prefix' => 'web', 'namespace' => 'Web'], function () {
+    Route::get('/news', 'NewsController@getAll');
+});

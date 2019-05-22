@@ -11,11 +11,16 @@ class News extends Model
 {
     use Filterable;
 
-    protected $fillable = ['title', 'description', 'content'];
+    protected $fillable = ['title', 'description', 'content', 'lang', 'link', 'type'];
 
     protected $with = [
         'categories'
     ];
+
+    protected $hidden = [
+        'entity', 'creator_id'
+    ];
+
     public function getThumbnailAttribute($value)
     {
         return Storage::disk('news-img')->url($value);
@@ -46,7 +51,6 @@ class News extends Model
 
         $this->categories()->sync($update);
     }
-
 
     private function createCategories(array $data)
     {

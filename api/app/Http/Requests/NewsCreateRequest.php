@@ -28,6 +28,7 @@ class NewsCreateRequest extends FormRequest
             'description' => 'required|string|max:255',
             'content' => 'required|string',
             'thumbnail' => 'required|image|max:2000',
+            'lang' => 'required'
         ];
     }
 }

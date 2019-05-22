@@ -18,7 +18,7 @@
                 this.loading = true;
                 this.axios({
                     method: 'delete',
-                    url: 'user/' + vm.user.id,
+                    url: 'news/' + vm.user.id,
 
                 }).then(function (response) {
                     if (response.status == 200) {

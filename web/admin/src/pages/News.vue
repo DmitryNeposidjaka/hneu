@@ -6,7 +6,8 @@
                 :visible.sync="createUserVisible"
                 width="60%">
             <create-news style="padding: 0px 100px 0px 50px" v-on:newsCreated="userCreated"
-                         :categories="categories"></create-news>
+                         :categories="categories"
+                         :languages="languages"></create-news>
         </el-dialog>
         <el-dialog
                 :title="$t('news.edit')"
@@ -157,6 +158,20 @@
         components: {CreateNews, EditNews, DeleteNews},
         data() {
             return {
+                languages: [
+                    {
+                        id: 'ua',
+                        name: 'Українська'
+                    },
+                    {
+                        id: 'en',
+                        name: 'English'
+                    },
+                    {
+                        id: 'ru',
+                        name: 'Русский'
+                    },
+                ],
                 userOnEdit: null,
                 userOnDelete: null,
                 createUserVisible: false,

@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('lang', 5)->nullable();
             $table->string('thumbnail')->nullable();
+            $table->json('group')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

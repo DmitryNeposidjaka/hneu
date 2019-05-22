@@ -112,7 +112,7 @@
                 <template slot-scope="props">
                     <div style="overflow: auto;">
                         <div class="table-thumbnail">
-                            <img width="100%" :src="props.row.thumbnail"/>
+                            <img width="100%" :src="props.row.thumbnail_img"/>
                         </div>
                         <div class="table-data">
                             <div class="content">
