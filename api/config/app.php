@@ -233,6 +233,13 @@ $config = [
 
     ],
 
+    'locales' => [
+        'en',
+        'ua',
+        'ru'
+    ],
+    'default_locale' => 'ua'
+
 ];
 
 if(env('APP_ENV') != 'production') {
