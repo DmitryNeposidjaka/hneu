@@ -66,7 +66,7 @@
                 :http-request="uploadFile"
                 :before-upload="beforeAvatarUpload">
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <img v-else :src="defaultUrl + '/storage/images/default/News.jpg'" class="avatar">
+            <img v-else :src="defaultUrl + '/assets/img/News.jpg'" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
         <el-form-item class="form-buttons">
