@@ -60,7 +60,7 @@ class User extends Authenticatable implements JWTSubject
         if($this->thumbnail){
             return \Storage::disk('user-img')->url($this->thumbnail);
         }
-        return \Storage::disk('public')->url('assets/img/img_avatar.png');
+        return \Storage::url('assets/img/img_avatar.png');
     }
 
     public function getFullnameAttribute()
