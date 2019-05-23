@@ -40,7 +40,7 @@ class MoodleClient
         $result = curl_exec($ch);
         curl_close($ch);
 
-        return json_decode($result, true, JSON_THROW_ON_ERROR);
+        return json_decode($result, true);
     }
 
     public static function getUserCourses($userId)
@@ -57,7 +57,7 @@ class MoodleClient
         $result = curl_exec($ch);
         curl_close($ch);
 
-        return json_decode($result, true, JSON_THROW_ON_ERROR);
+        return json_decode($result, true);
     }
 
     public static function getUser($username)
@@ -75,7 +75,7 @@ class MoodleClient
         $result = curl_exec($ch);
         curl_close($ch);
 
-        $data = json_decode($result, true, JSON_THROW_ON_ERROR);
+        $data = json_decode($result, true);
 
         return $data[0] ?? null;
     }
