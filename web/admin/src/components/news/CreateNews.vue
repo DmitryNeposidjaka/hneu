@@ -1,10 +1,10 @@
 <template>
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
-        <el-form-item label="Language" prop="lang">
+        <el-form-item :label="$t('news.language')" prop="lang">
             <el-select
                     v-model="ruleForm.lang"
                     default-first-option
-                    placeholder="Choose Language">
+                    :placeholder="$t('news.choose_language')">
                 <el-option
                         v-for="lang in languages"
                         :key="lang.id"
@@ -13,11 +13,11 @@
                 </el-option>
             </el-select>
         </el-form-item>
-        <el-form-item label="Type" prop="type">
+        <el-form-item :label="$t('news.type')" prop="type">
             <el-select
                     v-model="ruleForm.type"
                     default-first-option
-                    placeholder="Choose Language">
+                    :placeholder="$t('news.choose_type')">
                 <el-option
                         v-for="type in types"
                         :key="type.id"
@@ -26,21 +26,21 @@
                 </el-option>
             </el-select>
         </el-form-item>
-        <el-form-item label="Link" prop="link">
+        <el-form-item :label="$t('news.link')" prop="link">
             <el-input v-model="ruleForm.link"></el-input>
         </el-form-item>
-        <el-form-item label="Title" prop="title">
+        <el-form-item :label="$t('news.title')" prop="title">
             <el-input v-model="ruleForm.title"></el-input>
         </el-form-item>
-        <el-form-item label="Description" prop="description">
+        <el-form-item :label="$t('news.description')" prop="description">
             <el-input v-model="ruleForm.description"
                       type="textarea"
                       :autosize="{ minRows: 2, maxRows: 4}"></el-input>
         </el-form-item>
-        <el-form-item label="Content" prop="content">
+        <el-form-item :label="$t('news.content')" prop="content">
             <vue-editor v-model="ruleForm.content"></vue-editor>
         </el-form-item>
-        <el-form-item label="Categories" prop="categories">
+        <el-form-item :label="$t('news.categories')" prop="categories">
             <el-select
                     v-model="ruleForm.categories"
                     multiple
@@ -69,10 +69,30 @@
             <img v-else :src="defaultUrl + '/assets/img/News.jpg'" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
+        <el-upload
+                ref="newsImgs"
+                id="files"
+                class="avatar-uploader"
+                multiple
+                :limit="8"
+                :action="defaultUrl + '/api'"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :http-request="uploadImages"
+                :before-upload="beforeAvatarUpload">
+            <el-button size="small" type="primary">{{$t('news.upload_photo')}}</el-button>
+        </el-upload>
+        <div class="images-block">
+            <div class="img-content" v-for="(img, i) in thumbnailsUrl">
+                <img width="100%" :src="img" alt="" class="avatar">
+                <el-button class="cancel-button" @click="handleRemove(i)" type="danger"
+                           icon="el-icon-circle-close-outline" circle size="mini"></el-button>
+            </div>
+        </div>
         <el-form-item class="form-buttons">
             <div>
-                <el-button type="primary" @click="getData">Create</el-button>
-                <el-button @click="resetForm('ruleForm')">Reset</el-button>
+                <el-button type="primary" @click="getData">{{$t('news.create')}}</el-button>
+                <el-button @click="resetForm('ruleForm')">{{$t('news.clear')}}</el-button>
             </div>
         </el-form-item>
     </el-form>
@@ -108,6 +128,31 @@
         height: 178px;
         display: block;
     }
+
+    .cancel-button {
+        position: relative;
+        right: -75px;
+        bottom: 190px;
+    }
+
+    .images-block {
+        width: 100%;
+    }
+
+    .img-content {
+        width: 200px;
+        height: 200px;
+        margin: 0px 5px;
+        display: inline-block;
+    }
+
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
 </style>
 
 
@@ -121,6 +166,7 @@ import { VueEditor } from 'vue2-editor'
             return {
                 imageUrl: '',
                 defaultUrl: '',
+                thumbnailsUrl: [],
                 types: [
                     {
                         id: 'article',
@@ -142,6 +188,7 @@ import { VueEditor } from 'vue2-editor'
                     content: '',
                     thumbnail: '',
                     categories: [],
+                    thumbnails: [],
                     lang: ''
                 },
                 rules: {
@@ -156,8 +203,14 @@ import { VueEditor } from 'vue2-editor'
                     content: [
                         {required: true, message: 'Please input Activity content', trigger: 'blur'},
                     ],
+                    lang: [
+                        {required: true, message: 'Please select Language', trigger: 'blur'},
+                    ],
+                    link: [
+                        {required: true, message: 'Please input link', trigger: 'blur'},
+                    ],
                     type: [
-                        {required: true, message: 'Please select Type', trigger: 'blur'},
+                        {required: true, message: 'Please select type', trigger: 'blur'},
                     ],
                 }
             };
@@ -179,6 +232,28 @@ import { VueEditor } from 'vue2-editor'
                         vm.imageUrl = response.data
                     }
                 })
+            },
+            uploadImages() {
+                var vm = this;
+                var formData = new FormData();
+                var files = this.$refs.newsImgs.uploadFiles;
+                var image = files.pop().raw;
+                formData.append("image", image);
+            //    this.imageUrl = image;
+                this.ruleForm.thumbnails.push(image);
+                this.axios.post('/temporary?type=images&entity=products', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        vm.thumbnailsUrl.push(response.data);
+                    }
+                })
+            },
+            handleRemove(item) {
+                this.thumbnailsUrl.splice(item, 1);
+                this.ruleForm.thumbnails.splice(item, 1);
             },
             handleAvatarSuccess(res, file) {
                 this.imageUrl = URL.createObjectURL(file.raw);

@@ -50,6 +50,7 @@ class NewsController extends Controller
         $item->thumbnail = $path;
         $item->creator_id = Auth::id();
         $item->entity = User::class;
+        $item->setImages($request->file('thumbnails', []));
         $item->save();
         $item->setCategories($request->categories);
         return $item;
@@ -67,6 +68,9 @@ class NewsController extends Controller
                     'news-img');
             $item->thumbnail = $path;
         }
+        $item->setImages(
+            $request->thumbnails?? []
+        );
         $item->save();
         $item->setCategories($request->categories);
         return $item;

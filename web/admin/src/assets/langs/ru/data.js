@@ -19,12 +19,23 @@ var data = {
     news: {
         create: 'Создать Новость',
         edit: 'Редактировать Новость',
+        clear: "Очистить",
+        choose_language: 'Выберите язык',
+        choose_type: 'Выберите тип',
         delete: 'Удалить Новость',
         add: 'Добавить Новость',
+        language: 'Язык',
+        type: 'Тип',
+        link: 'Ссылка',
+        title: 'Название',
+        description: 'Описание',
+        content: 'Контент',
+        categories: 'Категории',
+        upload_photo: 'Загрузить фото',
         table: {
             title: 'Название',
             created_at: 'Создан в'
-        }
+        },
     },
     user: {
         create: 'Создать Пользователя',

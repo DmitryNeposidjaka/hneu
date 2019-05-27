@@ -1,17 +1,33 @@
 <template>
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
-        <el-form-item label="Title" prop="title">
+        <el-form-item :label="$t('news.language')" prop="lang">
+            <el-select
+                    v-model="ruleForm.lang"
+                    default-first-option
+                    :placeholder="$t('news.choose_language')">
+                <el-option
+                        v-for="lang in languages"
+                        :key="lang.id"
+                        :label="lang.name"
+                        :value="lang.id">
+                </el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item :label="$t('news.link')" prop="link">
+            <el-input v-model="ruleForm.link"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('news.title')" prop="title">
             <el-input v-model="ruleForm.title"></el-input>
         </el-form-item>
-        <el-form-item label="Description" prop="description">
+        <el-form-item :label="$t('news.description')" prop="description">
             <el-input v-model="ruleForm.description"
                       type="textarea"
                       :autosize="{ minRows: 2, maxRows: 4}"></el-input>
         </el-form-item>
-        <el-form-item label="Content" prop="content">
+        <el-form-item :label="$t('news.content')" prop="content">
             <vue-editor v-model="ruleForm.content"></vue-editor>
         </el-form-item>
-        <el-form-item label="Categories" prop="categories">
+        <el-form-item :label="$t('news.categories')" prop="categories">
             <el-select
                     v-model="ruleForm.categories"
                     multiple
@@ -39,10 +55,32 @@
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <img v-else :src="news.thumbnail" class="avatar">
         </el-upload>
+        <el-upload
+                ref="newsImgs"
+                id="files"
+                class="avatar-uploader"
+                multiple
+                :limit="8"
+                :action="defaultUrl + '/api'"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :http-request="uploadFile"
+                :before-upload="beforeAvatarUpload">
+            <el-button size="small" type="primary">{{$t('news.upload_photo')}}</el-button>
+        </el-upload>
+        <div class="images-block">
+            <div>
+                <div class="img-content" v-for="(img, i) in ruleForm.thumbnails" v-if="typeof img === 'string'">
+                    <img width="100%" :src="img" alt="" class="avatar">
+                    <el-button class="cancel-button" @click="handleRemove(i)" type="danger"
+                               icon="el-icon-circle-close-outline" circle size="mini"></el-button>
+                </div>
+            </div>
+        </div>
         <el-form-item  class="form-buttons">
             <div>
-                <el-button type="primary" @click="getData">Create</el-button>
-                <el-button @click="resetForm('ruleForm')">Reset</el-button>
+                <el-button type="primary" @click="getData">{{$t('news.edit')}}</el-button>
+                <el-button @click="resetForm('ruleForm')">{{$t('news.clear')}}</el-button>
             </div>
         </el-form-item>
     </el-form>
@@ -78,6 +116,23 @@
         height: 178px;
         display: block;
     }
+
+    .cancel-button {
+        position: relative;
+        right: -75px;
+        bottom: 190px;
+    }
+
+    .images-block {
+        width: 100%;
+    }
+
+    .img-content {
+        width: 200px;
+        height: 200px;
+        margin: 0px 5px;
+        display: inline-block;
+    }
 </style>
 
 
@@ -85,17 +140,19 @@
     import { VueEditor } from 'vue2-editor'
     export default {
         components: {VueEditor},
-        props: ['news', 'categories'],
+        props: ['news', 'categories', 'languages'],
         data() {
             return {
                 imageUrl: '',
                 defaultUrl: '',
+                thumbnailsUrl: [],
                 ruleForm: {
                     title: '',
                     description: '',
                     content: '',
                     thumbnail: '',
                     categories: [],
+                    thumbnails: [],
                     lang: ''
                 },
                 rules: {
@@ -109,6 +166,12 @@
                     ],
                     content: [
                         {required: true, message: 'Please input Activity username', trigger: 'blur'},
+                    ],
+                    lang: [
+                        {required: true, message: 'Please select Language', trigger: 'blur'},
+                    ],
+                    link: [
+                        {required: true, message: 'Please input link', trigger: 'blur'},
                     ],
                 }
             };
@@ -130,6 +193,28 @@
                         vm.imageUrl = response.data
                     }
                 })
+            },
+            uploadImages() {
+                var vm = this;
+                var formData = new FormData();
+                var files = this.$refs.newsImgs.uploadFiles;
+                var image = files.pop().raw;
+                formData.append("image", image);
+                //    this.imageUrl = image;
+                this.ruleForm.thumbnails.push(image);
+                this.axios.post('/temporary?type=images&entity=products', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        vm.thumbnailsUrl.push(response.data);
+                    }
+                })
+            },
+            handleRemove(item) {
+                this.thumbnailsUrl.splice(item, 1);
+                this.ruleForm.thumbnails.splice(item, 1);
             },
             handleAvatarSuccess(res, file) {
                 this.ruleForm.thumbnail = URL.createObjectURL(file.raw);

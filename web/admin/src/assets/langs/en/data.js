@@ -21,6 +21,14 @@ var data = {
         edit: 'Edit News',
         delete: 'Delete News',
         add: 'Add News',
+        language: 'Language',
+        type: 'Type',
+        link: 'Link',
+        title: 'Title',
+        description: 'Description',
+        content: 'Content',
+        categories: 'Categories',
+        upload_photo: 'Upload Photo',
         table: {
             title: 'Title',
             created_at: 'Created at'

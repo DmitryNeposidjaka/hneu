@@ -21,6 +21,7 @@ class CreateNewsTable extends Migration
             $table->integer('creator_id');
             $table->string('entity');
             $table->string('thumbnail');
+            $table->json('images');
             $table->string('type');
             $table->string('link');
             $table->string('lang', 20);
