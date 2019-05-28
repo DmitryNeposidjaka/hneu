@@ -236,7 +236,8 @@ $config = [
     'locales' => [
         'en',
         'ua',
-        'ru'
+        'ru',
+        'fr'
     ],
     'default_locale' => 'ua'
 

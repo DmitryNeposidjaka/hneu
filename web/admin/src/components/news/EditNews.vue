@@ -22,7 +22,7 @@
         },
         methods: {
             modelEdited() {
-                vm.$emit('newsEdited');
+                this.$emit('newsEdited');
             }
         }
     }

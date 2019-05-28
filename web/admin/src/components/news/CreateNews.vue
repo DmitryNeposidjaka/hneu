@@ -1,8 +1,8 @@
 <template>
     <div>
-        <form-article v-if="type == 'article'" :categories="categories" :languages="languages"></form-article>
-        <form-advertising v-if="type == 'advertising'" :categories="categories" :languages="languages"></form-advertising>
-        <form-message v-if="type == 'message'" :categories="categories" :languages="languages"></form-message>
+        <form-article v-if="type == 'article'" v-on:newsCreated="modelCreated" :categories="categories" :languages="languages"></form-article>
+        <form-advertising v-if="type == 'advertising'" v-on:newsCreated="modelCreated" :categories="categories" :languages="languages"></form-advertising>
+        <form-message v-if="type == 'message'" v-on:newsCreated="modelCreated" :categories="categories" :languages="languages"></form-message>
     </div>
 </template>
 
@@ -18,6 +18,9 @@
             return {
 
             }
+        },
+        modelCreated() {
+            this.$emit('newsCreated');
         }
     }
 </script>

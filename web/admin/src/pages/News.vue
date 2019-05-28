@@ -63,6 +63,26 @@
                 <el-input :placeholder="$t('news.table.title')" v-model="filters.title"></el-input>
             </el-col>
             <el-col :span="4">
+                <el-select v-model="filters.lang" placeholder="Язык">
+                    <el-option
+                            v-for="item in languages"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id">
+                    </el-option>
+                </el-select>
+            </el-col>
+            <el-col :span="4">
+                <el-select v-model="filters.type" placeholder="Тип">
+                    <el-option
+                            v-for="item in types"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id">
+                    </el-option>
+                </el-select>
+            </el-col>
+            <el-col :span="4">
                 <el-button type="success" icon="el-icon-search" @click="getData">{{ $t('common.search') }}</el-button>
             </el-col>
         </el-row>
@@ -166,6 +186,20 @@
         components: {CreateNews, EditNews, DeleteNews},
         data() {
             return {
+                types: [
+                    {
+                        id: 'article',
+                        name: 'Статья'
+                    },
+                    {
+                        id: 'advertising',
+                        name: 'Реклама'
+                    },
+                    {
+                        id: 'message',
+                        name: 'Уведомление'
+                    },
+                ],
                 languages: [
                     {
                         id: 'ua',
