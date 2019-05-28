@@ -42,12 +42,14 @@ class NewsController extends Controller
     public function create(NewsCreateRequest $request)
     {
         $item = new News($request->only(['title', 'description', 'content', 'lang', 'link', 'type']));
-        $path = $request->file('thumbnail')
-            ->storeAs(
-                'images',
-                uniqid() . '.' . \Carbon\Carbon::now()->format('Y-m-d_H:i:s') . '.' . $request->thumbnail->extension(),
-                'news-img');
-        $item->thumbnail = $path;
+        if ($request->has('thumbnail')) {
+            $path = $request->file('thumbnail')
+                ->storeAs(
+                    'images',
+                    uniqid() . '.' . \Carbon\Carbon::now()->format('Y-m-d_H:i:s') . '.' . $request->thumbnail->extension(),
+                    'news-img');
+            $item->thumbnail = $path;
+        }
         $item->creator_id = Auth::id();
         $item->entity = User::class;
         $item->setImages($request->file('thumbnails', []));
@@ -69,7 +71,7 @@ class NewsController extends Controller
             $item->thumbnail = $path;
         }
         $item->setImages(
-            $request->thumbnails?? []
+            $request->thumbnails ?? []
         );
         $item->save();
         $item->setCategories($request->categories);

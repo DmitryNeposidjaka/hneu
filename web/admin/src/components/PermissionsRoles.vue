@@ -7,25 +7,25 @@
                     @row-click="rowClick">
                 <el-table-column
                         prop="title"
-                        label="Title"
+                        :label="$t('permissions.title')"
                         width="180">
                 </el-table-column>
                 <el-table-column
                         prop="abilities"
-                        label="Abilities"
+                        :label="$t('permissions.abilities')"
                         width="180">
                 </el-table-column>
             </el-table>
         </el-col>
         <el-col :span="16">
             <div style="text-align: center">
-                <div v-if="form.role">Assign to <span style="color: #1d68a7">{{form.role.title}}</span></div>
+                <div v-if="form.role">{{$t('permissions.assign')}}<span style="color: #1d68a7">{{form.role.title}}</span></div>
                 <el-transfer
                         style="text-align: left; display: inline-block"
                         v-model="form.permissions"
                         filterable
-                        :titles="['Abilities', 'Permissions']"
-                        :button-texts="['Unassign', 'Assign']"
+                        :titles="[$t('permissions.abilities'), $t('permissions.permissions')]"
+                        :button-texts="[$t('permissions.unassign'), $t('permissions.assign')]"
                         :format="{
                         noChecked: '${total}',
                         hasChecked: '${checked}/${total}'
@@ -34,7 +34,7 @@
                         :data="_abilities">
                     <!--               <el-button class="transfer-footer" slot="left-footer" size="small">Operation</el-button>
                                    <el-button class="transfer-footer" slot="right-footer" size="small">Operation</el-button>-->
-                    <el-button class="transfer-footer" slot="right-footer" size="small" @click="assignAbilities" :disabled="form.role == null">Assign</el-button>
+                    <el-button class="transfer-footer" slot="right-footer" size="small" @click="assignAbilities" :disabled="form.role == null">{{$t('permissions.assign')}}</el-button>
                 </el-transfer>
             </div>
         </el-col>

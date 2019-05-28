@@ -15,7 +15,7 @@ class News extends Model
     protected $fillable = ['title', 'description', 'content', 'lang', 'link', 'type', 'images'];
 
     protected $with = [
-        'categories'
+        'categories', 'creator'
     ];
 
     protected $casts = [
@@ -46,6 +46,11 @@ class News extends Model
         );
     }
 
+    public function creator()
+    {
+        return $this->hasOne(User::class, 'id', 'creator_id');
+    }
+
     public function getThumbnailsAttribute($value)
     {
         $result = [];
@@ -53,6 +58,11 @@ class News extends Model
             $result[] = Storage::disk('news-img')->url($image);
         }
         return $result;
+    }
+
+    public function setLinkAttribute($value)
+    {
+        $this->attributes['link'] = urlencode($value);
     }
 
     public function setCategories(array $data)

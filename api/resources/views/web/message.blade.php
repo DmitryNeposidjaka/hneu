@@ -89,10 +89,9 @@
                         <div class="ripple-container"></div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#pablo" class="dropdown-item" {{app()->getLocale() == 'ua'? 'checked' : ''}}>Українська</a>
-                        <a href="#pablo" class="dropdown-item" {{app()->getLocale() == 'ru'? 'checked' : ''}}>Русский</a>
-                        <a href="#pablo" class="dropdown-item" {{app()->getLocale() == 'en'? 'checked' : ''}}>English</a>
-                        <a href="#pablo" class="dropdown-item" {{app()->getLocale() == 'fr'? 'checked' : ''}}>French</a>
+                        <a href="#pablo" class="dropdown-item">Русский</a>
+                        <a href="#pablo" class="dropdown-item">English</a>
+                        <a href="#pablo" class="dropdown-item">French</a>
                     </div>
                 </li>
             </ul>
@@ -178,18 +177,6 @@
                     <p>
                         {{$article['description']}}
                     </p>
-                </div>
-                <div class="section col-md-10 ml-auto mr-auto">
-                    <div class="row">
-                        @foreach($article['thumbnails'] as $image)
-                            <div class="col-md-4">
-                                <img class="img-raised rounded img-fluid" alt="Raised Image" src="{{$image}}">
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="col-md-8 ml-auto mr-auto">
-                    {!! $article['content'] !!}
                 </div>
             </div>
         </div>

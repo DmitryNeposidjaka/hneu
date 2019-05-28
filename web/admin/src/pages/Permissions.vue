@@ -1,9 +1,9 @@
 <template>
     <el-tabs v-model="activeName">
-        <el-tab-pane label="Roles" name="roles">
+        <el-tab-pane :label="$t('permissions.tab.roles')" name="roles">
             <permissions-roles :roles="roles" :abilities="abilities"></permissions-roles>
         </el-tab-pane>
-        <el-tab-pane label="Users" name="users">
+        <el-tab-pane :label="$t('permissions.tab.users')" name="users">
             <permissions-users :roles="roles" :abilities="abilities"></permissions-users>
         </el-tab-pane>
     </el-tabs>

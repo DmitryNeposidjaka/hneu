@@ -25,10 +25,11 @@ class NewsCreateRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'content' => 'required|string',
-            'thumbnail' => 'required|image|max:2000',
-            'lang' => 'required'
+            'description' => 'required|string',
+            'content' => 'sometimes|required|string',
+            'thumbnail' => 'sometimes|required|image|max:2000',
+            'lang' => 'required',
+
         ];
     }
 }

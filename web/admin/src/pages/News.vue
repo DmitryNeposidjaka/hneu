@@ -1,21 +1,22 @@
 <template>
     <div>
-
         <el-dialog
                 :title="$t('news.create')"
-                :visible.sync="createUserVisible"
+                :visible.sync="actions.createModel.open"
                 width="60%">
             <create-news style="padding: 0px 100px 0px 50px" v-on:newsCreated="userCreated"
                          :categories="categories"
+                         :type="actions.createModel.type"
                          :languages="languages"></create-news>
         </el-dialog>
         <el-dialog
                 :title="$t('news.edit')"
-                :visible.sync="editUserVisible"
+                :visible.sync="actions.editModel.open"
                 width="60%">
             <edit-news ref="edit-user-form" style="padding: 0px 100px 0px 50px" v-on:newsEdited="userEdited"
                        v-bind:news="userOnEdit" v-on:userEditClose="editUserVisible = false"
-                       :categories="categories" :languages="languages" v-if="editUserVisible"></edit-news>
+                       :categories="categories"
+                       :languages="languages" v-if="actions.editModel.open"></edit-news>
         </el-dialog>
         <el-dialog
                 :title="$t('news.delete')"
@@ -28,7 +29,7 @@
             <el-col :span="4">
                 <el-dropdown @command="changePerPage">
               <span class="el-dropdown-link">
-                Perpage<i class="el-icon-arrow-down el-icon--right"></i>
+                {{$t('common.perpage')}}<i class="el-icon-arrow-down el-icon--right"></i>
               </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item :command="10">10</el-dropdown-item>
@@ -41,8 +42,15 @@
             </el-col>
             <div style="text-align: right; width: 70%; float: right;">
                 <div style="padding: 0px 50px">
-                    <el-button type="primary" icon="el-icon-plus" circle :title="$t('news.add')"
-                               @click="createUserVisible = true"></el-button>
+                    <el-dropdown @command="handleCommand">
+                        <el-button type="primary" icon="el-icon-plus" circle >
+                        </el-button>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item :command="{action: 'createModel', type: 'article'}">Создать новость</el-dropdown-item>
+                            <el-dropdown-item :command="{action: 'createModel', type: 'advertising'}">Создать рекламу</el-dropdown-item>
+                            <el-dropdown-item :command="{action: 'createModel', type: 'message'}">Создать уведомление</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
                 </div>
             </div>
         </el-row>
@@ -172,9 +180,18 @@
                         name: 'Русский'
                     },
                 ],
+                actions: {
+                    createModel: {
+                        open: false,
+                        type: ''
+                    },
+                    editModel: {
+                        open: false,
+                        type: ''
+                    },
+                },
                 userOnEdit: null,
                 userOnDelete: null,
-                createUserVisible: false,
                 editUserVisible: false,
                 deleteUserVisible: false,
                 filters: {
@@ -199,20 +216,27 @@
             }
         },
         methods: {
+            handleCommand(command) {
+                if (this.actions[command.action]){
+                    this.actions[command.action].open = true
+                    this.actions[command.action].type = command.type
+                }
+            },
             openDeleteUser(user) {
                 this.userOnDelete = user;
                 this.deleteUserVisible = true;
             },
             openEditUser(user) {
                 this.userOnEdit = user;
-                this.editUserVisible = true;
+                this.actions.editModel.type = user.type
+                this.actions.editModel.open = true;
             },
             userCreated() {
-                this.createUserVisible = false;
+                this.actions.createModel.open = false
                 this.getData();
             },
             userEdited() {
-                this.editUserVisible = false;
+                this.actions.editModel.open = false
                 this.getData();
             },
             userDeleted(news) {

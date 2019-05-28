@@ -1,10 +1,11 @@
 var data = {
     nav: {
-        admins: 'Администраторы',
+        users: 'Администраторы',
         students: 'Студенты',
         permissions: 'Роли и права',
         news: 'Новости',
         products: 'Продукты',
+        home: 'Главная'
     },
     header: {
         logout: 'Выйти'
@@ -49,6 +50,20 @@ var data = {
             last_name: 'Фамилия',
             role: 'Роль',
         }
+    },
+    permissions: {
+        tab: {
+            roles: 'Роли',
+            users: 'Пользователи'
+        },
+        title: 'Назание',
+        abilities: 'Доступы',
+        name: 'Имя',
+        role: 'Роли',
+        permissions: 'Разрешения',
+        assign: 'Назначить',
+        unassign: 'Отменить',
+        nodata: 'Нет данных'
     }
 };
 

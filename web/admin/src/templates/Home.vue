@@ -6,6 +6,12 @@
         <el-container>
             <navigation/>
             <el-main>
+                <div class="breadcrumb">
+                    <el-breadcrumb separator-class="el-icon-arrow-right">
+                        <el-breadcrumb-item :to="{ path: '/' }">{{$t('nav.home')}}</el-breadcrumb-item>
+                        <el-breadcrumb-item >{{$t('nav.' + $router.currentRoute.name)}}</el-breadcrumb-item>
+                    </el-breadcrumb>
+                </div>
                 <div class="m-content">
                     <router-view/>
                 </div>
@@ -43,11 +49,18 @@
         },
         mounted() {
             this.getUser();
+            console.log(this.$router)
         }
     }
 </script>
 
 <style>
+    .breadcrumb {
+        margin: auto;
+        width: 90%;
+        padding: 20px;
+    }
+
     .el-dropdown-link {
         cursor: pointer;
         color: #409EFF;

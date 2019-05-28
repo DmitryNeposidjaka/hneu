@@ -15,18 +15,20 @@ class CreateNewsTable extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('type', 20);
+            $table->string('link');
             $table->string('title');
-            $table->text('description');
-            $table->text('content');
+            $table->text('description')->nullable();
+            $table->text('content')->nullable();
             $table->integer('creator_id');
             $table->string('entity');
-            $table->string('thumbnail');
-            $table->json('images');
-            $table->string('type');
-            $table->string('link');
+            $table->string('thumbnail')->nullable();
+            $table->json('images')->nullable();
             $table->string('lang', 20);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->unique(['type', 'lang', 'link'], 'unique_news_index');
         });
     }
 

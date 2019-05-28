@@ -1,10 +1,11 @@
 var data = {
     nav: {
-        admins: 'Admins',
+        users: 'Admins',
         students: 'Students',
         permissions: 'Permissions',
         news: 'News',
         products: 'Products',
+        home: 'Home'
     },
     header: {
         logout: 'Logout'
@@ -46,6 +47,20 @@ var data = {
             last_name: 'Last Name',
             role: 'Role',
         }
+    },
+    permissions: {
+        tab: {
+            roles: 'Roles',
+            users: 'Users'
+        },
+        title: 'Title',
+        abilities: 'Abilities',
+        name: 'Name',
+        role: 'Role',
+        permissions: 'Permissions',
+        assign: 'Assign',
+        unassign: 'Unassign',
+        nodata: 'No data'
     }
 };
 

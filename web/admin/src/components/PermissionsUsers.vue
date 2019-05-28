@@ -7,7 +7,7 @@
                                @click="clearRefresh"></el-button>
                 </el-col>
                 <el-col :span="16">
-                    <el-input placeholder="Title" v-model="filters.fullname"></el-input>
+                    <el-input :placeholder="$t('permissions.name')" v-model="filters.fullname"></el-input>
                 </el-col>
                 <el-col :span="4">
                     <el-button type="success" icon="el-icon-search" @click="getData">{{ $t('common.search') }}</el-button>
@@ -20,12 +20,12 @@
                     @row-click="rowClick">
                 <el-table-column
                         prop="fullname"
-                        label="Name"
+                        :label="$t('permissions.name')"
                         width="180">
                 </el-table-column>
                 <el-table-column
                         prop="role"
-                        label="Role"
+                        :label="$t('permissions.role')"
                         width="180">
                 </el-table-column>
             </el-table>
@@ -37,20 +37,20 @@
             </el-pagination>
         </el-col>
         <el-col :span="15">
-            <div v-if="form.user">Assign to <span style="color: #1d68a7">{{form.user.fullname}}</span></div>
+            <div v-if="form.user">{{$t('permissions.assign')}}<span style="color: #1d68a7">{{form.user.fullname}}</span></div>
                 <el-transfer
                         style="text-align: left; display: inline-block"
                         v-model="form.permissions"
                         filterable
-                        :titles="['Abilities', 'Permissions']"
-                        :button-texts="['Unassign', 'Assign']"
+                        :titles="[$t('permissions.abilities'), $t('permissions.permissions')]"
+                        :button-texts="[$t('permissions.unassign'), $t('permissions.assign')]"
                         :format="{
                         noChecked: '${total}',
                         hasChecked: '${checked}/${total}'
                       }"
                         :data="_abilities">
                                    <!--<el-button class="transfer-footer" slot="left-footer" size="small">Operation</el-button>-->
-                                   <el-button class="transfer-footer" slot="right-footer" size="small" @click="assignAbilities" :disabled="form.user == null">Assign</el-button>
+                                   <el-button class="transfer-footer" slot="right-footer" size="small" @click="assignAbilities" :disabled="form.user == null">{{$t('permissions.assign')}}</el-button>
                 </el-transfer>
         </el-col>
     </el-row>

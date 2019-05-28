@@ -6,7 +6,7 @@
 
         <el-menu-item index="1" :route="{name: 'users'}">
             <i class="far fa-address-card"></i>
-            <span>{{ $t('nav.admins') }}</span>
+            <span>{{ $t('nav.users') }}</span>
         </el-menu-item>
         <el-menu-item index="2" :route="{name: 'students'}">
             <i class="fas fa-user-graduate"></i>
