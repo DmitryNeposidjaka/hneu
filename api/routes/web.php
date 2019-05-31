@@ -45,5 +45,18 @@ Route::group(['prefix' => '{locale?}'], function () {
     Route::get('/admin', function () {
         return view('admin');
     });
+
+
+    Route::get('/page/{link}', function (\Illuminate\Http\Request $request, $lang, $link) {
+        return view('web.page', [
+            'page' => \App\Models\Page::where(['link' => $link, 'lang' => app()->getLocale()])->first()->toArray()
+        ]);
+    });
+
+    Route::get('/product/{link}', function (\Illuminate\Http\Request $request, $lang, $link) {
+        return view('web.product', [
+            'product' => \App\Models\Product::where(['link' => $link, 'lang' => app()->getLocale()])->first()->toArray()
+        ]);
+    });
 });
 
