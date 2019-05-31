@@ -24,6 +24,10 @@
             <i class="fas fa-shopping-basket"></i>
             <span>{{ $t('nav.products') }}</span>
         </el-menu-item>
+        <el-menu-item index="5" :route="{name: 'pages'}">
+            <i class="fa fa-window-maximize"></i>
+            <span> {{ $t('nav.pages') }} </span>
+        </el-menu-item>
     </el-menu>
 </template>
 

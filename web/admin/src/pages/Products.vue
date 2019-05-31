@@ -5,7 +5,7 @@
                 :visible.sync="createUserVisible"
                 width="60%">
             <create-product style="padding: 0px 100px 0px 50px" v-on:productCreated="productCreated"
-                            :categories="categories">
+                            :categories="categories" :languages="languages">
             </create-product>
         </el-dialog>
         <el-dialog
@@ -158,6 +158,20 @@
         components: {CreateProduct, EditProduct, DeleteProduct},
         data() {
             return {
+                languages: [
+                    {
+                        id: 'ua',
+                        name: 'Українська'
+                    },
+                    {
+                        id: 'en',
+                        name: 'English'
+                    },
+                    {
+                        id: 'ru',
+                        name: 'Русский'
+                    },
+                ],
                 userOnEdit: null,
                 userOnDelete: null,
                 createUserVisible: false,

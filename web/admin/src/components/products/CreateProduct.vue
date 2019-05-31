@@ -1,12 +1,28 @@
 <template>
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
-        <el-form-item label="Title" prop="title">
+        <el-form-item :label="$t('news.language')" prop="lang">
+            <el-select
+                    v-model="ruleForm.lang"
+                    default-first-option
+                    :placeholder="$t('news.choose_language')">
+                <el-option
+                        v-for="lang in languages"
+                        :key="lang.id"
+                        :label="lang.name"
+                        :value="lang.id">
+                </el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item :label="$t('news.link')" prop="link">
+            <el-input v-model="ruleForm.link"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('news.title')" prop="title">
             <el-input v-model="ruleForm.title"></el-input>
         </el-form-item>
-        <el-form-item label="Description" prop="description">
+        <el-form-item :label="$t('news.description')" prop="description">
             <vue-editor v-model="ruleForm.description"></vue-editor>
         </el-form-item>
-        <el-form-item label="Categories" prop="categories">
+        <el-form-item :label="$t('news.categories')" prop="categories">
             <el-select
                     v-model="ruleForm.categories"
                     multiple
@@ -37,7 +53,7 @@
         </el-upload>
         <div class="images-block">
             <div class="img-content" v-for="(img, i) in thumbnailsUrl">
-                <img width="100%" :src="defaultUrl + img" alt="" class="avatar">
+                <img width="100%" :src="img" alt="" class="avatar">
                 <el-button class="cancel-button" @click="handleRemove(i)" type="danger"
                            icon="el-icon-circle-close-outline" circle size="mini"></el-button>
             </div>
@@ -100,7 +116,7 @@
 
     export default {
         components: {VueEditor},
-        props: ['categories'],
+        props: ['categories', 'languages'],
         data() {
             return {
                 imageUrl: '',

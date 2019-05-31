@@ -5,7 +5,8 @@ var data = {
         permissions: 'Роли и права',
         news: 'Новости',
         products: 'Продукты',
-        home: 'Главная'
+        home: 'Главная',
+        pages: 'Страницы',
     },
     header: {
         logout: 'Выйти'
@@ -35,7 +36,7 @@ var data = {
         upload_photo: 'Загрузить фото',
         table: {
             title: 'Название',
-            created_at: 'Создан в'
+            created_at: 'Создан в',
         },
     },
     user: {

@@ -12,6 +12,20 @@ class NewsFilter extends ModelFilter
      */
     public $relations = [];
 
+    public function lang($lang)
+    {
+        return $this->where('lang',  $lang);
+    }
+
+    public function type($type)
+    {
+        return $this->where('type', $type);
+    }
+
+    public function title($name)
+    {
+        return $this->where('title', 'like', "%{$name}%");
+    }
 /*    public function name($name)
     {
         return $this->where('firstname', 'like', "%{$name}%")->orWhere('lastname', 'like', "%{$name}%");

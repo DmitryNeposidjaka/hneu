@@ -5,7 +5,8 @@ var data = {
         permissions: 'Permissions',
         news: 'News',
         products: 'Products',
-        home: 'Home'
+        home: 'Home',
+        pages: 'Pages'
     },
     header: {
         logout: 'Logout'

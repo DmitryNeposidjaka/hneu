@@ -42,7 +42,7 @@
 
     .el-header {
         border-bottom: 2px solid #FFFD00;
-        color: #495057;
+        color: #495057!;
         line-height: 60px;
         padding: 0px 0px;
     }

@@ -48,6 +48,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
             Route::delete('/{item}', 'NewsController@delete');
             Route::post('/{item}', 'NewsController@update');
         });
+        Route::group(['prefix' => 'pages'], function () {
+            Route::get('/all', 'PagesController@getAll');
+            Route::get('/categories/all', 'NewsController@getAllCategories');
+            Route::get('/{page}', 'PagesController@getItem');
+            Route::post('/', 'PagesController@create');
+            Route::delete('/{page}', 'PagesController@delete');
+            Route::post('/{page}', 'PagesController@update');
+        });
         Route::group(['prefix' => 'product'], function () {
             Route::get('/all', 'ProductController@getAll');
             Route::get('/categories/all', 'ProductController@getAllCategories');

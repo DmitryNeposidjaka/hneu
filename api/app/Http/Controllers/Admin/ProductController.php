@@ -41,7 +41,7 @@ class ProductController extends Controller
 
     public function create(ProductCreateRequest $request)
     {
-        $product = new Product($request->only(['title', 'description']));
+        $product = new Product($request->only(['title', 'description', 'link', 'lang']));
         $product->creator_id = Auth::id();
         $product->entity = User::class;
         $product->setImages($request->file('thumbnails', []));
@@ -53,7 +53,7 @@ class ProductController extends Controller
 
     public function update(ProductUpdateRequest $request, Product $product)
     {
-        $product->update($request->only(['title', 'description', 'images']));
+        $product->update($request->only(['title', 'description', 'images', 'lang', 'link']));
         $product->setImages(
             $request->thumbnails?? []
         );

@@ -7,6 +7,7 @@ import Students from './pages/Students'
 import News from './pages/News'
 import Products from './pages/Products'
 import Permissions from './pages/Permissions'
+import Pages from './pages/Pages'
 
 Vue.use(Router);
 
@@ -48,6 +49,11 @@ export default new Router({
             path: '/products',
             name: 'products',
             component: Products,
+        },
+        {
+            path: '/pages',
+            name: 'pages',
+            component: Pages,
         },
       ]
     },

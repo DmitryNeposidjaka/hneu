@@ -13,7 +13,7 @@ class Product extends Model
     use Filterable;
 
     protected $fillable = [
-        'title', 'description',
+        'title', 'description', 'lang', 'images', 'link',
     ];
 
     protected $casts = [
