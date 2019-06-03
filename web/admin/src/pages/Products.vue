@@ -83,6 +83,14 @@
                     label="Title">
             </el-table-column>
             <el-table-column
+                    prop="lang"
+                    label="Lang">
+            </el-table-column>
+            <el-table-column
+                    prop="price"
+                    label="Price">
+            </el-table-column>
+            <el-table-column
                     prop="created_at"
                     label="Created at">
             </el-table-column>

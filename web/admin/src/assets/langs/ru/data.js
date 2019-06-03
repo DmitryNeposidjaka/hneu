@@ -34,6 +34,7 @@ var data = {
         content: 'Контент',
         categories: 'Категории',
         upload_photo: 'Загрузить фото',
+        price: 'Цена',
         table: {
             title: 'Название',
             created_at: 'Создан в',

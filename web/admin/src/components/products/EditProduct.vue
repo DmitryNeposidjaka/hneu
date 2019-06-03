@@ -3,6 +3,9 @@
         <el-form-item label="Title" prop="title">
             <el-input v-model="ruleForm.title"></el-input>
         </el-form-item>
+        <el-form-item :label="$t('news.price')" prop="price" style="text-align: left">
+            <el-input v-model="ruleForm.price" style="width: 200px"></el-input>
+        </el-form-item>
         <el-form-item label="Description" prop="description">
             <vue-editor v-model="ruleForm.description"></vue-editor>
         </el-form-item>
@@ -112,6 +115,7 @@
                 dialogVisible: false,
                 ruleForm: {
                     title: '',
+                    price: '',
                     description: '',
                     thumbnails: [],
                     categories: []
@@ -124,6 +128,9 @@
                     description: [
                         {required: true, message: 'Please input Activity description', trigger: 'blur'},
                         {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
+                    ],
+                    price: [
+                        {required: true, message: 'Please input price', trigger: 'blur'}
                     ],
                 }
             };

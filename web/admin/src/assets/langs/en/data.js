@@ -31,6 +31,7 @@ var data = {
         content: 'Content',
         categories: 'Categories',
         upload_photo: 'Upload Photo',
+        price: 'Price',
         table: {
             title: 'Title',
             created_at: 'Created at'
