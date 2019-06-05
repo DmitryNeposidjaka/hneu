@@ -71,28 +71,54 @@
                             <span class="product-card-title">{{ props.row.title }}</span>
                             <span class="product-card-date">{{ props.row.created_at }}</span>
                         </div>
-                        <p title="Content" v-html="props.row.description">{{ props.row.description }}</p>
-                        <div class="product-card-image-place">
-                            <img v-for="image in props.row.thumbnails" :src="image"/>
-                        </div>
+                        <el-row>
+                            <el-col style="padding-left: 20px; margin: 20px 0px; color: #1d68a7">
+                                <a :href="defaultUrl+'/'+props.row.lang+'/product/'+props.row.link">{{defaultUrl+'/'+props.row.lang+'/product/'+props.row.link}}</a>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col style="padding-left: 20px; margin: 20px 0px; color: #1d68a7">{{props.row.categories.map(function(item, i, arr) {
+                                return item.name
+                                }).join(', ')}}</el-col>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <el-col :span="16" style="padding-left: 25px;">
+                                <div v-html="props.row.description" class="ql-editor">{{ props.row.description }}</div>
+                            </el-col>
+                            <el-col :span="8">
+                                <div class="news-card-image-place" v-if="props.row.thumbnails">
+                                    <img :src="props.row.thumbnails.pop()"/>
+                                </div>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <div title="Content" v-html="props.row.content" class="ql-editor">{{ props.row.content }}</div>
+                        </el-row>
+                        <el-row>
+                            <div class="images-block">
+                                <div class="img-content" v-for="(img, i) in props.row.thumbnails">
+                                    <img width="100%" :src="img" alt="" class="avatar">
+                                </div>
+                            </div>
+                        </el-row>
                     </el-card>
                 </template>
             </el-table-column>
             <el-table-column
                     prop="title"
-                    label="Title">
+                    label="Название">
             </el-table-column>
             <el-table-column
                     prop="lang"
-                    label="Lang">
+                    label="Язык">
             </el-table-column>
             <el-table-column
                     prop="price"
-                    label="Price">
+                    label="Цена">
             </el-table-column>
             <el-table-column
                     prop="created_at"
-                    label="Created at">
+                    label="Создан в">
             </el-table-column>
             <el-table-column
                     align="right">
@@ -180,6 +206,7 @@
                         name: 'Русский'
                     },
                 ],
+                defaultUrl: '',
                 userOnEdit: null,
                 userOnDelete: null,
                 createUserVisible: false,
@@ -294,6 +321,7 @@
         mounted() {
             this.getData();
             this.getCategories();
+            this.defaultUrl = process.env.VUE_APP_SERVER_URL;
         }
     }
 </script>

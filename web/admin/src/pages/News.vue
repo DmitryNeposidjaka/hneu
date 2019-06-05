@@ -98,17 +98,50 @@
                             <span class="news-card-title">{{ props.row.title }}</span>
                             <span class="news-card-date">{{ props.row.created_at }}</span>
                         </div>
-                        <div class="news-card-image-place">
-                            <img :src="props.row.thumbnail"/>
-                        </div>
-                        <p title="Description">{{ props.row.description }} </p>
-                        <div title="Content" v-html="props.row.content" class="ql-editor">{{ props.row.content }}</div>
+                        <el-row>
+                            <el-col style="padding-left: 20px; margin: 20px 0px; color: #1d68a7">
+                                <a :href="defaultUrl+'/'+props.row.lang+'/blog/'+props.row.type+'/'+props.row.link">{{defaultUrl+'/'+props.row.lang+'/blog/'+props.row.type+'/'+props.row.link}}</a>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col style="padding-left: 20px; margin: 20px 0px; color: #1d68a7">{{props.row.categories.map(function(item, i, arr) {
+                                return item.name
+                                }).join(', ')}}</el-col>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <el-col :span="16" style="padding-left: 25px;">
+                                <div>{{ props.row.description }}</div>
+                            </el-col>
+                            <el-col :span="8">
+                                <div class="news-card-image-place" v-if="props.row.thumbnail">
+                                    <img :src="props.row.thumbnail"/>
+                                </div>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <div title="Content" v-html="props.row.content" class="ql-editor">{{ props.row.content }}</div>
+                        </el-row>
+                        <el-row>
+                            <div class="images-block">
+                                <div class="img-content" v-for="(img, i) in props.row.thumbnails">
+                                    <img width="100%" :src="img" alt="" class="avatar">
+                                </div>
+                            </div>
+                        </el-row>
                     </el-card>
                 </template>
             </el-table-column>
             <el-table-column
                     prop="title"
                     :label="$t('news.table.title')">
+            </el-table-column>
+            <el-table-column
+                    prop="type"
+                    :label="$t('news.type')">
+            </el-table-column>
+            <el-table-column
+                    prop="lang"
+                    :label="$t('news.language')">
             </el-table-column>
             <el-table-column
                     prop="created_at"
@@ -147,7 +180,7 @@
     }
 
     .news-card-image-place img {
-        width: 200px;
+        width: 300px;
         border: 4px solid #f4f4f5;
         border-radius: 1px;
     }
@@ -174,6 +207,23 @@
         text-align: left;
         overflow: auto;
         height: auto;
+    }
+
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
+
+    .images-block {
+        width: 100%;
+    }
+
+    .img-content {
+        width: 200px;
+        height: 200px;
+        margin: 0px 5px;
+        display: inline-block;
     }
 </style>
 
@@ -224,6 +274,7 @@
                         type: ''
                     },
                 },
+                defaultUrl: '',
                 userOnEdit: null,
                 userOnDelete: null,
                 editUserVisible: false,
@@ -341,6 +392,7 @@
         mounted() {
             this.getData();
             this.getCategories();
+            this.defaultUrl = process.env.VUE_APP_SERVER_URL;
         }
     }
 </script>

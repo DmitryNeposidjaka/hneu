@@ -52,7 +52,7 @@
             <el-input v-model="ruleForm.title"></el-input>
         </el-form-item>
         <el-form-item :label="$t('news.link')">
-            {{defaultUrl+'/'+ruleForm.lang+'/article/'+ruleForm.link}}
+            {{defaultUrl+'/'+ruleForm.lang+'/blog/article/'+ruleForm.link}}
         </el-form-item>
         <el-form-item :label="$t('news.link')" prop="link">
             <el-input v-model="linkMutated"></el-input>
