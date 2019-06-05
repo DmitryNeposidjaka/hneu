@@ -54,13 +54,13 @@ class NewsController extends Controller
         $item->entity = User::class;
         $item->setImages($request->file('thumbnails', []));
         $item->save();
-        $item->setCategories($request->categories);
+        $item->setCategories($request->input('categories', []));
         return $item;
     }
 
     public function update(NewsUpdateRequest $request, News $item)
     {
-        $item->update($request->only(['title', 'description', 'content', 'lang']));
+        $item->update($request->only(['title', 'description', 'content', 'lang', 'link']));
 
         if ($request->hasFile('thumbnail')) {
             $path = $request->file('thumbnail')
@@ -74,7 +74,7 @@ class NewsController extends Controller
             $request->thumbnails ?? []
         );
         $item->save();
-        $item->setCategories($request->categories);
+        $item->setCategories($request->input('categories', []));
         return $item;
     }
 

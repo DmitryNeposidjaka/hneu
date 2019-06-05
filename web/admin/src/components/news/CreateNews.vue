@@ -19,8 +19,11 @@
 
             }
         },
-        modelCreated() {
-            this.$emit('newsCreated');
+        methods: {
+
+            modelCreated() {
+                this.$emit('newsCreated');
+            }
         }
     }
 </script>

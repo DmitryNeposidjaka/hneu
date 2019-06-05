@@ -13,12 +13,15 @@
                 </el-option>
             </el-select>
         </el-form-item>
-        <el-form-item :label="$t('news.link')" prop="link">
-            <el-input v-model="ruleForm.link"></el-input>
-        </el-form-item>
         <el-form-item :label="$t('news.title')" prop="title">
             <el-input v-model="ruleForm.title"></el-input>
         </el-form-item>
+        <el-form-item :label="$t('news.link')">
+            {{defaultUrl+'/'+ruleForm.lang+'/page/'+ruleForm.link}}
+        </el-form-item>
+            <el-form-item :label="$t('news.link')" prop="link">
+                <el-input v-model="linkMutated"></el-input>
+            </el-form-item>
             <el-tabs v-model="tab">
                 <el-tab-pane label="Редактор" name="redactor">
                     <el-form-item :label="$t('news.content')" prop="content">
@@ -104,6 +107,7 @@
 <script>
 
     import { VueEditor } from 'vue2-editor'
+    import {slugify} from 'transliteration'
 
     export default {
         components: {VueEditor},
@@ -114,12 +118,13 @@
                 imageUrl: '',
                 defaultUrl: '',
                 thumbnailsUrl: [],
+                tempLink: '',
                 ruleForm: {
                     link: '',
                     title: '',
                     description: '',
                     content: '',
-                    lang: ''
+                    lang: 'ua'
                 },
                 rules: {
                     title: [
@@ -138,6 +143,20 @@
                     ],
                 }
             };
+        },
+        computed: {
+            linkMutated: {
+                get: function () {
+                    if (this.tempLink == '') {
+                        this.ruleForm.link = slugify(this.ruleForm.title)
+                    }
+                    return this.ruleForm.link
+                },
+                set: function (val) {
+                    this.tempLink = val
+                    this.ruleForm.link = slugify(val)
+                }
+            }
         },
         methods: {
             submitForm(formName) {

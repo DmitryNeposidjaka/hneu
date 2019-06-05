@@ -48,11 +48,14 @@
                 </el-upload>
             </el-col>
         </el-row>
-        <el-form-item :label="$t('news.link')" prop="link">
-            <el-input v-model="ruleForm.link"></el-input>
-        </el-form-item>
         <el-form-item :label="$t('news.title')" prop="title">
             <el-input v-model="ruleForm.title"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('news.link')">
+            {{defaultUrl+'/'+ruleForm.lang+'/article/'+ruleForm.link}}
+        </el-form-item>
+        <el-form-item :label="$t('news.link')" prop="link">
+            <el-input v-model="linkMutated"></el-input>
         </el-form-item>
         <el-form-item :label="$t('news.description')" prop="description">
             <el-input v-model="ruleForm.description"
@@ -95,6 +98,7 @@
     .form-buttons div {
         margin: 50px;
     }
+
     .avatar-uploader .el-upload {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;
@@ -150,7 +154,8 @@
 
 
 <script>
-    import { VueEditor } from 'vue2-editor'
+    import {VueEditor} from 'vue2-editor'
+    import {slugify} from 'transliteration'
 
     export default {
         components: {VueEditor},
@@ -174,6 +179,7 @@
                         name: 'Message'
                     },
                 ],
+                tempLink: '',
                 ruleForm: {
                     link: '',
                     title: '',
@@ -183,7 +189,7 @@
                     thumbnail: '',
                     categories: [],
                     thumbnails: [],
-                    lang: ''
+                    lang: 'ua'
                 },
                 rules: {
                     title: [
@@ -209,6 +215,20 @@
                 }
             };
         },
+        computed: {
+            linkMutated: {
+                get: function () {
+                    if (this.tempLink == '') {
+                        this.ruleForm.link = slugify(this.ruleForm.title)
+                    }
+                    return this.ruleForm.link
+                },
+                set: function (val) {
+                    this.tempLink = val
+                    this.ruleForm.link = slugify(val)
+                }
+            }
+        },
         methods: {
             uploadFile() {
                 var vm = this;
@@ -222,7 +242,7 @@
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(function (response) {
-                    if(response.status == 200) {
+                    if (response.status == 200) {
                         vm.imageUrl = response.data
                     }
                 })

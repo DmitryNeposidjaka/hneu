@@ -27,6 +27,8 @@ class NewsUpdateRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'content' => 'required|string',
+            'link' => 'required|string',
+            'lang' => 'required',
         ];
     }
 }

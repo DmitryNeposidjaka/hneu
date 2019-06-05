@@ -13,14 +13,17 @@
                 </el-option>
             </el-select>
         </el-form-item>
-        <el-form-item :label="$t('news.link')" prop="link">
-            <el-input v-model="ruleForm.link"></el-input>
-        </el-form-item>
         <el-form-item :label="$t('news.title')" prop="title">
             <el-input v-model="ruleForm.title"></el-input>
         </el-form-item>
+        <el-form-item :label="$t('news.link')">
+            {{defaultUrl+'/'+ruleForm.lang+'/product/'+ruleForm.link}}
+        </el-form-item>
+        <el-form-item :label="$t('news.link')" prop="link">
+            <el-input v-model="linkMutated"></el-input>
+        </el-form-item>
         <el-form-item :label="$t('news.price')" prop="price" style="text-align: left">
-            <el-input v-model="ruleForm.price" style="width: 200px"></el-input>
+            <el-input :type="'number'" v-model="ruleForm.price" style="width: 200px"></el-input>
         </el-form-item>
         <el-form-item :label="$t('news.description')" prop="description">
             <vue-editor v-model="ruleForm.description"></vue-editor>
@@ -115,7 +118,8 @@
     }
 </style>
 <script>
-    import { VueEditor } from 'vue2-editor'
+    import {VueEditor} from 'vue2-editor'
+    import {slugify} from 'transliteration'
 
     export default {
         components: {VueEditor},
@@ -126,27 +130,42 @@
                 thumbnailsUrl: [],
                 defaultUrl: '',
                 dialogVisible: false,
+                tempLink: '',
                 ruleForm: {
                     title: '',
-                    price: '',
+                    price: 0,
                     description: '',
                     thumbnails: [],
                     categories: [],
+                    lang: 'ua',
                 },
                 rules: {
                     title: [
-                        {required: true, message: 'Please input product title', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
+                        {required: true, message: 'Название должно быть заполнено', trigger: 'blur'},
+                        {min: 3, max: 255, message: 'Длина должна быть между 3 и 255 символами', trigger: 'blur'}
                     ],
                     description: [
-                        {required: true, message: 'Please input product description', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
+                        {required: true, message: 'Описание должно быть заполнено', trigger: 'blur'},
                     ],
                     price: [
-                        {required: true, message: 'Please input price', trigger: 'blur'}
+                        {required: true, message: 'Цена должна быть заполнена', trigger: 'blur'},
                     ],
                 }
             };
+        },
+        computed: {
+            linkMutated: {
+                get: function () {
+                    if (this.tempLink == '') {
+                        this.ruleForm.link = slugify(this.ruleForm.title)
+                    }
+                    return this.ruleForm.link
+                },
+                set: function (val) {
+                    this.tempLink = val
+                    this.ruleForm.link = slugify(val)
+                }
+            }
         },
         methods: {
             handleRemove(item) {

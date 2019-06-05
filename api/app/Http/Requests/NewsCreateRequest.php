@@ -28,6 +28,7 @@ class NewsCreateRequest extends FormRequest
             'description' => 'required|string',
             'content' => 'sometimes|required|string',
             'thumbnail' => 'sometimes|required|image|max:2000',
+            'link' => 'required|string',
             'lang' => 'required',
 
         ];

@@ -3,8 +3,14 @@
         <el-form-item label="Title" prop="title">
             <el-input v-model="ruleForm.title"></el-input>
         </el-form-item>
+        <el-form-item :label="$t('news.link')">
+            {{defaultUrl+'/'+ruleForm.lang+'/product/'+ruleForm.link}}
+        </el-form-item>
+        <el-form-item :label="$t('news.link')" prop="link">
+            <el-input v-model="linkMutated"></el-input>
+        </el-form-item>
         <el-form-item :label="$t('news.price')" prop="price" style="text-align: left">
-            <el-input v-model="ruleForm.price" style="width: 200px"></el-input>
+            <el-input :type="'number'" v-model="ruleForm.price" style="width: 200px"></el-input>
         </el-form-item>
         <el-form-item label="Description" prop="description">
             <vue-editor v-model="ruleForm.description"></vue-editor>
@@ -104,6 +110,8 @@
 
 <script>
     import { VueEditor } from 'vue2-editor'
+    import {slugify} from 'transliteration'
+
     export default {
         components: {VueEditor},
         props: ['product', 'categories'],
@@ -113,6 +121,7 @@
                 thumbnailsUrl: [],
                 defaultUrl: '',
                 dialogVisible: false,
+                tempLink: '',
                 ruleForm: {
                     title: '',
                     price: '',
@@ -134,6 +143,28 @@
                     ],
                 }
             };
+        },
+        computed: {
+            linkMutated: {
+                get: function () {
+                    if (this.tempLink == '') {
+                        this.ruleForm.link = slugify(this.ruleForm.title)
+                    }
+                    return this.ruleForm.link
+                },
+                set: function (val) {
+                    this.tempLink = val
+                    this.ruleForm.link = slugify(val)
+                }
+            },
+            priceMutated: {
+                get: function () {
+                    return this.ruleForm.price
+                },
+                set: function (val) {
+                    this.ruleForm.price = val
+                }
+            }
         },
         methods: {
             handleRemoveImages(item) {
