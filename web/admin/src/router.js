@@ -8,6 +8,8 @@ import News from './pages/News'
 import Products from './pages/Products'
 import Permissions from './pages/Permissions'
 import Pages from './pages/Pages'
+import Documents from './pages/Documents'
+import Memos from './pages/Memos'
 
 Vue.use(Router);
 
@@ -54,6 +56,16 @@ export default new Router({
             path: '/pages',
             name: 'pages',
             component: Pages,
+        },
+        {
+            path: '/documents',
+            name: 'documents',
+            component: Documents,
+        },
+        {
+            path: '/memos',
+            name: 'memos',
+            component: Memos,
         },
       ]
     },

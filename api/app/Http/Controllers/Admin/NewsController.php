@@ -60,7 +60,7 @@ class NewsController extends Controller
 
     public function update(NewsUpdateRequest $request, News $item)
     {
-        $item->update($request->only(['title', 'description', 'content', 'lang', 'link']));
+        $item->update($request->only(['title', 'description', 'content', 'lang', 'link', 'type']));
 
         if ($request->hasFile('thumbnail')) {
             $path = $request->file('thumbnail')

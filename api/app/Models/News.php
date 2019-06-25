@@ -32,6 +32,9 @@ class News extends Model
 
     public function getThumbnailAttribute($value)
     {
+        if (is_null($this->attributes['thumbnail'])) {
+            return null;
+        }
         return Storage::disk('news-img')->url($value);
     }
 
@@ -119,6 +122,6 @@ class News extends Model
                 \Storage::disk('news-img')->url($image),
                 $updated
             );
-        } );
+        });
     }
 }

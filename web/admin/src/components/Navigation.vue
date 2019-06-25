@@ -28,6 +28,14 @@
             <i class="fa fa-window-maximize"></i>
             <span> {{ $t('nav.pages') }} </span>
         </el-menu-item>
+        <el-menu-item index="5" :route="{name: 'documents'}">
+            <i class="fas fa-file-alt"></i>
+            <span>{{ $t('nav.documents') }}</span>
+        </el-menu-item>
+        <el-menu-item index="5" :route="{name: 'memos'}">
+            <i class="far fa-comment-dots"></i>
+            <span>{{ $t('nav.memos') }}</span>
+        </el-menu-item>
     </el-menu>
 </template>
 

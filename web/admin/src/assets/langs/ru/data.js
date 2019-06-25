@@ -7,6 +7,8 @@ var data = {
         products: 'Продукты',
         home: 'Главная',
         pages: 'Страницы',
+        documents: 'Документы',
+        memos: 'Памятки'
     },
     header: {
         logout: 'Выйти'

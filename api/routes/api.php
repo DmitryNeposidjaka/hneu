@@ -64,6 +64,22 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
             Route::delete('/{product}', 'ProductController@delete');
             Route::post('/{product}', 'ProductController@update');
         });
+        Route::group(['prefix' => 'document'], function () {
+            Route::get('/all', 'DocumentController@getAll');
+            Route::get('/categories/all', 'DocumentController@getAllCategories');
+            Route::get('/{product}', 'DocumentController@getDocument');
+            Route::post('/', 'DocumentController@create');
+            Route::delete('/{product}', 'DocumentController@delete');
+            Route::post('/{product}', 'DocumentController@update');
+        });
+        Route::group(['prefix' => 'memo'], function () {
+            Route::get('/all', 'MemoController@getAll');
+            Route::get('/categories/all', 'MemoController@getAllCategories');
+            Route::get('/{product}', 'MemoController@getMemo');
+            Route::post('/', 'MemoController@create');
+            Route::delete('/{product}', 'MemoController@delete');
+            Route::post('/{product}', 'MemoController@update');
+        });
         Route::group(['prefix' => 'permissions'], function () {
             Route::get('/roles', 'PermissionsController@getRoles');
             Route::get('/abilities', 'PermissionsController@getAbilities');
