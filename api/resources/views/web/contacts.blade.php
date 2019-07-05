@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Вступительная компания</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- Material Kit CSS -->
+    <link href="assets/css/material-kit.css?v=2.1.1" rel="stylesheet" />
+
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <!-- Modernizr -->
+    <script src="assets/js/modernizr.js"></script>
+</head>
+
+<body>
+<header>
+    <div class="cd-logo"><a href="index.html" style="color: white; text-transform: uppercase; white-space: nowrap">Портал студента</a></div>
+    <!--  <div class="cd-logo"><a href="#"><img src="./assets/img/logo.png" alt="Logo"></a></div>-->
+
+    @include('header-nav')
+
+    <a href="#0" class="cd-nav-trigger"><span></span></a>
+
+</header>
+
+<main class="cd-main-content">
+    <div class="page-header header-filter" data-parallax="true" style="background-image: url('assets/img/section-bg-4.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 ml-auto mr-auto">
+                    <div class="brand text-center">
+                        <h1 class="title">Контакты</h1>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main main-raised">
+
+        <div class="section section-contacts">
+            <div class="contactus-1 text-black">
+                <div class="container">
+                    <h2 class="title">Контакты</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="info info-horizontal">
+                                <div class="icon icon-primary">
+                                    <i class="material-icons">pin_drop</i>
+                                </div>
+                                <div class="description">
+                                    <h4 class="info-title">ООО «Бизнес центр «ИНЖЭК»</h4>
+                                    <p> Украина,
+                                        <br> 61166 г. Харьков,
+                                        <br> ул. Бакулина 4-а, офис 52
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="info info-horizontal">
+                                <div class="icon icon-primary">
+                                    <i class="material-icons">phone</i>
+                                </div>
+                                <div class="description">
+                                    <h4 class="info-title">(Whatsapp, Viber, Line, Telegram)</h4>
+                                    <p>+38 050 198 64 41
+                                        <br> +38 097 575 00 21
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="info info-horizontal">
+                                <div class="icon icon-primary">
+                                    <i class="material-icons">email</i>
+                                </div>
+                                <div class="description">
+                                    <h4 class="info-title">Email</h4>
+                                    <p>post@ingek.com
+                                        <br> postllcfirm@gmail.com
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info info-horizontal">
+                                <div class="icon icon-primary">
+                                    <i class="material-icons">pin_drop</i>
+                                </div>
+                                <div class="description">
+                                    <h4 class="info-title">ООО «ИНТКОМ»</h4>
+                                    <p> Украина,
+                                        <br>г. Харьков 61166,
+                                        <br>ул. Бакулина 4-а, офис 52
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="info info-horizontal">
+                                <div class="icon icon-primary">
+                                    <i class="material-icons">phone</i>
+                                </div>
+                                <div class="description">
+                                    <h4 class="info-title">(Whatsapp, Viber, Line, Telegram)</h4>
+                                    <p>+38(050) 198-64-41
+                                        <br>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="info info-horizontal">
+                                <div class="icon icon-primary">
+                                    <i class="material-icons">email</i>
+                                </div>
+                                <div class="description">
+                                    <h4 class="info-title">Email</h4>
+                                    <p>postllcfirm@gmail.com
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="flex-row">
+            <nav>
+                <ul>
+                    <li>
+                        <a href="profile-page.html">
+                            Гостевой профиль
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile-page.html">
+                            Профиль студента
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright">
+                &copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>, сделано <a href="#">Digital Flat [Bo]</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!--   Core JS Files   -->
+<script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
+<script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="./assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+<script src="assets/js/plugin.js"></script>
+<!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
+<script src="./assets/js/material-kit.js?v=2.1.1" type="text/javascript"></script>
+
+</body>
+
+</html>
