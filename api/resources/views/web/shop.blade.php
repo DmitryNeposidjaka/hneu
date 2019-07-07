@@ -1,3 +1,9 @@
+@php
+
+#var_dump($products)
+
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,205 +22,99 @@
     <!-- CSS Files -->
     <link href="/assets/css/material-kit.css?v=2.1.1" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link href="/assets/demo/demo.css" rel="stylesheet" />
-    <link href="/assets/demo/vertical-nav.css" rel="stylesheet" />
+    <!--  <link href="/assets/demo/demo.css" rel="stylesheet" />-->
+    <!--  <link href="/assets/demo/vertical-nav.css" rel="stylesheet" />-->
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <!-- Modernizr -->
+    <script src="/assets/js/modernizr.js"></script>
+
 </head>
 
 <body class="ecommerce-page sidebar-collapse">
-<nav class="navbar navbar-transparent navbar-absolute navbar-expand-lg">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-translate">
-            <a class="navbar-brand logo-big" href="#">
-                <img src="/assets/img/logo.png" alt="ХНЕУ">
-                ХНЕУ
-            </a>
-            <button type="button" class="ml-auto navbar-toggler" data-toggle="collapse" data-target="#navigation-example3">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="navbar-toggler-icon"></span>
-                <span class="navbar-toggler-icon"></span>
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-        <div class="collapse navbar-collapse" id="navigation-example3">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link">
-                        Портал ХНЕУ
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="Introductory-company.html" class="nav-link">
-                        Поступление
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="3d.html" class="nav-link">
-                        3D тур
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="blog-posts.html" class="nav-link">
-                        Блог
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="blog-posts.html" class="nav-link">
-                        Тесты
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="traning.html" class="nav-link">
-                        Подготовка до ЗНО
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="ecommerce.html" class="nav-link">
-                        Магазин
-                    </a>
-                </li>
-                <li class="button-container nav-item iframe-extern">
-                    <a href="/amin/404.html" target="_blank" class="btn  btn-primary   btn-round btn-block">
-                        <i class="material-icons">account_circle</i> &nbsp;&nbsp;Личный кабинет
-                        <div class="ripple-container"></div>
-                    </a>
-                </li>
-                <li class="dropdown nav-item">
-                    <a href="#pablo" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="true" style="display: flex;align-items: center">
-                        <i class="material-icons">g_translate</i> Русский
-                        <b class="caret"></b>
-                        <div class="ripple-container"></div>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#pablo" class="dropdown-item">Русский</a>
-                        <a href="#pablo" class="dropdown-item">English</a>
-                        <a href="#pablo" class="dropdown-item">French</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
 
-<div class="page-header header-filter header-small" data-parallax="true" style="background-image: url('/assets/img/examples/clark-street-merc.jpg');">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 ml-auto mr-auto text-center">
-                <div class="brand">
-                    <h1 class="title">Магазин университета</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="main main-raised">
-    <div class="section">
+@include('web.header')
+
+<main class="cd-main-content">
+    <div class="page-header header-filter header-small" data-parallax="true" style="background-image: url('/assets/img/section-bg-1.jpg');">
         <div class="container">
-            <h2 class="section-title">Latest Offers</h2>
             <div class="row">
-                <div class="col-md-4">
-                    <div class="card card-product card-plain">
-                        <div class="card-header card-header-image">
-                            <a href="product-page.html">
-                                <img src="/assets/img/examples/gucci.jpg" alt="">
-                            </a>
-                        </div>
-                        <div class="card-body text-center">
-                            <h4 class="card-title">
-                                <a href="#pablo">Gucci</a>
-                            </h4>
-                            <p class="card-description">The structured shoulders and sleek detailing ensure a sharp silhouette. Team it with a silk pocket square and leather loafers.</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="price-container">
-                                <span class="price price-old"> €1,430</span>
-                                <span class="price price-new"> €743</span>
-                            </div>
-                            <div class="stats ml-auto">
-                                <button type="button" rel="tooltip" title="" class="btn btn-just-icon btn-link btn-rose" data-original-title="Saved to Wishlist">
-                                    <i class="material-icons">favorite</i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card card-product card-plain">
-                        <div class="card-header card-header-image">
-                            <a href="product-page.html">
-                                <img src="/assets/img/examples/dolce.jpg" alt="">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <h4 class="card-title">Dolce &amp; Gabbana</h4>
-                            <p class="card-description">The structured shoulders and sleek detailing ensure a sharp silhouette. Team it with a silk pocket square and leather loafers.</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="price-container">
-                                <span class="price price-old"> €1,430</span>
-                                <span class="price price-new">€743</span>
-                            </div>
-                            <div class="stats ml-auto">
-                                <button type="button" rel="tooltip" title="" class="btn btn-just-icon btn-link btn-rose" data-original-title="Saved to Wishlist">
-                                    <i class="material-icons">favorite</i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card card-product card-plain">
-                        <div class="card-header card-header-image">
-                            <a href="product-page.html">
-                                <img src="/assets/img/examples/tom-ford.jpg" alt="">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <h4 class="card-title">Dolce &amp; Gabbana</h4>
-                            <p class="card-description">The structured shoulders and sleek detailing ensure a sharp silhouette. Team it with a silk pocket square and leather loafers.</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="price-container">
-                                <span class="price price-old"> €1,430</span>
-                                <span class="price price-new">€743</span>
-                            </div>
-                            <div class="stats ml-auto">
-                                <button type="button" rel="tooltip" title="" class="btn btn-just-icon btn-link btn-rose" data-original-title="Saved to Wishlist">
-                                    <i class="material-icons">favorite</i>
-                                </button>
-                            </div>
-                        </div>
+                <div class="col-md-8 ml-auto mr-auto text-center">
+                    <div class="brand">
+                        <h1 class="title">Магазин университета</h1>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- section -->
+    <div class="main main-raised">
+        <div class="section">
+            <div class="container">
+                <h2 class="section-title">Latest Offers</h2>
+                <div class="row">
+                    @foreach($products as $product)
 
-</div>
-<!-- end-main-raised -->
+                        <div class="col-md-4">
+                            <div class="card card-product card-plain">
+                                <div class="card-header card-header-image">
+                                    <a href="{{$product['web_link']}}">
+                                        <img src="{{$product['thumbnails'][0]?? url('/img/default-thumbnail.jpg')}}" alt="{{$product['title']}}">
+                                    </a>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h4 class="card-title">
+                                        <a href="{{$product['web_link']}}">{{$product['title']}}</a>
+                                    </h4>
+                                    <p class="card-description">{{substr(strip_tags($product['description']), 0, 255)}}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="price-container">
+                                        <!--                  <span class="price price-old"> €1,430</span>-->
+                                        <span class="price price-new"> ₴{{intval($product['price'])}}</span>
+                                        <a href="{{$product['web_link']}}" class="btn btn-rose btn-round">
+                                            Подробнее
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        <!-- section -->
+
+    </div>
+    <!-- end-main-raised -->
+</main>
+
+
 
 <footer class="footer">
     <div class="container">
-        <nav class="float-left">
-            <ul>
-                <li>
-                    <a href="profile-page.html">
-                        Гостевой профиль
-                    </a>
-                </li>
-                <li>
-                    <a href="profile-page.html">
-                        Профиль студента
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <div class="copyright float-right">
-            &copy;
-            <script>
-                document.write(new Date().getFullYear())
-            </script>, сделано <a href="#">Digital Flat [Bo]</a>
+        <div class="flex-row">
+            <nav>
+                <ul>
+                    <li>
+                        <a href="profile-page.html">
+                            Гостевой профиль
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile-page.html">
+                            Профиль студента
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright">
+                &copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>, сделано <a href="#">Digital Flat [Bo]</a>
+            </div>
         </div>
     </div>
 </footer>
@@ -223,6 +123,7 @@
 <script src="/assets/js/core/jquery.min.js" type="text/javascript"></script>
 <script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
 <script src="/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+<script src="/assets/js/plugin.js"></script>
 <script src="/assets/js/plugins/moment.min.js"></script>
 <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
 <script src="/assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>

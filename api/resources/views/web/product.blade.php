@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="/assets/img/favicon.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
         Material Kit PRO by Creative Tim
@@ -14,53 +14,24 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
-    <link href="./assets/css/material-kit.css?v=2.1.1" rel="stylesheet" />
+    <link href="/assets/css/material-kit.css?v=2.1.1" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <!--  <link href="./assets/demo/demo.css" rel="stylesheet" />-->
-    <!--  <link href="./assets/demo/vertical-nav.css" rel="stylesheet" />-->
+    <!--  <link href="/assets/demo/demo.css" rel="stylesheet" />-->
+    <!--  <link href="/assets/demo/vertical-nav.css" rel="stylesheet" />-->
 
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 
     <!-- Modernizr -->
-    <script src="assets/js/modernizr.js"></script>
+    <script src="/assets/js/modernizr.js"></script>
 
 </head>
 
 <body class="product-page sidebar-collapse">
-
-<header>
-
-    <div class="cd-logo"><a href="index.html" style="color: white; text-transform: uppercase; white-space: nowrap">Портал студента</a></div>
-    <!--  <div class="cd-logo"><a href="#"><img src="./assets/img/logo.png" alt="Logo"></a></div>-->
-
-    <nav class="cd-main-nav-wrapper navbar navbar-color-on-scroll navbar-transparent fixed-top navbar-expand-lg " color-on-scroll="100" id="sectionsNav">
-        <ul class="cd-main-nav">
-            <li><a href="index.html">Главная</a></li>
-            <li><a href="introductory.html">Поступление 2019</a></li>
-            <li><a href="traning.html">Подготовка поступлению</a></li>
-            <li><a href="testing.html">Тесты</a></li>
-            <li><a href="3d.html">3D тур</a></li>
-            <li>
-                <a href="#" class="cd-subnav-trigger"><span>Для студента</span></a>
-
-                <ul>
-                    <li class="go-back"><a href="#0">Menu</a></li>
-                    <li><a href="blog-posts.html">Инфо портал</a></li>
-                    <li><a href="ecommerce.html">Магазин</a></li>
-                    <li><a href="#">Навигатор по корпусам</a></li>
-                    <li><a href="contacts.html">Контакты</a></li>
-                    <li><a href="#" class="placeholder">Placeholder</a></li>
-                </ul>
-            </li>
-        </ul> <!-- .cd-main-nav -->
-    </nav> <!-- .cd-main-nav-wrapper -->
-
-    <a href="#0" class="cd-nav-trigger"><span></span></a>
-
-</header>
+    
+@include('web.header')
 
 <main class="cd-main-content">
-    <div class="page-header" data-parallax="true" filter-color="rose" style="background-image: url('assets/img/section-bg-5.jpg');">
+    <div class="page-header" data-parallax="true" filter-color="rose" style="background-image: url('/assets/img/section-bg-5.jpg');">
         <div class="container">
             <div class="row title-row">
                 <div class="col-md-4 ml-auto">
@@ -75,58 +46,42 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
                         <div class="tab-content">
-                            <div class="tab-pane" id="product-page1">
-                                <img src="./assets/img/examples/product1.jpg">
-                            </div>
-                            <div class="tab-pane active" id="product-page2">
-                                <img src="./assets/img/examples/product2.jpg">
-                            </div>
-                            <div class="tab-pane" id="product-page3">
-                                <img src="./assets/img/examples/product3.jpg">
-                            </div>
-                            <div class="tab-pane" id="product-page4">
-                                <img src="./assets/img/examples/product4.jpg">
-                            </div>
+                            @foreach($product['thumbnails'] as $k => $thumbnail)
+
+                                <div class="tab-pane" id="product-page{{$k}}">
+                                    <img src="{{$thumbnail}}">
+                                </div>
+
+                            @endforeach
                         </div>
-                        <ul class="nav flexi-nav" data-tabs="tabs" id="flexiselDemo1">
-                            <li class="nav-item">
-                                <a href="#product-page1" class="nav-link" data-toggle="tab">
-                                    <img src="./assets/img/examples/product1.jpg">
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#product-page2" class="nav-link" data-toggle="tab">
-                                    <img src="./assets/img/examples/product2.jpg">
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#product-page3" class="nav-link" data-toggle="tab">
-                                    <img src="./assets/img/examples/product3.jpg">
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#product-page4" class="nav-link" data-toggle="tab">
-                                    <img src="./assets/img/examples/product4.jpg">
-                                </a>
-                            </li>
+                        <ul class="nav flexi-nav" data-tabs="tabs" id="flexiselDemo{{$k}}">
+                            @foreach($product['thumbnails'] as $k => $thumbnail)
+
+                                <li class="nav-item">
+                                    <a href="{{$thumbnail}}" class="nav-link" data-toggle="tab">
+                                        <img src="{{$thumbnail}}">
+                                    </a>
+                                </li>
+
+                            @endforeach
                         </ul>
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <h2 class="title"> Becky Silk Blazer </h2>
-                        <h3 class="main-price">$335</h3>
-                        <h3 class="main-price mb-0"><strong>Артикул 5678</strong></h3>
+                        <h2 class="title">{{$product['title']}}</h2>
+                        <h3 class="main-price">₴{{$product['price']}}</h3>
+                        <h3 class="main-price mb-0"><strong>Артикул {{$product['id']}}</strong></h3>
                         <div id="accordion" role="tablist">
                             <div class="card card-collapse">
                                 <div class="card-header pt-0 ьк-фгещ" role="tab" id="headingOne">
                                     <h5 class="mb-0">
                                         <p>
-                                            Категория
+                                            {{ implode(', ', array_column($product['categories'], 'name')) }}
                                         </p>
                                     </h5>
                                 </div>
                                 <div  class="" >
                                     <div class="card-body">
-                                        <p>Eres&apos; daring &apos;Grigri Fortune&apos; swimsuit has the fit and coverage of a bikini in a one-piece silhouette. This fuchsia style is crafted from the label&apos;s sculpting peau douce fabric and has flattering cutouts through the torso and back. Wear yours with mirrored sunglasses on vacation.</p>
+                                        <p>{!! $product['description'] !!}</p>
                                     </div>
                                 </div>
                             </div>
@@ -250,34 +205,34 @@
 <!--  End Modal -->
 
 <!--   Core JS Files   -->
-<script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
-<script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-<script src="./assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-<script src="assets/js/plugin.js"></script>
-<script src="./assets/js/plugins/moment.min.js"></script>
+<script src="/assets/js/core/jquery.min.js" type="text/javascript"></script>
+<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+<script src="/assets/js/plugin.js"></script>
+<script src="/assets/js/plugins/moment.min.js"></script>
 <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
-<script src="./assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+<script src="/assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
 <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-<script src="./assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+<script src="/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
 <!--  Google Maps Plugin    -->
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
 <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
-<script src="./assets/js/plugins/bootstrap-tagsinput.js"></script>
+<script src="/assets/js/plugins/bootstrap-tagsinput.js"></script>
 <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
-<script src="./assets/js/plugins/bootstrap-selectpicker.js" type="text/javascript"></script>
+<script src="/assets/js/plugins/bootstrap-selectpicker.js" type="text/javascript"></script>
 <!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-<script src="./assets/js/plugins/jasny-bootstrap.min.js" type="text/javascript"></script>
+<script src="/assets/js/plugins/jasny-bootstrap.min.js" type="text/javascript"></script>
 <!--	Plugin for Small Gallery in Product Page -->
-<script src="./assets/js/plugins/jquery.flexisel.js" type="text/javascript"></script>
+<script src="/assets/js/plugins/jquery.flexisel.js" type="text/javascript"></script>
 <!-- Plugins for presentation and navigation  -->
-<script src="./assets/demo/modernizr.js" type="text/javascript"></script>
-<script src="./assets/demo/vertical-nav.js" type="text/javascript"></script>
+<script src="/assets/demo/modernizr.js" type="text/javascript"></script>
+<script src="/assets/demo/vertical-nav.js" type="text/javascript"></script>
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- Js With initialisations For Demo Purpose, Don't Include it in Your Project -->
-<script src="./assets/demo/demo.js" type="text/javascript"></script>
+<script src="/assets/demo/demo.js" type="text/javascript"></script>
 <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-<script src="./assets/js/material-kit.js?v=2.1.1" type="text/javascript"></script>
+<script src="/assets/js/material-kit.js?v=2.1.1" type="text/javascript"></script>
 <script>
     $(document).ready(function() {
         $("#flexiselDemo1").flexisel({

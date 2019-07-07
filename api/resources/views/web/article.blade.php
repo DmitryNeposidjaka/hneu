@@ -1,10 +1,13 @@
-<!DOCTYPE html>
+@php
+    #var_dump($article)
+@endphp
+        <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="/assets/img/favicon.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
         Material Kit PRO by Creative Tim
@@ -14,61 +17,32 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
-    <link href="./assets/css/material-kit.css?v=2.1.1" rel="stylesheet" />
+    <link href="/assets/css/material-kit.css?v=2.1.1" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <!--  <link href="./assets/demo/demo.css" rel="stylesheet" />-->
-    <!--  <link href="./assets/demo/vertical-nav.css" rel="stylesheet" />-->
+    <!--  <link href="/assets/demo/demo.css" rel="stylesheet" />-->
+    <!--  <link href="/assets/demo/vertical-nav.css" rel="stylesheet" />-->
 
     <!--  Owlcarousel  -->
-    <link rel="stylesheet" href="./assets/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/owlcarousel/owl.carousel.min.css">
 
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 
     <!-- Modernizr -->
-    <script src="assets/js/modernizr.js"></script>
+    <script src="/assets/js/modernizr.js"></script>
 
 </head>
 
 <body class="blog-post sidebar-collapse">
 
-<header>
-
-    <div class="cd-logo"><a href="index.html" style="color: white; text-transform: uppercase; white-space: nowrap">Портал студента</a></div>
-    <!--  <div class="cd-logo"><a href="#"><img src="./assets/img/logo.png" alt="Logo"></a></div>-->
-
-    <nav class="cd-main-nav-wrapper navbar navbar-color-on-scroll navbar-transparent fixed-top navbar-expand-lg " color-on-scroll="100" id="sectionsNav">
-        <ul class="cd-main-nav">
-            <li><a href="index.html">Главная</a></li>
-            <li><a href="introductory.html">Поступление 2019</a></li>
-            <li><a href="traning.html">Подготовка поступлению</a></li>
-            <li><a href="testing.html">Тесты</a></li>
-            <li><a href="3d.html">3D тур</a></li>
-            <li>
-                <a href="#" class="cd-subnav-trigger"><span>Для студента</span></a>
-
-                <ul>
-                    <li class="go-back"><a href="#0">Menu</a></li>
-                    <li><a href="blog-posts.html">Инфо портал</a></li>
-                    <li><a href="ecommerce.html">Магазин</a></li>
-                    <li><a href="#">Навигатор по корпусам</a></li>
-                    <li><a href="contacts.html">Контакты</a></li>
-                    <li><a href="#" class="placeholder">Placeholder</a></li>
-                </ul>
-            </li>
-        </ul> <!-- .cd-main-nav -->
-    </nav> <!-- .cd-main-nav-wrapper -->
-
-    <a href="#0" class="cd-nav-trigger"><span></span></a>
-
-</header>
+@include('web.header')
 
 <main class="cd-main-content">
 
-    <div class="page-header header-filter" data-parallax="true" style="background-image: url('../assets/img/bg5.jpg');">
+    <div class="page-header header-filter" data-parallax="true" style="background-image: url('./assets/img/bg5.jpg');">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto text-center">
-                    <h1 class="title">How We Built the Most Successful Castle Ever</h1>
+                    <h1 class="title">{{$article['title']}}</h1>
                     <!--          <h4>The last 48 hours of my life were total madness. This is what I did.</h4>-->
                     <!--          <br>-->
                     <!--          <a href="#pablo" class="btn btn-rose btn-round btn-lg">-->
@@ -84,38 +58,19 @@
             <div class="section section-text">
                 <div class="row">
                     <div class="col-md-8 ml-auto mr-auto">
-                        <h3 class="title">The Castle Looks Different at Night...</h3>
-                        <p>This is the paragraph where you can write more details about your product. Keep you user engaged by providing meaningful information. Remember that by this time, the user is curious, otherwise he wouldn&apos;t scroll to get here. Add a button if you want the user to see more. We are here to make life better.
-                            <br>
-                            <br> And now I look and look around and there&#x2019;s so many Kanyes I&apos;ve been trying to figure out the bed design for the master bedroom at our Hidden Hills compound... and thank you for turning my personal jean jacket into a couture piece.</p>
-                        <div class="blockquote undefined">
-                            <p>
-                                &#x201C;And thank you for turning my personal jean jacket into a couture piece.&#x201D;
-                            </p>
-                            <small>
-                                Kanye West, Producer.
-                            </small>
-                        </div>
+                        {{$article['description']}}
                     </div>
                     <div class="section col-md-10 ml-auto mr-auto">
                         <div class="row">
-                            <div class="col-md-4">
-                                <img class="img-raised rounded img-fluid" alt="Raised Image" src="./assets/img/examples/blog4.jpg">
-                            </div>
-                            <div class="col-md-4">
-                                <img class="img-raised rounded img-fluid" alt="Raised Image" src="./assets/img/examples/blog3.jpg">
-                            </div>
-                            <div class="col-md-4">
-                                <img class="img-raised rounded img-fluid" alt="Raised Image" src="./assets/img/examples/blog1.jpg">
-                            </div>
+                            @foreach($article['thumbnails'] as $thumbnail)
+                                <div class="col-md-4">
+                                    <img class="img-raised rounded img-fluid" alt="Raised Image" src="{{$thumbnail}}">
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="col-md-8 ml-auto mr-auto">
-                        <h3 class="title">Rest of the Story:</h3>
-                        <p>We are here to make life better. And now I look and look around and there&#x2019;s so many Kanyes I&apos;ve been trying to figure out the bed design for the master bedroom at our Hidden Hills compound... and thank you for turning my personal jean jacket into a couture piece.
-                            <br> I speak yell scream directly at the old guard on behalf of the future. daytime All respect prayers and love to Phife&#x2019;s family Thank you for so much inspiration. </p>
-                        <p> Thank you Anna for the invite thank you to the whole Vogue team And I love you like Kanye loves Kanye Pand Pand Panda I&apos;ve been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...The Pablo pop up was almost a pop up of influence. All respect prayers and love to Phife&#x2019;s family Thank you for so much inspiration daytime I love this new Ferg album! The Life of Pablo is now available for purchase I have a dream. Thank you to everybody who made The Life of Pablo the number 1 album in the world! I&apos;m so proud of the nr #1 song in the country. Panda! Good music 2016!</p>
-                        <p> I love this new Ferg album! The Life of Pablo is now available for purchase I have a dream. Thank you to everybody who made The Life of Pablo the number 1 album in the world! I&apos;m so proud of the nr #1 song in the country. Panda! Good music 2016!</p>
+                        {!! $article['content'] !!}
                     </div>
                 </div>
             </div>
@@ -178,35 +133,35 @@
 </footer>
 
 <!--   Core JS Files   -->
-<script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
-<script src="./assets/owlcarousel/owl.carousel.min.js"></script>
-<script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-<script src="./assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-<script src="assets/js/plugin.js"></script>
-<script src="./assets/js/plugins/moment.min.js"></script>
+<script src="/assets/js/core/jquery.min.js" type="text/javascript"></script>
+<script src="/assets/owlcarousel/owl.carousel.min.js"></script>
+<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+<script src="/assets/js/plugin.js"></script>
+<script src="/assets/js/plugins/moment.min.js"></script>
 <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
-<script src="./assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+<script src="/assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
 <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-<script src="./assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+<script src="/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
 <!--  Google Maps Plugin    -->
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
 <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
-<script src="./assets/js/plugins/bootstrap-tagsinput.js"></script>
+<script src="/assets/js/plugins/bootstrap-tagsinput.js"></script>
 <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
-<script src="./assets/js/plugins/bootstrap-selectpicker.js" type="text/javascript"></script>
+<script src="/assets/js/plugins/bootstrap-selectpicker.js" type="text/javascript"></script>
 <!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-<script src="./assets/js/plugins/jasny-bootstrap.min.js" type="text/javascript"></script>
+<script src="/assets/js/plugins/jasny-bootstrap.min.js" type="text/javascript"></script>
 <!--	Plugin for Small Gallery in Product Page -->
-<script src="./assets/js/plugins/jquery.flexisel.js" type="text/javascript"></script>
+<script src="/assets/js/plugins/jquery.flexisel.js" type="text/javascript"></script>
 <!-- Plugins for presentation and navigation  -->
-<script src="./assets/demo/modernizr.js" type="text/javascript"></script>
-<script src="./assets/demo/vertical-nav.js" type="text/javascript"></script>
+<script src="/assets/demo/modernizr.js" type="text/javascript"></script>
+<script src="/assets/demo/vertical-nav.js" type="text/javascript"></script>
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- Js With initialisations For Demo Purpose, Don't Include it in Your Project -->
-<script src="./assets/demo/demo.js" type="text/javascript"></script>
+<script src="/assets/demo/demo.js" type="text/javascript"></script>
 <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-<script src="./assets/js/material-kit.js?v=2.1.1" type="text/javascript"></script>
+<script src="/assets/js/material-kit.js?v=2.1.1" type="text/javascript"></script>
 </body>
 
 </html>

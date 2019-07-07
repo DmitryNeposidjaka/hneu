@@ -11,47 +11,20 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- Material Kit CSS -->
-    <link href="assets/css/material-kit.css?v=2.1.1" rel="stylesheet" />
+    <link href="/assets/css/material-kit.css?v=2.1.1" rel="stylesheet" />
 
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 
     <!-- Modernizr -->
-    <script src="assets/js/modernizr.js"></script>
+    <script src="/assets/js/modernizr.js"></script>
 </head>
 
 <body>
-<header>
-    <div class="cd-logo"><a href="index.html" style="color: white; text-transform: uppercase; white-space: nowrap">Портал студента</a></div>
-    <!--  <div class="cd-logo"><a href="#"><img src="./assets/img/logo.png" alt="Logo"></a></div>-->
 
-    <nav class="cd-main-nav-wrapper navbar navbar-color-on-scroll navbar-transparent fixed-top navbar-expand-lg " color-on-scroll="100" id="sectionsNav">
-        <ul class="cd-main-nav">
-            <li><a href="index.html">Главная</a></li>
-            <li><a href="introductory.html">Поступление 2019</a></li>
-            <li><a href="traning.html">Подготовка поступлению</a></li>
-            <li><a href="testing.html">Тесты</a></li>
-            <li><a href="3d.html">3D тур</a></li>
-            <li>
-                <a href="#" class="cd-subnav-trigger"><span>Для студента</span></a>
-
-                <ul>
-                    <li class="go-back"><a href="#0">Menu</a></li>
-                    <li><a href="blog-posts.html">Инфо портал</a></li>
-                    <li><a href="ecommerce.html">Магазин</a></li>
-                    <li><a href="#">Навигатор по корпусам</a></li>
-                    <li><a href="contacts.html">Контакты</a></li>
-                    <li><a href="#" class="placeholder">Placeholder</a></li>
-                </ul>
-            </li>
-        </ul> <!-- .cd-main-nav -->
-    </nav> <!-- .cd-main-nav-wrapper -->
-
-    <a href="#0" class="cd-nav-trigger"><span></span></a>
-
-</header>
+@include('web.header')
 
 <main class="cd-main-content introdactiom-company">
-    <div class="page-header header-filter" data-parallax="true" style="background-image: url('assets/img/section-bg-4.jpg')">
+    <div class="page-header header-filter" data-parallax="true" style="background-image: url('/assets/img/section-bg-4.jpg')">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
@@ -128,7 +101,7 @@
             /*padding-left: 5%;*/
             max-width: unset"
                     >
-                        <img src="./assets/img/bg.jpg" style="
+                        <img src="/assets/img/bg.jpg" style="
               width: 100%;
               height: 100%;
               object-fit: cover;">
@@ -270,7 +243,7 @@
             </div>
         </div>
 
-        <div class="features-5" style="background-image: url('./assets/img/bg9.jpg')">
+        <div class="features-5" style="background-image: url('/assets/img/bg9.jpg')">
             <div class="col-md-8 ml-auto mr-auto text-center">
                 <h2 class="title">Почему студенты выбирают BC INGEK</h2>
                 <h4 class="title">
@@ -411,7 +384,7 @@
                         </div>
                     </div>
                     <div class="col col-md-6 col-lg">
-                        <div class="card card-pricing card-background card-raised" style="background-image: url('./assets/img/examples/card-blog3.jpg')">
+                        <div class="card card-pricing card-background card-raised" style="background-image: url('/assets/img/examples/card-blog3.jpg')">
                             <div class="card-body">
                                 <h6 class="card-category text-info">МЕДИЦИНСКИЕ СПЕЦИАЛЬНОСТИ</h6>
                                 <h1 class="card-title">
@@ -463,7 +436,7 @@
                         </div>
                     </div>
                     <div class="col col-md-6 col-lg">
-                        <div class="card card-pricing card-background card-raised" style="background-image: url('./assets/img/examples/card-blog3.jpg')">
+                        <div class="card card-pricing card-background card-raised" style="background-image: url('/assets/img/examples/card-blog3.jpg')">
                             <div class="card-body">
                                 <h6 class="card-category text-info">ТЕХНИЧЕСКИЕ СПЕЦИАЛЬНОСТИ</h6>
                                 <h1 class="card-title">
@@ -518,7 +491,7 @@
             </div>
         </div>
 
-        <div class="contactus-1 section-image" style="background-image: url('./assets/img/examples/city.jpg')">
+        <div class="contactus-1 section-image" style="background-image: url('/assets/img/examples/city.jpg')">
             <div class="container">
                 <div class="row">
                     <div class="col-md-5">
@@ -651,12 +624,12 @@
 </footer>
 
 <!--   Core JS Files   -->
-<script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
-<script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-<script src="./assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-<script src="assets/js/plugin.js"></script>
+<script src="/assets/js/core/jquery.min.js" type="text/javascript"></script>
+<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+<script src="/assets/js/plugin.js"></script>
 <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-<script src="./assets/js/material-kit.js?v=2.1.1" type="text/javascript"></script>
+<script src="/assets/js/material-kit.js?v=2.1.1" type="text/javascript"></script>
 
 </body>
 

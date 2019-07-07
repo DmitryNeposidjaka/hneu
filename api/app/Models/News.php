@@ -27,7 +27,8 @@ class News extends Model
     ];
 
     protected $appends = [
-        'thumbnails'
+        'thumbnails',
+        'web_link'
     ];
 
     public function getThumbnailAttribute($value)
@@ -66,6 +67,11 @@ class News extends Model
     public function setLinkAttribute($value)
     {
         $this->attributes['link'] = urlencode($value);
+    }
+
+    public function getWebLinkAttribute()
+    {
+        return route($this->attributes['type'], [app()->getLocale(), $this->attributes['link']]);
     }
 
     public function setCategories(array $data)

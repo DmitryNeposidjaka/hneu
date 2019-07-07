@@ -47,7 +47,9 @@ Route::group(['prefix' => '{locale?}'], function () {
         ]);
     })->name('message');
     Route::get('/shop', function () {
-        return view('web.shop');
+        return view('web.shop', [
+            'products' => \App\Models\Product::where(['lang' => app()->getLocale()])->orderBy('created_at')->get()->toArray()
+        ]);
     })->name('shop');
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 

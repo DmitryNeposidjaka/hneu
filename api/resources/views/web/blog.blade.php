@@ -16,224 +16,160 @@
     <!-- CSS Files -->
     <link href="/assets/css/material-kit.css?v=2.1.1" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link href="/assets/demo/demo.css" rel="stylesheet" />
-    <link href="/assets/demo/vertical-nav.css" rel="stylesheet" />
+    <!--  <link href="/assets/demo/demo.css" rel="stylesheet" />-->
+    <!--  <link href="/assets/demo/vertical-nav.css" rel="stylesheet" />-->
 
     <!--  Owlcarousel  -->
     <link rel="stylesheet" href="/assets/owlcarousel/owl.carousel.min.css">
+
     <link rel="stylesheet" href="/assets/css/style.css">
+
+    <!-- Modernizr -->
+    <script src="/assets/js/modernizr.js"></script>
 
 </head>
 
 <body class="blog-posts sidebar-collapse">
-<nav class="navbar navbar-transparent navbar-absolute navbar-expand-lg">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-translate">
-            <a class="navbar-brand logo-big" href="#">
-                <img src="/assets/img/logo.png" alt="ХНЕУ">
-                ХНЕУ
-            </a>
-            <button tpe="button" class="ml-auto navbar-toggler" data-toggle="collapse" data-target="#navigation-example3">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="navbar-toggler-icon"></span>
-                <span class="navbar-toggler-icon"></span>
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-        <div class="collapse navbar-collapse" id="navigation-example3">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a href="{{url(app()->getLocale().'/home')}}" class="nav-link">
-                        Портал ХНЕУ
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="Introductory-company.html" class="nav-link">
-                        Поступление
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{url(app()->getLocale().'/3d')}}" class="nav-link">
-                        3D тур
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{url(app()->getLocale().'/blog')}}" class="nav-link">
-                        Блог
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="blog-posts.html" class="nav-link">
-                        Тесты
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="traning.html" class="nav-link">
-                        Подготовка до ЗНО
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{url(app()->getLocale().'/shop')}}" class="nav-link">
-                        Магазин
-                    </a>
-                </li>
-                <li class="button-container nav-item iframe-extern">
-                    <a href="/amin/404.html" target="_blank" class="btn  btn-primary   btn-round btn-block">
-                        <i class="material-icons">account_circle</i> &nbsp;&nbsp;Личный кабинет
-                        <div class="ripple-container"></div>
-                    </a>
-                </li>
-                <li class="dropdown nav-item">
-                    <a href="#pablo" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="true" style="display: flex;align-items: center">
-                        <i class="material-icons">g_translate</i> Русский
-                        <b class="caret"></b>
-                        <div class="ripple-container"></div>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#pablo" class="dropdown-item">Русский</a>
-                        <a href="#pablo" class="dropdown-item">English</a>
-                        <a href="#pablo" class="dropdown-item">French</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
 
-<div class="page-header header-filter header-small" data-parallax="true" style="background-image: url('/assets/img/bg10.jpg');">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 ml-auto mr-auto text-center">
-                <h2 class="title">Новости университета</h2>
+@include('web.header')
+
+<main class="cd-main-content">
+
+    <div class="page-header header-filter header-small" data-parallax="true" style="background-image: url('/assets/img/section-bg-6.jpg');">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 ml-auto mr-auto text-center">
+                    <h1 class="title">Новости университета</h1>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="main main-raised">
-    <div class="container">
+    <div class="main main-raised">
 
         <div class="section" style="position: relative; top: -24vh">
 
             <div id="owl-1" class="owl-carousel">
-                @if(isset($posts['advertising']))
-                @foreach($posts['advertising'] as $model)
+                @foreach($posts['advertising'] as $advert)
+
                 <div class="col-md-12">
                     <div class="card card-plain card-blog">
                         <div class="card-header card-header-image">
-                            <a href="{{url(app()->getLocale().'/blog/advertising/'.$model['link'])}}">
-                                <img class="img img-raised" src="{{$model['thumbnail']}}">
+                            <a href="{{$advert['web_link']}}">
+                                <img class="img img-raised" src="{{$advert['thumbnail']}}" alt="{{$advert['title']}}">
                             </a>
-                            <h4 class="card-title" style="height: 80px">
-                                <a href="{{url(app()->getLocale().'/blog/advertising/'.$model['link'])}}">{{$model['title']}}</a>
-                            </h4>
+                            <!--                <h4 class="card-title" style="height: 80px">-->
+                            <!--                  <a href="blog-post.html">&quot;А У ВАШЕГО ДИПЛОМА ЕСТЬ ОБЛОЖКА ОТ BC_INGEK?</a>-->
+                            <!--                </h4>-->
                         </div>
                     </div>
                 </div>
+
                 @endforeach
-                @endif
             </div>
+
         </div>
 
-    </div>
+        <!-- cards -->
+        <div id="cards" class="cd-section" style="position: relative; top: -28vh">
+            <div class="section-white">
+                <!--     *********    BLOG CARDS     *********      -->
+                <div class="cards">
+                    <div class="container">
+                        <div class="title-wrapper">
+                            <h2>Новости</h2>
+                        </div>
+                        <div id="owl-2" class="owl-carousel">
+                            @foreach($posts['article'] as $article)
 
-    <!-- cards -->
-    <div id="cards" class="cd-section" style="position: relative; top: -28vh">
-        <div class="section-white">
-            <!--     *********    BLOG CARDS     *********      -->
-            <div class="cards">
-                <div class="container">
-                    <div class="title">
-                        <h2>Новости</h2>
-                    </div>
-                    <div id="owl-2" class="owl-carousel">
-                    @if(isset($posts['article']))
-                    @foreach($posts['article'] as $model)
-                            <div class="col">
-                                <div class="card card-plain card-blog">
-                                    <div class="card-header card-header-image">
-                                        <a href="{{url(app()->getLocale().'/blog/article/'.$model['link'])}}">
-                                            <img class="img img-raised" src="{{$model['thumbnail']}}">
-                                        </a>
-                                    </div>
-                                    <div class="card-body">
-                                        <h6 class="card-category text-info">{{ implode(', ', array_column($model['categories'], 'name')) }}</h6>
-                                        <h4 class="card-title" style="height: 80px">
-                                            <a href="#pablo">{{$model['title']}}</a>
-                                        </h4>
-                                        <p class="card-description">
-                                            {{$model['description']}}
-                                            <a href="{{url(app()->getLocale().'/blog/article/'.$model['link'])}}"> читать дальше </a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                    @endforeach
-                    @endif
-                    </div>
-                    <div class="title">
-                        <h2>Увидомления</h2>
-                    </div>
-                    <div id="owl-3" class="owl-carousel">
-                        @if(isset($posts['message']))
-                        @foreach($posts['message'] as $model)
-                            <div class="col-lg-12">
-                                <div class="card bg-info">
-                                    <div class="card-body">
-                                        <h5 class="card-category card-category-social">
-                                            {{ implode(', ', array_column($model['categories'], 'name')) }}
-                                        </h5>
-                                        <h4 class="card-title" style="height: 80px">
-                                            <a href="{{url(app()->getLocale().'/blog/message/'.$model['link'])}}">{{$model['title']}}</a>
-                                        </h4>
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="author">
-                                            <a href="{{url(app()->getLocale().'/blog/message/'.$model['link'])}}">
-                                                <!--                          <img src="/assets/img/faces/avatar.jpg" alt="..." class="avatar img-raised">-->
-                                                <span>{{$model['creator']['fullname']}}</span>
+                                <div class="col">
+                                    <div class="card card-plain card-blog">
+                                        <div class="card-header card-header-image">
+                                            <a href="{{$article['web_link']}}">
+                                                <img class="img img-raised" src="{{$article['thumbnail']}}">
                                             </a>
                                         </div>
-                                        <div class="stats ml-auto">
-                                            <i class="material-icons">favorite</i> 2.4K
+                                        <div class="card-body">
+                                            <h6 class="card-category text-info">{{ implode(', ', array_column($article['categories'], 'name')) }}</h6>
+                                            <h4 class="card-title" style="height: 80px">
+                                                <a href="{{$article['web_link']}}">{{$advert['title']}}</a>
+                                            </h4>
+                                            <p class="card-description">
+                                                {{ substr($article['description'], 0, 255) . '...'}}
+                                                <a href="{{$article['web_link']}}"> читать дальше </a>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
-                        @endif
+
+                            @endforeach
+                        </div>
+                        <div class="title-wrapper">
+                            <h2>Уведомления</h2>
+                        </div>
+                        <div id="owl-3" class="owl-carousel">
+                            @foreach($posts['message'] as $message)
+
+                                <div class="col-lg-12">
+                                    <div class="card bg-info">
+                                        <div class="card-body">
+                                            <h5 class="card-category card-category-social">
+                                                {{ implode(', ', array_column($article['categories'], 'name')) }}
+                                            </h5>
+                                            <h4 class="card-title" style="height: 80px">
+                                                <a href="{{$message['web_link']}}">&quot;{{$message['title']}}</a>
+                                            </h4>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="author">
+                                                <a href="{{$message['title']}}">
+                                                    <!--                          <img src="/assets/img/faces/avatar.jpg" alt="..." class="avatar img-raised">-->
+                                                    <span>{{$message['creator']['fullname']}}</span>
+                                                </a>
+                                            </div>
+                                            <div class="stats ml-auto">
+                                                <i class="material-icons">favorite</i> 2.4K
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            @endforeach
+                        </div>
                     </div>
                 </div>
+                <!--     *********    END BLOG CARDS      *********      -->
             </div>
-            <!--     *********    END BLOG CARDS      *********      -->
         </div>
-    </div>
-    <!-- end cards -->
+        <!-- end cards -->
 
-</div>
+    </div>
+
+</main>
 
 <footer class="footer">
     <div class="container">
-        <nav class="float-left">
-            <ul>
-                <li>
-                    <a href="profile-page.html">
-                        Гостевой профиль
-                    </a>
-                </li>
-                <li>
-                    <a href="profile-page.html">
-                        Профиль студента
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <div class="copyright float-right">
-            &copy;
-            <script>
-                document.write(new Date().getFullYear())
-            </script>, сделано <a href="#">Digital Flat [Bo]</a>
+        <div class="flex-row">
+            <nav>
+                <ul>
+                    <li>
+                        <a href="profile-page.html">
+                            Гостевой профиль
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile-page.html">
+                            Профиль студента
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright">
+                &copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>, сделано <a href="#">Digital Flat [Bo]</a>
+            </div>
         </div>
     </div>
 </footer>
@@ -243,6 +179,7 @@
 <script src="/assets/owlcarousel/owl.carousel.min.js"></script>
 <script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
 <script src="/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+
 <script src="/assets/js/plugins/moment.min.js"></script>
 <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
 <!--  <script src="/assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>-->

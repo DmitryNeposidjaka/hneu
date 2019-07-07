@@ -11,27 +11,20 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- Material Kit CSS -->
-    <link href="assets/css/material-kit.css?v=2.1.1" rel="stylesheet" />
+    <link href="/assets/css/material-kit.css?v=2.1.1" rel="stylesheet" />
 
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 
     <!-- Modernizr -->
-    <script src="assets/js/modernizr.js"></script>
+    <script src="/assets/js/modernizr.js"></script>
 </head>
 
 <body>
-<header>
-    <div class="cd-logo"><a href="index.html" style="color: white; text-transform: uppercase; white-space: nowrap">Портал студента</a></div>
-    <!--  <div class="cd-logo"><a href="#"><img src="./assets/img/logo.png" alt="Logo"></a></div>-->
 
-    @include('header-nav')
-
-    <a href="#0" class="cd-nav-trigger"><span></span></a>
-
-</header>
+@include('web.header')
 
 <main class="cd-main-content">
-    <div class="page-header header-filter" data-parallax="true" style="background-image: url('assets/img/section-bg-4.jpg')">
+    <div class="page-header header-filter" data-parallax="true" style="background-image: url('/assets/img/section-bg-4.jpg')">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
@@ -160,12 +153,12 @@
 </footer>
 
 <!--   Core JS Files   -->
-<script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
-<script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-<script src="./assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-<script src="assets/js/plugin.js"></script>
+<script src="/assets/js/core/jquery.min.js" type="text/javascript"></script>
+<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+<script src="/assets/js/plugin.js"></script>
 <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-<script src="./assets/js/material-kit.js?v=2.1.1" type="text/javascript"></script>
+<script src="/assets/js/material-kit.js?v=2.1.1" type="text/javascript"></script>
 
 </body>
 

@@ -25,7 +25,8 @@ class Product extends Model
         'categories'
     ];
     protected $appends = [
-        'thumbnails'
+        'thumbnails',
+        'web_link'
     ];
 
     public function getThumbnailsAttribute($value)
@@ -35,6 +36,11 @@ class Product extends Model
             $result[] = Storage::disk('products')->url($image);
         }
         return $result;
+    }
+
+    public function getWebLinkAttribute()
+    {
+        return route('product', [app()->getLocale(), $this->attributes['link']]);
     }
 
     public function categories()
