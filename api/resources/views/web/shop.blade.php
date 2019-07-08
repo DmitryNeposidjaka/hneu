@@ -1,9 +1,3 @@
-@php
-
-#var_dump($products)
-
-@endphp
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -71,7 +65,7 @@
                                 <div class="card-footer">
                                     <div class="price-container">
                                         <!--                  <span class="price price-old"> €1,430</span>-->
-                                        <span class="price price-new"> ₴{{intval($product['price'])}}</span>
+                                        <span class="price price-new"> ₴{{round($product['price'])}}</span>
                                         <a href="{{$product['web_link']}}" class="btn btn-rose btn-round">
                                             Подробнее
                                         </a>

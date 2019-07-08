@@ -48,17 +48,17 @@
                         <div class="tab-content">
                             @foreach($product['thumbnails'] as $k => $thumbnail)
 
-                                <div class="tab-pane" id="product-page{{$k}}">
+                                <div class="tab-pane {{ $k[0] ?? 'active' }}" id="product-page{{$k}}">
                                     <img src="{{$thumbnail}}">
                                 </div>
 
                             @endforeach
                         </div>
-                        <ul class="nav flexi-nav" data-tabs="tabs" id="flexiselDemo{{$k}}">
+                        <ul class="nav flexi-nav" data-tabs="tabs" id="flexiselDemo1">
                             @foreach($product['thumbnails'] as $k => $thumbnail)
 
                                 <li class="nav-item">
-                                    <a href="{{$thumbnail}}" class="nav-link" data-toggle="tab">
+                                    <a href="#product-page{{$k}}" class="nav-link" data-toggle="tab">
                                         <img src="{{$thumbnail}}">
                                     </a>
                                 </li>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="col-md-6 col-sm-6">
                         <h2 class="title">{{$product['title']}}</h2>
-                        <h3 class="main-price">₴{{$product['price']}}</h3>
+                        <h3 class="main-price">₴{{round($product['price'])}}</h3>
                         <h3 class="main-price mb-0"><strong>Артикул {{$product['id']}}</strong></h3>
                         <div id="accordion" role="tablist">
                             <div class="card card-collapse">
