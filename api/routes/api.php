@@ -99,6 +99,10 @@ Route::group(['namespace' => 'Student', 'prefix' => 'student'], function () {
         Route::group(['prefix' => 'user'], function () {
             Route::get('/me', 'UserController@getMe');
             Route::get('/courses', 'UserController@getCourses');
+            Route::get('/articles', 'UserController@getArticles');
+            Route::get('/advertising', 'UserController@getAdvertising');
+            Route::get('/messages', 'UserController@getMessages');
+            Route::get('/products', 'UserController@getProducts');
         });
     });
 });

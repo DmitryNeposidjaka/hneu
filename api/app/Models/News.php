@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Class News
+ * @package App\Models
+ * @method static \Illuminate\Database\Eloquent\Builder message()
+ * @method static \Illuminate\Database\Eloquent\Builder article()
+ * @method static \Illuminate\Database\Eloquent\Builder advertising()
+ */
 class News extends Model
 {
     use Filterable;
@@ -74,6 +81,10 @@ class News extends Model
         return route($this->attributes['type'], [app()->getLocale(), $this->attributes['link']]);
     }
 
+    /**
+     * @param array $data
+     * @return void
+     */
     public function setCategories(array $data)
     {
         $new = array_filter($data, function ($item) {
@@ -88,6 +99,10 @@ class News extends Model
         $this->categories()->sync($update);
     }
 
+    /**
+     * @param array $data
+     * @return array
+     */
     private function createCategories(array $data)
     {
         $result = [];
@@ -98,6 +113,9 @@ class News extends Model
         return $result;
     }
 
+    /**
+     * @param array $data
+     */
     public function setImages(array $data)
     {
         $new = [];
@@ -116,11 +134,20 @@ class News extends Model
         $this->images = array_merge($stored, $new);
     }
 
+    /**
+     * @param $data
+     * @return bool
+     */
     private function getNewFiles($data)
     {
         return $data instanceof UploadedFile;
     }
 
+    /**
+     * @param $stored
+     * @param $updated
+     * @return array
+     */
     private function syncImages($stored, $updated)
     {
         return array_filter($stored, function ($image) use ($updated) {
@@ -129,5 +156,35 @@ class News extends Model
                 $updated
             );
         });
+    }
+
+
+    /**
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeArticle($query)
+    {
+        return $query->where('type', 'article');
+    }
+
+
+    /**
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAdvertising($query)
+    {
+        return $query->where('type', 'advertising');
+    }
+
+
+    /**
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeMessage($query)
+    {
+        return $query->where('type', 'message');
     }
 }
