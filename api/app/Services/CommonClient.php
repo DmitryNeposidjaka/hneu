@@ -68,7 +68,7 @@ class CommonClient
         $query = http_build_query([
             'auth' => config('commonClient.auth'),
             'sid' => $id,
-            'q' => 'studentbig'
+            'q' => 'studentreport'
         ]);
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url + '?' + $query,

@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+// TODO Refactor this class. We dont need Common class for all students.
 class CommonController extends Controller
 {
     protected $request;
