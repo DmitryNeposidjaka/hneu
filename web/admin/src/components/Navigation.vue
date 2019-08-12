@@ -24,15 +24,15 @@
             <i class="fas fa-shopping-basket"></i>
             <span>{{ $t('nav.products') }}</span>
         </el-menu-item>
-        <el-menu-item index="5" :route="{name: 'pages'}">
+        <el-menu-item index="6" :route="{name: 'pages'}">
             <i class="fa fa-window-maximize"></i>
             <span> {{ $t('nav.pages') }} </span>
         </el-menu-item>
-        <el-menu-item index="5" :route="{name: 'documents'}">
+        <el-menu-item index="7" :route="{name: 'documents'}">
             <i class="fas fa-file-alt"></i>
             <span>{{ $t('nav.documents') }}</span>
         </el-menu-item>
-        <el-menu-item index="5" :route="{name: 'memos'}">
+        <el-menu-item index="8" :route="{name: 'memos'}">
             <i class="far fa-comment-dots"></i>
             <span>{{ $t('nav.memos') }}</span>
         </el-menu-item>
