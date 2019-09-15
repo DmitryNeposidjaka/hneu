@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\JWTAuth;
 
 class LoginController extends Controller
@@ -108,25 +109,8 @@ class LoginController extends Controller
 
         $user = null;
         if (!empty($moodleUser)) {
-            list($lastName, $firstName) = explode(' ', $moodleUser['fullname']);
-            $user = User::updateOrCreate([
-                'username' => $moodleUser['username']
-            ], [
-                'username' => $moodleUser['username'],
-                'firstname' => $firstName,
-                'lastname' => $lastName,
-                'email' => $moodleUser['email'],
-                'lang' => $moodleUser['lang'],
-                'moodle_id' => $moodleUser['id'],
-                'student_id' => $moodleUser['idnumber'],
-                'thumbnail' => $moodleUser['profileimageurl'],
-                'moodle_token' => \MoodleClient::getToken(),
-            ]);
-            if ($user->wasRecentlyCreated) {
-                \Bouncer::assign('student')->to($user);
-            }
+            $user = $this->retryUser($moodleUser);
         }
-
         return $user;
     }
 
@@ -134,4 +118,57 @@ class LoginController extends Controller
     {
         return response()->json(['token' => auth()->login($user)]);
     }
+
+    /**
+     * @param $moodleUser
+     * @return User
+     */
+    protected function retryUser($moodleUser)
+    {
+        $middleName = null;
+        $student_sid = null;
+        $telephone = null;
+        $group = null;
+
+        list($lastName, $firstName) = explode(' ', $moodleUser['fullname']);
+
+        try {
+            $commonUser = \CommonClient::getUser($moodleUser['idnumber']);
+            $jsonUser = json_decode(json_encode(simplexml_load_string($commonUser)));
+            $student_sid = $jsonUser->element->{'@attributes'}->id;
+            $telephone = $jsonUser->element->telephone;
+            list($lastName, $firstName, $middleName) = explode(' ', $jsonUser->element->fio);
+            $group = \CommonClient::getGroupData($jsonUser->element->gid);
+        } catch(\Exception $exception) {
+            Log::channel('commonDBlog')->error($exception->getMessage());
+        }
+
+        /**
+         * @var $user User
+         */
+        $user = User::updateOrCreate([
+            'username' => $moodleUser['username']
+        ], [
+            'username' => $moodleUser['username'],
+            'firstname' => $firstName,
+            'lastname' => $lastName,
+            'middlename' => $middleName,
+            'email' => $moodleUser['email'],
+            'lang' => $moodleUser['lang'],
+            'moodle_id' => $moodleUser['id'],
+            'student_sid' => $student_sid,
+            'student_hid' => $moodleUser['idnumber'],
+            'telephone' => $telephone,
+            'thumbnail' => $moodleUser['profileimageurl'],
+            'moodle_token' => \MoodleClient::getToken(),
+            'group' => $group,
+        ]);
+
+        if($user->isNotA('student')) {
+            $user->role = 'student';
+        }
+
+        return $user;
+    }
+
 }

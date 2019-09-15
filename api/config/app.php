@@ -178,6 +178,7 @@ $config = [
         EloquentFilter\ServiceProvider::class,
         \Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         \App\Providers\MoodleClientServiceProvider::class,
+        \App\Providers\CommonClientServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         EloquentFilter\ServiceProvider::class
     ],
@@ -229,7 +230,8 @@ $config = [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Bouncer' => Silber\Bouncer\BouncerFacade::class,
-        'MoodleClient' => \App\Facades\MoodleClient::class
+        'MoodleClient' => \App\Facades\MoodleClient::class,
+        'CommonClient' => \App\Facades\CommonClient::class
 
     ],
 

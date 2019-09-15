@@ -16,12 +16,15 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('moodle_id')->nullable();
-            $table->string('student_id')->unique()->nullable();
+            $table->string('student_hid')->unique()->nullable();
+            $table->string('student_sid')->unique()->nullable();
             $table->string('firstname')->nullable();
-            $table->string('moodle_token')->nullable();
             $table->string('lastname')->nullable();
-            $table->string('email')->unique()->nullable();
+            $table->string('middlename')->nullable();
             $table->string('username')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('telephone')->nullable();
+            $table->string('moodle_token')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->string('lang', 5)->nullable();

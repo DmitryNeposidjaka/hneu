@@ -46,6 +46,12 @@ return [
             'level' => 'debug',
         ],
 
+        'commonDBlog' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/commonDB.log'),
+            'level' => 'debug',
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),

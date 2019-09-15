@@ -5,17 +5,18 @@ namespace App\Services;
 
 class CommonClient
 {
+
     public static function getUser($id)
     {
         $curl = curl_init();
         $url = config('commonClient.url');
         $query = http_build_query([
             'auth' => config('commonClient.auth'),
-            'sid' => $id,
+            'hid' => $id,
             'q' => 'studentbig'
         ]);
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $url + '?' + $query,
+            CURLOPT_URL => $url . '?' . $query,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
@@ -35,6 +36,7 @@ class CommonClient
 
     public static function getGroupData($groupId)
     {
+        return null;
         $curl = curl_init();
         $url = config('commonClient.url');
         $query = http_build_query([
@@ -43,7 +45,7 @@ class CommonClient
             'q' => 'studentgroups'
         ]);
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $url + '?' + $query,
+            CURLOPT_URL => $url . '?' . $query,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
@@ -71,7 +73,7 @@ class CommonClient
             'q' => 'studentreport'
         ]);
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $url + '?' + $query,
+            CURLOPT_URL => $url . '?' . $query,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",

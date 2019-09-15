@@ -22,7 +22,20 @@ class User extends Authenticatable implements JWTSubject
      */
 
     protected $fillable = [
-        'firstname', 'lastname', 'lang', 'thumbnail', 'email', 'username', 'moodle_id', 'role', 'moodle_token', 'student_id'
+        'firstname',
+        'lastname',
+        'middlename',
+        'lang',
+        'thumbnail',
+        'email',
+        'username',
+        'moodle_id',
+        'role',
+        'moodle_token',
+        'student_sid',
+        'student_hid',
+        'telephone',
+        'group'
     ];
 
     protected $appends = ['fullname', 'role', 'thumbnail_img'];
