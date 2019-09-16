@@ -95,6 +95,12 @@ Route::group(['namespace' => 'Student', 'prefix' => 'student'], function () {
     Route::post('/login', 'LoginController@login');
     Route::get('/refresh', function () {})->middleware('jwt.refresh');
 
+    Route::get('/webservice/pluginfile.php/{n1}/mod_resource/content/{i}/{filename}', function (Request $request) {
+        return response()->streamDownload(function () use ($request){
+            echo file_get_contents('https://pns.hneu.edu.ua/'. preg_replace('~/api/student/~', '', $request->getRequestUri()));
+        }, $request->filename);
+    });
+
     Route::group(['middleware' => 'jwt.auth'], function () {
         Route::group(['prefix' => 'user'], function () {
             Route::get('/me', 'UserController@getMe');

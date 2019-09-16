@@ -60,6 +60,25 @@ class MoodleClient
         return json_decode($result, true);
     }
 
+    public static function getCoursesFiles(array $courcesIds)
+    {
+        $service = 'moodle_mobile_app';
+        $params = [
+            'wstoken' => self::$token,
+            'wsfunction' => 'mod_resource_get_resources_by_courses',
+            'moodlewsrestformat' => 'json',
+        ];
+        foreach($courcesIds as $key => $id) {
+            $params["courseids[{$key}]"] = $id;
+        }
+        $ch = curl_init(self::$url . '/webservice/rest/server.php?' . http_build_query($params));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        return json_decode($result, true);
+    }
+
     public static function getUser($username)
     {
         $service = 'moodle_mobile_app';
