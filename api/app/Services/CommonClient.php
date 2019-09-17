@@ -28,7 +28,7 @@ class CommonClient
         curl_close($curl);
 
         if ($err) {
-            echo "cURL Error #:" . $err;
+            Log::channel('commonDBlog')->error(['error' => "cURL Error #:" . $err, 'query' => $url . '?' . $query]);
         } else {
             return $response;
         }
@@ -57,7 +57,7 @@ class CommonClient
         curl_close($curl);
 
         if ($err) {
-            echo "cURL Error #:" . $err;
+            Log::channel('commonDBlog')->error(['error' => "cURL Error #:" . $err, 'query' => $url . '?' . $query]);
         } else {
             return $response;
         }
@@ -85,7 +85,7 @@ class CommonClient
         curl_close($curl);
 
         if ($err) {
-            echo "cURL Error #:" . $err;
+            Log::channel('commonDBlog')->error("cURL Error #:" . $err);
         } else {
             return $response;
         }
