@@ -65,6 +65,8 @@ class News extends Model
     public function getThumbnailsAttribute($value)
     {
         $result = [];
+        if (!$this->images) return $result;
+
         foreach ($this->images as $image) {
             $result[] = Storage::disk('news-img')->url($image);
         }
