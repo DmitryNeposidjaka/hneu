@@ -93,6 +93,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 Route::group(['namespace' => 'Student', 'prefix' => 'student'], function () {
     Route::post('/login', 'LoginController@login');
+    Route::get('/logout', function() {
+        \Auth::logout();
+        return response()->json('You were unsuccessful logouted!');
+    });
     Route::get('/refresh', function () {})->middleware('jwt.refresh');
 
     Route::get('/webservice/pluginfile.php/{n1}/mod_resource/content/{i}/{filename}', function (Request $request) {
@@ -109,6 +113,8 @@ Route::group(['namespace' => 'Student', 'prefix' => 'student'], function () {
             Route::get('/advertising', 'UserController@getAdvertising');
             Route::get('/messages', 'UserController@getMessages');
             Route::get('/products', 'UserController@getProducts');
+            Route::get('/schedule', 'UserController@getSchedule');
+            Route::get('/marks', 'UserController@getMarks');
         });
     });
 });

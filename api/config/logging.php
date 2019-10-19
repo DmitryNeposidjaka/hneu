@@ -46,6 +46,18 @@ return [
             'level' => 'debug',
         ],
 
+        'user' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/user.debug.log'),
+            'level' => 'debug',
+        ],
+
+        'schedule' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/schedule.error.log'),
+            'level' => 'error',
+        ],
+
         'commonDBlog' => [
             'driver' => 'single',
             'path' => storage_path('logs/commonDB.log'),

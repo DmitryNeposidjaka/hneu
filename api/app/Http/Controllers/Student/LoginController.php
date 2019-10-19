@@ -138,7 +138,8 @@ class LoginController extends Controller
             $student_sid = $jsonUser->element->{'@attributes'}->id;
             $telephone = $jsonUser->element->telephone;
             list($lastName, $firstName, $middleName) = explode(' ', $jsonUser->element->fio);
-            $group = \CommonClient::getGroupData($jsonUser->element->gid);
+        //    $group = \CommonClient::getGroupData($jsonUser->element->gid);
+            $group = [intval($jsonUser->element->gid)];
         } catch(\Exception $exception) {
             Log::channel('commonDBlog')->error($exception->getMessage());
         }

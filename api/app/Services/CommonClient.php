@@ -65,15 +65,47 @@ class CommonClient
         }
     }
 
-    public function getUserMarks($id)
+    public function getUserMarks($sid)
     {
         $curl = curl_init();
         $url = config('commonClient.url');
         $query = http_build_query([
             'auth' => config('commonClient.auth'),
-            'sid' => $id,
+            'sid' => $sid,
             'q' => 'studentreport'
         ]);
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url . '?' . $query,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            Log::channel('commonDBlog')->error("cURL Error #:" . $err);
+        } else {
+            return $response;
+        }
+    }
+
+    public function getGroupScheduleByWeek($groupId, $week, $user = null)
+    {
+        $curl = curl_init();
+        $url = 'http://services.ksue.edu.ua:8081/schedule/xml';
+        $data = [
+            'auth' => config('commonClient.auth'),
+            'group' => $groupId,
+            'week' => $week
+        ];
+        if ($user) {
+            $data = array_merge($data, ['student' => $user]);
+        }
+        $query = http_build_query($data);
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url . '?' . $query,
             CURLOPT_RETURNTRANSFER => true,
