@@ -47,6 +47,20 @@ class CommonHelper
         return $courses;
     }
 
+
+    public static function appendThumbnailToCourses(array $courses) {
+        $files = glob(public_path('assets/img/courses/*'));
+
+        foreach($courses as &$course) {
+            $course['thumbnail'] = url('assets/img/courses/' . basename($files[array_rand($files)]));
+        }
+        return $courses;
+    }
+
+    /**
+     * @param array $files
+     * @return array
+     */
     private static function courceFilesChangeLink(array $files)
     {
         foreach ($files as &$file) {
@@ -62,5 +76,4 @@ class CommonHelper
         }
         return $files;
     }
-
 }

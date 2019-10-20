@@ -115,6 +115,7 @@ Route::group(['namespace' => 'Student', 'prefix' => 'student'], function () {
             Route::get('/products', 'UserController@getProducts');
             Route::get('/schedule', 'UserController@getSchedule');
             Route::get('/marks', 'UserController@getMarks');
+            Route::get('/like/{model}/{id}', 'UserController@like');
         });
     });
 });

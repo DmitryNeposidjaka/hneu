@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->integer('creator_id');
             $table->string('entity');
             $table->json('images');
+            $table->json('likes')->nullable()->comment('User id`s');
             $table->string('lang', 20);
             $table->timestamps();
             $table->softDeletes();

@@ -18,6 +18,7 @@ class Product extends Model
 
     protected $casts = [
         'images' => 'array',
+        'likes' => 'array',
         'price' => 'float'
     ];
 
@@ -28,6 +29,11 @@ class Product extends Model
         'thumbnails',
         'web_link'
     ];
+
+    public function getIsUserLikedAttribute()
+    {
+        return $this->liked()->where('user_likes.user_id', \Auth::user()->id)->exists();
+    }
 
     public function getThumbnailsAttribute($value)
     {
@@ -109,7 +115,15 @@ class Product extends Model
                 \Storage::disk('products')->url($image),
                 $updated
             );
-        } );
+        });
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function liked()
+    {
+        return $this->morphToMany(User::class, 'entity', 'user_likes');
     }
 
 }

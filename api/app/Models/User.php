@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use EloquentFilter\Filterable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -71,7 +72,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getThumbnailImgAttribute()
     {
-        if($this->thumbnail){
+        if ($this->thumbnail) {
             return \Storage::disk('user-img')->url($this->thumbnail);
         }
         return \Storage::disk('app')->url('assets/img/img_avatar.png');
@@ -94,6 +95,11 @@ class User extends Authenticatable implements JWTSubject
     {
         $roles = $this->getRoles()->toArray();
         return is_array($roles) && !empty($roles) ? array_pop($roles) : null;
+    }
+
+    public function like($model)
+    {
+        return $this->morphedByMany($model, 'entity', 'user_likes');
     }
 
 }
