@@ -33,7 +33,8 @@
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-upload
+                <el-form-item prop="thumbnail" style="margin: 0px 0px 50px 0px">
+                    <el-upload
                         ref="newsThumb"
                         id="file"
                         class="avatar-uploader"
@@ -42,10 +43,18 @@
                         :on-success="handleAvatarSuccess"
                         :http-request="uploadFile"
                         :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                    <img v-else :src="defaultUrl + '/assets/img/News.jpg'" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload>
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <div class="block" style="padding: 20px; background: #ebeef5;" v-else>
+                            <span class="demonstration">Миниатюра</span>
+                            <el-image name="default">
+                                <div slot="error" class="image-slot">
+                                    <i class="el-icon-picture-outline"></i>
+                                </div>
+                            </el-image>
+                        </div>
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </el-form-item>
             </el-col>
         </el-row>
         <el-form-item :label="$t('news.title')" prop="title">
@@ -68,7 +77,7 @@
 
         <el-form-item class="form-buttons">
             <div>
-                <el-button type="primary" @click="getData">{{$t('news.create')}}</el-button>
+                <el-button type="primary" @click="save('ruleForm')">{{$t('news.create')}}</el-button>
                 <el-button @click="resetForm('ruleForm')">{{$t('news.clear')}}</el-button>
             </div>
         </el-form-item>
@@ -159,25 +168,26 @@
                 },
                 rules: {
                     title: [
-                        {required: true, message: 'Please input Activity title', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
+                        {required: true, message: 'Название должно быть заполнино!', trigger: 'blur'},
+                        {min: 3, max: 255, message: 'Длина текста должна быть от 3 до 255', trigger: 'blur'}
                     ],
                     description: [
-                        {required: true, message: 'Please input Activity description', trigger: 'blur'},
+                        {required: true, message: 'Описание обязательное', trigger: 'blur'},
+                    ],
+                    thumbnail: [
+                        {required: true, message: 'Миниатюра обязательно', trigger: 'blur'},
                     ],
                     content: [
-                        {required: true, message: 'Please input Activity content', trigger: 'blur'},
+                        {required: true, message: 'Контен обязательный', trigger: 'blur'},
                     ],
                     lang: [
-                        {required: true, message: 'Please select Language', trigger: 'blur'},
+                        {required: true, message: 'Пожалуйста, выберите язык', trigger: 'blur'},
                     ],
                     link: [
-                        {required: true, message: 'Please input link', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
-                    ],
-                    type: [
-                        {required: true, message: 'Please select type', trigger: 'blur'},
-                    ],
+                        {required: true, message: 'ссылка должна быть заполнена', trigger: 'blur'},
+                        {regex: '~^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$~gm', message: 'Ссилка должна содержать только латинские буквы и подчеркивания', trigger: 'blur'},
+                        {min: 3, max: 255, message: 'Длина ссыдки должна быть от 3 до 255', trigger: 'blur'}
+                    ]
                 }
             };
         },
@@ -251,17 +261,13 @@
                 return isJPG && isLt2M;
             },
             submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        alert('submit!');
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
+                return this.$refs[formName].validate((valid) => {
+                    return valid
                 });
             },
             resetForm(formName) {
                 this.$refs[formName].resetFields();
+                this.imageUrl = ''
             },
             getFormData(data = {}) {
                 const formData = new FormData();
@@ -291,6 +297,16 @@
                 }).then(function () {
                     vm.resetForm('ruleForm');
                 })
+            },
+            save(formName) {
+                let vm = this;
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        vm.getData()
+                    } else {
+                        return false;
+                    }
+                });
             }
         },
         mounted() {

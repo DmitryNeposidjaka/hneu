@@ -1,6 +1,6 @@
 <template>
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
-        <el-form-item label="Title" prop="title">
+        <el-form-item label="Название" prop="title">
             <el-input v-model="ruleForm.title"></el-input>
         </el-form-item>
         <el-form-item :label="$t('news.link')">
@@ -12,17 +12,17 @@
         <el-form-item :label="$t('news.price')" prop="price" style="text-align: left">
             <el-input :type="'number'" v-model="ruleForm.price" style="width: 200px"></el-input>
         </el-form-item>
-        <el-form-item label="Description" prop="description">
+        <el-form-item label="Описание" prop="description">
             <vue-editor v-model="ruleForm.description"></vue-editor>
         </el-form-item>
-        <el-form-item label="Categories" prop="categories">
+        <el-form-item label="Категории" prop="categories">
             <el-select
                     v-model="ruleForm.categories"
                     multiple
                     filterable
                     allow-create
                     default-first-option
-                    placeholder="Choose tags for your article">
+                    placeholder="Выберите категорию">
                 <el-option
                         v-for="category in categories"
                         :key="category.id"
@@ -31,6 +31,7 @@
                 </el-option>
             </el-select>
         </el-form-item>
+        <el-form-item label="Изображения" prop="thumbnail">
         <el-upload
                 ref="newsThumb"
                 id="file"
@@ -42,20 +43,21 @@
                 :on-success="handleAvatarSuccess"
                 :http-request="uploadFile"
                 :before-upload="beforeAvatarUpload">
-            <el-button size="small" type="primary">Upload photo</el-button>
+            <el-button size="small" type="primary">Загрузить фото</el-button>
         </el-upload>
+        </el-form-item>
         <div class="images-block">
             <div>
                 <div class="img-content" v-for="(img, i) in ruleForm.thumbnails" v-if="typeof img === 'string'">
                     <img width="100%" :src="img" alt="" class="avatar">
                     <el-button class="cancel-button" @click="handleRemove(i)" type="danger"
-                               icon="el-icon-circle-close-outline" circle size="mini"></el-button>
+                               icon="el-icon-circle-close-outline" circle style="width: 5px;height: 5px;"></el-button>
                 </div>
             </div>
         </div>
         <el-form-item>
-            <el-button type="primary" @click="getData">Update</el-button>
-            <el-button @click="resetForm('ruleForm')">Reset</el-button>
+            <el-button type="primary" @click="save('ruleForm')">Сохранить</el-button>
+            <el-button @click="resetForm('ruleForm')">Очистить</el-button>
         </el-form-item>
     </el-form>
 </template>
@@ -131,15 +133,17 @@
                 },
                 rules: {
                     title: [
-                        {required: true, message: 'Please input Activity title', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
+                        {required: true, message: 'Название обязательное!', trigger: 'blur'},
+                        {min: 3, max: 255, message: 'Длина должна быть от 3 до 255 символов!', trigger: 'blur'}
                     ],
                     description: [
-                        {required: true, message: 'Please input Activity description', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
+                        {required: true, message: 'Описание обязательное!', trigger: 'blur'},
+                    ],
+                    thumbnail: [
+                        {validator: this.filesCheck, trigger: 'blur'},
                     ],
                     price: [
-                        {required: true, message: 'Please input price', trigger: 'blur'}
+                        {required: true, message: 'Цена обязатеьна!', trigger: 'blur'}
                     ],
                 }
             };
@@ -167,6 +171,12 @@
             }
         },
         methods: {
+            filesCheck(rule, value, callback) {
+                if (this.ruleForm.thumbnails.length <= 0) {
+                    callback(new Error('Должно быть не мение одного изображения!'));
+                }
+                callback();
+            },
             handleRemoveImages(item) {
                 this.ruleForm.images.splice(item, 1);
             },
@@ -208,13 +218,8 @@
                 return isJPG && isLt2M;
             },
             submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        alert('submit!');
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
+                return this.$refs[formName].validate((valid) => {
+                    return valid
                 });
             },
             resetForm(formName) {
@@ -249,6 +254,16 @@
                         vm.$emit('productEdited');
                     }
                 })
+            },
+            save(formName) {
+                let vm = this;
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        vm.getData()
+                    } else {
+                        return false;
+                    }
+                });
             }
         },
         created() {

@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-dialog
-                title="Create product"
+                title="Создание продукта"
                 :visible.sync="createUserVisible"
                 width="60%">
             <create-product style="padding: 0px 100px 0px 50px" v-on:productCreated="productCreated"
@@ -9,7 +9,7 @@
             </create-product>
         </el-dialog>
         <el-dialog
-                title="Edit product"
+                title="Редактирование продукта"
                 :visible.sync="editUserVisible"
                 width="60%">
             <edit-product ref="edit-user-form" style="padding: 0px 100px 0px 50px" v-on:productEdited="productEdited"
@@ -18,7 +18,7 @@
             </edit-product>
         </el-dialog>
         <el-dialog
-                title="Delete product"
+                title="Удаление продукта"
                 :visible.sync="deleteUserVisible"
                 width="40%">
             <delete-product ref="edit-user-form" style="padding: 0px 100px 0px 50px" v-on:productDeleted="productDeleted"
@@ -29,7 +29,7 @@
             <el-col :span="4">
                 <el-dropdown @command="chengePerPage">
               <span class="el-dropdown-link">
-                Perpage<i class="el-icon-arrow-down el-icon--right"></i>
+                Отобразить<i class="el-icon-arrow-down el-icon--right"></i>
               </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item :command="10">10</el-dropdown-item>
@@ -42,18 +42,18 @@
             </el-col>
             <div style="text-align: right; width: 70%; float: right;">
                 <div style="padding: 0px 50px">
-                    <el-button type="primary" icon="el-icon-plus" circle title="Add product"
+                    <el-button type="primary" icon="el-icon-plus" circle title="Добавить продукт"
                                @click="createUserVisible = true"></el-button>
                 </div>
             </div>
         </el-row>
         <el-row style="text-align: right; line-height: 30px; margin: 20px;" :gutter=10>
             <el-col :span="1">
-                <el-button type="primary" icon="el-icon-refresh" circle title="Refresh"
+                <el-button type="primary" icon="el-icon-refresh" circle title="Обновить"
                            @click="clearRefresh"></el-button>
             </el-col>
             <el-col :span="4">
-                <el-input placeholder="Title" v-model="filters.title"></el-input>
+                <el-input placeholder="Название" v-model="filters.title"></el-input>
             </el-col>
             <el-col :span="4">
                 <el-button type="success" icon="el-icon-search" @click="getData">{{ $t('common.search') }}</el-button>
@@ -92,7 +92,7 @@
                             </el-col>
                         </el-row>
                         <el-row>
-                            <div title="Content" v-html="props.row.content" class="ql-editor">{{ props.row.content }}</div>
+                            <div title="Контент" v-html="props.row.content" class="ql-editor">{{ props.row.content }}</div>
                         </el-row>
                         <el-row>
                             <div class="images-block">

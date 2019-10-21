@@ -45,7 +45,7 @@
         </el-form-item>
         <el-form-item class="form-buttons">
             <div>
-                <el-button type="primary" @click="getData">{{$t('news.create')}}</el-button>
+                <el-button type="primary" @click="save('ruleForm')">{{$t('news.create')}}</el-button>
                 <el-button @click="resetForm('ruleForm')">{{$t('news.clear')}}</el-button>
             </div>
         </el-form-item>
@@ -130,25 +130,23 @@
                 },
                 rules: {
                     title: [
-                        {required: true, message: 'Please input Activity title', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
+                        {required: true, message: 'Название должно быть заполнино!', trigger: 'blur'},
+                        {min: 3, max: 255, message: 'Длина текста должна быть от 3 до 255', trigger: 'blur'}
                     ],
                     description: [
-                        {required: true, message: 'Please input Activity description', trigger: 'blur'},
+                        {required: true, message: 'Описание обязательное', trigger: 'blur'},
                     ],
                     content: [
-                        {required: true, message: 'Please input Activity content', trigger: 'blur'},
+                        {required: true, message: 'Контен обязательный', trigger: 'blur'},
                     ],
                     lang: [
-                        {required: true, message: 'Please select Language', trigger: 'blur'},
+                        {required: true, message: 'Пожалуйста, выберите язык', trigger: 'blur'},
                     ],
                     link: [
-                        {required: true, message: 'Please input link', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
-                    ],
-                    type: [
-                        {required: true, message: 'Please select type', trigger: 'blur'},
-                    ],
+                        {required: true, message: 'ссылка должна быть заполнена', trigger: 'blur'},
+                        {regex: '~^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$~gm', message: 'Ссилка должна содержать только латинские буквы и подчеркивания', trigger: 'blur'},
+                        {min: 3, max: 255, message: 'Длина ссыдки должна быть от 3 до 255', trigger: 'blur'}
+                    ]
                 }
             };
         },
@@ -222,13 +220,8 @@
                 return isJPG && isLt2M;
             },
             submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        alert('submit!');
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
+                return this.$refs[formName].validate((valid) => {
+                    return valid
                 });
             },
             resetForm(formName) {
@@ -262,6 +255,16 @@
                 }).then(function () {
                     vm.resetForm('ruleForm');
                 })
+            },
+            save(formName) {
+                let vm = this;
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        vm.getData()
+                    } else {
+                        return false;
+                    }
+                });
             }
         },
         mounted() {

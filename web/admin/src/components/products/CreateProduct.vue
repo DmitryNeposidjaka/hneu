@@ -35,7 +35,7 @@
                     filterable
                     allow-create
                     default-first-option
-                    placeholder="Choose tags for your article">
+                    placeholder="Выберите категорию">
                 <el-option
                         v-for="category in categories"
                         :key="category.id"
@@ -44,6 +44,7 @@
                 </el-option>
             </el-select>
         </el-form-item>
+        <el-form-item label="Изображения" prop="thumbnail">
         <el-upload
                 ref="newsThumb"
                 id="file"
@@ -52,11 +53,13 @@
                 :limit="8"
                 :action="defaultUrl + '/api'"
                 :show-file-list="false"
+                :file-list="ruleForm.thumbnails"
                 :on-success="handleAvatarSuccess"
                 :http-request="uploadFile"
                 :before-upload="beforeAvatarUpload">
-            <el-button size="small" type="primary">Upload photo</el-button>
+            <el-button size="small" type="primary">Загрузить фото</el-button>
         </el-upload>
+        </el-form-item>
         <div class="images-block">
             <div class="img-content" v-for="(img, i) in thumbnailsUrl">
                 <img width="100%" :src="img" alt="" class="avatar">
@@ -65,8 +68,8 @@
             </div>
         </div>
         <el-form-item>
-            <el-button type="primary" @click="getData">Create</el-button>
-            <el-button @click="resetForm('ruleForm')">Reset</el-button>
+            <el-button type="primary" @click="save('ruleForm')">Сохранить</el-button>
+            <el-button @click="resetForm('ruleForm')">Очистить</el-button>
         </el-form-item>
     </el-form>
 </template>
@@ -141,14 +144,17 @@
                 },
                 rules: {
                     title: [
-                        {required: true, message: 'Название должно быть заполнено', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Длина должна быть между 3 и 255 символами', trigger: 'blur'}
+                        {required: true, message: 'Название обязательное!', trigger: 'blur'},
+                        {min: 3, max: 255, message: 'Длина должна быть от 3 до 255 символов!', trigger: 'blur'}
                     ],
                     description: [
-                        {required: true, message: 'Описание должно быть заполнено', trigger: 'blur'},
+                        {required: true, message: 'Описание обязательное!', trigger: 'blur'},
+                    ],
+                    thumbnail: [
+                        {validator: this.filesCheck, trigger: 'blur'},
                     ],
                     price: [
-                        {required: true, message: 'Цена должна быть заполнена', trigger: 'blur'},
+                        {required: true, message: 'Цена обязатеьна!', trigger: 'blur'}
                     ],
                 }
             };
@@ -168,6 +174,12 @@
             }
         },
         methods: {
+            filesCheck(rule, value, callback) {
+                if (this.ruleForm.thumbnails.length <= 0) {
+                    callback(new Error('Должно быть не мение одного изображения!'));
+                }
+                callback();
+            },
             handleRemove(item) {
                 this.thumbnailsUrl.splice(item, 1);
                 this.ruleForm.thumbnails.splice(item, 1);
@@ -206,13 +218,8 @@
                 return isJPG && isLt2M;
             },
             submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        alert('submit!');
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
+                return this.$refs[formName].validate((valid) => {
+                    return valid
                 });
             },
             resetForm(formName) {
@@ -250,6 +257,16 @@
                 }).then(function () {
                     vm.resetForm('ruleForm');
                 })
+            },
+            save(formName) {
+                let vm = this;
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        vm.getData()
+                    } else {
+                        return false;
+                    }
+                });
             }
         },
         mounted() {

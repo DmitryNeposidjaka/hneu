@@ -259,10 +259,10 @@
                         id: 'en',
                         name: 'English'
                     },
-                    {
+                    /*{
                         id: 'ru',
                         name: 'Русский'
-                    },
+                    },*/
                 ],
                 actions: {
                     createModel: {

@@ -39,6 +39,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
             Route::post('/', 'UserController@create');
             Route::delete('/{user}', 'UserController@delete');
             Route::post('/{user}', 'UserController@update');
+            Route::post('/{user}/change-password', 'UserController@changePassword');
         });
         Route::group(['prefix' => 'news'], function () {
             Route::get('/all', 'NewsController@getAll');

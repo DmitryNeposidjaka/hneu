@@ -42,12 +42,14 @@ class UserController extends Controller
     {
         $user = new User($request->all());
         $user->password = Hash::make($request->password);
-        $path = $request->file('thumbnail')
-            ->storeAs(
-                'images',
-                uniqid() . '.' . \Carbon\Carbon::now()->format('Y-m-d_H:i:s') . '.' . $request->thumbnail->extension(),
-                'user-img');
-        $user->thumbnail = $path;
+        if ($request->hasFile('thumbnail')) {
+            $path = $request->file('thumbnail')
+                ->storeAs(
+                    'images',
+                    uniqid() . '.' . \Carbon\Carbon::now()->format('Y-m-d_H:i:s') . '.' . $request->thumbnail->extension(),
+                    'user-img');
+            $user->thumbnail = $path;
+        }
         $user->save();
         \Bouncer::assign($request->role)->to($user);
         return $user;
@@ -76,5 +78,16 @@ class UserController extends Controller
     public function saveThumbnail(TemporaryStorageImageRequest $request)
     {
 
+    }
+
+    public function changePassword(Request $request, User $user)
+    {
+        $this->validate($request, [
+            'password' => 'required|confirmed|min:3|max:255',
+        ]);
+
+        $user->password = \Hash::make($request->input('password'));
+        $user->save();
+        return response()->json(['message' => 'Password changed']);
     }
 }

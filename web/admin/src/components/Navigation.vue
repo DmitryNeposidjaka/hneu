@@ -1,40 +1,12 @@
 <template>
     <el-menu
             :router="true"
-            default-active="2"
+            :default-active="$router.currentRoute.name"
             class="el-menu-vertical-demo">
 
-        <el-menu-item index="1" :route="{name: 'users'}">
-            <i class="far fa-address-card"></i>
-            <span>{{ $t('nav.users') }}</span>
-        </el-menu-item>
-        <el-menu-item index="2" :route="{name: 'students'}">
-            <i class="fas fa-user-graduate"></i>
-            <span>{{ $t('nav.students') }}</span>
-        </el-menu-item>
-        <el-menu-item index="3" :route="{name: 'permissions'}">
-            <i class="fas fa-user-tag"></i>
-            <span>{{ $t('nav.permissions') }}</span>
-        </el-menu-item>
-        <el-menu-item index="4" :route="{name: 'news'}">
-            <i class="far fa-newspaper"></i>
-            <span>{{ $t('nav.news') }}</span>
-        </el-menu-item>
-        <el-menu-item index="5" :route="{name: 'products'}">
-            <i class="fas fa-shopping-basket"></i>
-            <span>{{ $t('nav.products') }}</span>
-        </el-menu-item>
-        <el-menu-item index="6" :route="{name: 'pages'}">
-            <i class="fa fa-window-maximize"></i>
-            <span> {{ $t('nav.pages') }} </span>
-        </el-menu-item>
-        <el-menu-item index="7" :route="{name: 'documents'}">
-            <i class="fas fa-file-alt"></i>
-            <span>{{ $t('nav.documents') }}</span>
-        </el-menu-item>
-        <el-menu-item index="8" :route="{name: 'memos'}">
-            <i class="far fa-comment-dots"></i>
-            <span>{{ $t('nav.memos') }}</span>
+        <el-menu-item v-for="(item) in nav" :index="item.route" :route="{name: item.route}">
+            <i :class="item.icon"></i>
+            <span>{{ item.name }}</span>
         </el-menu-item>
     </el-menu>
 </template>
@@ -42,6 +14,52 @@
 <script>
     export default {
         name: 'Navigation',
+        data() {
+            return {
+                nav: [
+                    {
+                        name: this.$t('nav.users'),
+                        icon: 'far fa-address-card',
+                        route: 'users'
+                    },
+                    {
+                        name: this.$t('nav.students'),
+                        icon: 'fas fa-user-graduate',
+                        route: 'students'
+                    },
+                    {
+                        name: this.$t('nav.permissions'),
+                        icon: 'fas fa-user-tag',
+                        route: 'permissions'
+                    },
+                    {
+                        name: this.$t('nav.news'),
+                        icon: 'far fa-newspaper',
+                        route: 'news'
+                    },
+                    {
+                        name: this.$t('nav.products'),
+                        icon: 'fas fa-shopping-basket',
+                        route: 'products'
+                    },
+                    {
+                        name: this.$t('nav.pages'),
+                        icon: 'fa fa-window-maximize',
+                        route: 'pages'
+                    },
+                    {
+                        name: this.$t('nav.documents'),
+                        icon: 'fas fa-file-alt',
+                        route: 'documents'
+                    },
+                    {
+                        name: this.$t('nav.memos'),
+                        icon: 'far fa-comment-dots',
+                        route: 'memos'
+                    },
+                ]
+            }
+        }
     }
 </script>
 

@@ -49,7 +49,7 @@
         },
         mounted() {
             this.getUser();
-            console.log(this.$router)
+        //    console.log(this.$router)
         }
     }
 </script>

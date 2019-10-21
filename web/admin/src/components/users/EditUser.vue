@@ -1,9 +1,9 @@
 <template>
     <el-form :model="ruleForm" :rules="rules" :ref="'ruleForm' + user.id" label-width="120px" class="demo-ruleForm">
-        <el-form-item label="Name" prop="firstname">
+        <el-form-item label="Имя" prop="firstname">
             <el-input v-model="ruleForm.firstname"></el-input>
         </el-form-item>
-        <el-form-item label="Last Name" prop="lastname">
+        <el-form-item label="Фамилия" prop="lastname">
             <el-input v-model="ruleForm.lastname"></el-input>
         </el-form-item>
         <el-form-item label="Username" prop="username">
@@ -12,7 +12,7 @@
         <el-form-item label="Email" prop="email">
             <el-input v-model="ruleForm.email"></el-input>
         </el-form-item>
-        <el-form-item label="Role" prop="role">
+        <el-form-item label="Роль" prop="role">
             <el-select v-model="ruleForm.role" placeholder="Select">
                 <el-option
                         v-for="role in roles"
@@ -34,19 +34,32 @@
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <img v-else :src="user.thumbnail_img" class="avatar">
         </el-upload>
-        <el-form-item>
-            <el-button @click="getData" type="success">Save</el-button>
-            <el-button @click="resetForm('ruleForm' + user.id)">Reset</el-button>
-            <el-button @click="editClose" type="warning">Close</el-button>
-        </el-form-item>
+        <el-dialog
+            width="30%"
+            title="Смена пароля"
+            :visible.sync="changePasswordVisible"
+            append-to-body>
+            <reset-password :user="user" v-on:passwordChanged="changePasswordVisible = false"/>
+        </el-dialog>
+        <div style="margin: 20px 0px">
+            <el-button @click="changePasswordVisible = true">Сменить пароль <i class="el-icon-edit"></i></el-button>
+        </div>
+        <div style="margin: 20px 0px">
+            <el-button @click="save('ruleForm' + user.id)" type="success">Сохранить</el-button>
+            <el-button @click="resetForm('ruleForm' + user.id)">Обновить</el-button>
+            <el-button @click="editClose" type="warning">Закрыть</el-button>
+        </div>
     </el-form>
 </template>
 
 <script>
+    import ResetPassword from './ResetPassword'
+
     export default {
         props: ['user', 'roles'],
         data() {
             return {
+                changePasswordVisible: false,
                 imageUrl: '',
                 defaultUrl: '',
                 ruleForm: {
@@ -59,38 +72,37 @@
                 },
                 rules: {
                     firstname: [
-                        {required: true, message: 'Please input Activity firstname', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
+                        {required: true, message: 'Укажите Имя', trigger: 'blur'},
+                        {min: 1, max: 255, message: 'Длина должна быть от 1 до "255 символов', trigger: 'blur'}
                     ],
                     lastname: [
-                        {required: true, message: 'Please input Activity lastname', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
+                        {required: true, message: 'Укажите фамилию', trigger: 'blur'},
+                        {min: 1, max: 255, message: 'Длина должна быть от 1 до "255 символов', trigger: 'blur'}
                     ],
                     username: [
-                        {required: true, message: 'Please input Activity username', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'}
+                        {required: true, message: 'Укажите username', trigger: 'blur'},
+                        {min: 3, max: 255, message: 'Длина должна быть от 3 до "255 символов', trigger: 'blur'}
+                    ],
+                    role: [
+                        {required: true, message: 'Выберите роль', trigger: 'blur'},
                     ],
                     email: [
-                        {required: true, message: 'Please input Activity email', trigger: 'blur'},
-                        {min: 3, max: 255, message: 'Length should be 3 to 255', trigger: 'blur'},
-                        { type: 'email', message: 'Please enter a valid email address', trigger: 'blur' },
+                        {required: true, message: 'Введите email', trigger: 'blur'},
+                        {min: 3, max: 255, message: 'Длина должна быть от 3 до "255 символов', trigger: 'blur'},
+                        { type: 'email', message: 'Введите валидный email', trigger: 'blur' },
                     ],
                 }
             };
         },
+        components: {ResetPassword},
         methods: {
             editClose() {
               this.resetForm('ruleForm' + this.user.id)
                 this.$emit('userEditClose');
             },
             submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        alert('submit!');
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
+                return this.$refs[formName].validate((valid) => {
+                    return valid
                 });
             },
             resetForm(formName) {
@@ -147,6 +159,16 @@
                         vm.$emit('userEdited');
                     }
                 })
+            },
+            save(formName) {
+                let vm = this;
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        vm.getData()
+                    } else {
+                        return false;
+                    }
+                });
             }
         },
         created() {
