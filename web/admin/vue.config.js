@@ -11,14 +11,14 @@ module.exports = {
     },
     css: {
         extract: {
-            filename: 'administration/[name].css',
-            chunkFilename: 'administration/[name].css',
+            filename: 'administration/css/[name].css',
+            chunkFilename: 'administration/css/[name].css',
         },
     },
     configureWebpack: {
         output: {
-            filename: 'administration/[name].js',
-            chunkFilename: 'administration/[name].js',
+            filename: 'administration/js/[name].js',
+            chunkFilename: 'administration/js/[name].js',
         }
     }
 }
