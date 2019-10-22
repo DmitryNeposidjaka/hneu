@@ -4,6 +4,8 @@
     </IfModule>
 
     RewriteEngine On
+    RewriteRule ^administration/(css|js)/(.*) administration/administration/$1/$2 [L]
+    RewriteRule ^administration/(.*) administration/$1 [L]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
