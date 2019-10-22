@@ -175,7 +175,6 @@
                     ],
                     thumbnail: [
                         {required: true, message: 'Миниатюра обязательно', trigger: 'blur'},
-                        {max: 2000000, message: 'Не больше 2 Мб', trigger: 'blur'},
                     ],
                     content: [
                         {required: true, message: 'Контен обязательный', trigger: 'blur'},
