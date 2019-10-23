@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Class Product
+ * @package App\Models
+ * @method static \Illuminate\Database\Eloquent\Builder lang(string $language)
+ */
 class Product extends Model
 {
     use Filterable;
@@ -124,6 +129,16 @@ class Product extends Model
     public function liked()
     {
         return $this->morphToMany(User::class, 'entity', 'user_likes');
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $language
+     * @return mixed
+     */
+    public function scopeLang($query, string $language)
+    {
+        return $query->where('lang', $language);
     }
 
 }

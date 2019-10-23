@@ -32,6 +32,18 @@ class UserController extends Controller
         return \Auth::user();
     }
 
+    public function updateMe(Request $request)
+    {
+        $this->validate($request, [
+            'lang' => 'string',
+        ]);
+        if($this->user->update($request->all())) {
+            return response()->json()->setStatusCode(201);
+        } else {
+            return response()->json()->setStatusCode(400);
+        }
+    }
+
     public function getCourses()
     {
         if (!Cache::has('courses_' . $this->user->moodle_id)) {
@@ -50,24 +62,24 @@ class UserController extends Controller
 
     public function getProducts()
     {
-        return Product::with('categories')->get()->each(function (Product $product) {
+        return Product::lang($this->user->lang)->with('categories')->get()->each(function (Product $product) {
             return $product->append(['is_user_liked']);
         });
     }
 
     public function getMessages()
     {
-        return News::message()->with('categories')->get();
+        return News::message()->lang($this->user->lang)->with('categories')->get();
     }
 
     public function getArticles()
     {
-        return News::article()->with('categories')->get();
+        return News::article()->lang($this->user->lang)->with('categories')->get();
     }
 
     public function getAdvertising()
     {
-        return News::advertising()->with('categories')->get();
+        return News::advertising()->lang($this->user->lang)->with('categories')->get();
     }
 
     public function getSchedule(Request $request)

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
  * @method static \Illuminate\Database\Eloquent\Builder message()
  * @method static \Illuminate\Database\Eloquent\Builder article()
  * @method static \Illuminate\Database\Eloquent\Builder advertising()
+ * @method static|public \Illuminate\Database\Eloquent\Builder lang(string $language)
  */
 class News extends Model
 {
@@ -188,5 +189,15 @@ class News extends Model
     public function scopeMessage($query)
     {
         return $query->where('type', 'message');
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $language
+     * @return mixed
+     */
+    public function scopeLang($query, string $language)
+    {
+        return $query->where('lang', $language);
     }
 }

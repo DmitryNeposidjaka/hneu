@@ -155,7 +155,7 @@ class LoginController extends Controller
             'lastname' => $lastName,
             'middlename' => $middleName,
             'email' => $moodleUser['email'],
-            'lang' => $moodleUser['lang'],
+            'lang' => 'ua',
             'moodle_id' => $moodleUser['id'],
             'student_sid' => $student_sid,
             'student_hid' => $moodleUser['idnumber'],
