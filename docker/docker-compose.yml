@@ -291,7 +291,7 @@ services:
 
 ### Web Admin ##################################################
     web-admin:
-      image: node:8
+      image: node:12
       networks:
          backend:
           aliases:
