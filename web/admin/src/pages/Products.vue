@@ -72,9 +72,9 @@
                             <span class="product-card-date">{{ props.row.created_at }}</span>
                         </div>
                         <el-row>
-                            <!--<el-col style="padding-left: 20px; margin: 20px 0px; color: #1d68a7">
+                            <el-col style="padding-left: 20px; margin: 20px 0px; color: #1d68a7">
                                 <a :href="defaultUrl+'/'+props.row.lang+'/product/'+props.row.link">{{defaultUrl+'/'+props.row.lang+'/product/'+props.row.link}}</a>
-                            </el-col>-->
+                            </el-col>
                         </el-row>
                         <el-row>
                             <el-col style="padding-left: 20px; margin: 20px 0px; color: #1d68a7">{{props.row.categories.map(function(item, i, arr) {
@@ -83,7 +83,7 @@
                         </el-row>
                         <el-row :gutter="20">
                             <el-col :span="16" style="padding-left: 25px;">
-                                <div v-html="props.row.description">{{ props.row.description }}</div>
+                                <div v-html="props.row.description" class="ql-editor">{{ props.row.description }}</div>
                             </el-col>
                             <el-col :span="8">
                                 <div class="news-card-image-place" v-if="props.row.thumbnails.length > 0">
