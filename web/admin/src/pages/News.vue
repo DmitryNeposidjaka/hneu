@@ -319,10 +319,12 @@
             userCreated() {
                 this.actions.createModel.open = false
                 this.getData();
+                this.getCategories();
             },
             userEdited() {
                 this.actions.editModel.open = false
                 this.getData();
+                this.getCategories();
             },
             userDeleted(news) {
                 this.deleteUserVisible = false;

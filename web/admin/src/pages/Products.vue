@@ -67,7 +67,8 @@
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-card class="box-card">
-                        <div slot="header" class="clearfix">
+                        {{ props.row.title }}
+                        <!--<div slot="header" class="clearfix">
                             <span class="product-card-title">{{ props.row.title }}</span>
                             <span class="product-card-date">{{ props.row.created_at }}</span>
                         </div>
@@ -86,8 +87,8 @@
                                 <div v-html="props.row.description" class="ql-editor">{{ props.row.description }}</div>
                             </el-col>
                             <el-col :span="8">
-                                <div class="news-card-image-place" v-if="props.row.thumbnails">
-                                    <img :src="props.row.thumbnails.pop()"/>
+                                <div class="news-card-image-place" v-if="props.row.thumbnails.length > 0">
+                                    <img :src="props.row.thumbnails[0]"/>
                                 </div>
                             </el-col>
                         </el-row>
@@ -100,7 +101,7 @@
                                     <img width="100%" :src="img" alt="" class="avatar">
                                 </div>
                             </div>
-                        </el-row>
+                        </el-row>-->
                     </el-card>
                 </template>
             </el-table-column>

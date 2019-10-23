@@ -4,7 +4,8 @@
     </IfModule>
 
     RewriteEngine On
-    RewriteRule ^administration/(css|js|fonts)/(.*) administration/administration/$1/$2 [L]
+    RewriteRule ^fonts/element(.*) administration/fonts/element$1 [l]
+    RewriteRule ^administration/(css|js)/(.*) administration/administration/$1/$2 [L]
     RewriteRule ^administration/(.*) administration/$1 [L]
 
     # Handle Authorization Header
