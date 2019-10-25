@@ -37,7 +37,7 @@ class UserController extends Controller
         $this->validate($request, [
             'lang' => 'string',
         ]);
-        if($this->user->update($request->all())) {
+        if ($this->user->update($request->all())) {
             return response()->json()->setStatusCode(201);
         } else {
             return response()->json()->setStatusCode(400);
@@ -109,6 +109,22 @@ class UserController extends Controller
     {
         $changes = $this->user->like($request->entity)->toggle($request->model);
         $result = empty($changes['detached']);
+        return response()->json(['result' => $result]);
+    }
+
+    public function changeThumbnail(Request $request)
+    {
+        $this->validate($request, [
+            'path' => 'required|string'
+        ]);
+        $filename = time().".svg";
+        $img = file_get_contents($request->path);
+        $result = \Storage::disk('user-img')->put($filename, $img);
+
+        if($result) {
+            $this->user->thumbnail = $filename;
+            $this->user->save();
+        }
         return response()->json(['result' => $result]);
     }
 }

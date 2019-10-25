@@ -110,6 +110,7 @@ Route::group(['namespace' => 'Student', 'prefix' => 'student'], function () {
         Route::group(['prefix' => 'user'], function () {
             Route::get('/me', 'UserController@getMe');
             Route::patch('/me', 'UserController@updateMe');
+            Route::patch('/change-thumbnail', 'UserController@changeThumbnail');
             Route::get('/courses', 'UserController@getCourses');
             Route::get('/articles', 'UserController@getArticles');
             Route::get('/advertising', 'UserController@getAdvertising');

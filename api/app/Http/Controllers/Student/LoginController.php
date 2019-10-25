@@ -160,16 +160,31 @@ class LoginController extends Controller
             'student_sid' => $student_sid,
             'student_hid' => $moodleUser['idnumber'],
             'telephone' => $telephone,
-            'thumbnail' => $moodleUser['profileimageurl'],
             'moodle_token' => \MoodleClient::getToken(),
             'group' => $group,
         ]);
+
+        if(!$user->thumbnail) {
+            $user->thumbnail = $this->getThumbnail();
+            $user->save();
+        }
 
         if($user->isNotA('student')) {
             $user->role = 'student';
         }
 
         return $user;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getThumbnail()
+    {
+        $filename = time().".svg";
+        $img = \Lavataaar::get();
+        $res = \Storage::disk('user-img')->put($filename, $img);
+        return $res? $filename : null;
     }
 
 }

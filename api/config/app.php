@@ -165,7 +165,7 @@ $config = [
         /*
          * Package Service Providers...
          */
-
+        \Darwin8\Lavataaar\LavataaarServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -231,7 +231,8 @@ $config = [
         'View' => Illuminate\Support\Facades\View::class,
         'Bouncer' => Silber\Bouncer\BouncerFacade::class,
         'MoodleClient' => \App\Facades\MoodleClient::class,
-        'CommonClient' => \App\Facades\CommonClient::class
+        'CommonClient' => \App\Facades\CommonClient::class,
+        'Lavataaar' => \Darwin8\Lavataaar\Facades\Lavataaar::class,
 
     ],
 
