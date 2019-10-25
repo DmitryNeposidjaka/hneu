@@ -18,15 +18,16 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('/temporary', function (\App\Http\Requests\TemporaryStorageImageRequest $request) {
         $path = $request->file('image')
             ->storeAs(
-                $request->type.'/'.$request->entity,
-                uniqid().'.'.\Carbon\Carbon::now()->format('Y-m-d_H:i:s').'.'.$request->image->extension(),
+                $request->type . '/' . $request->entity,
+                uniqid() . '.' . \Carbon\Carbon::now()->format('Y-m-d_H:i:s') . '.' . $request->image->extension(),
                 'temporary');
 
         return \Storage::disk('temporary')->url($path);
     });
 
     Route::post('/login', 'LoginController@login');
-    Route::get('/refresh', function () {})->middleware('jwt.refresh');
+    Route::get('/refresh', function () {
+    })->middleware('jwt.refresh');
 
     Route::group(['middleware' => 'jwt.auth'], function () {
         Route::group(['prefix' => 'student'], function () {
@@ -94,19 +95,26 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 Route::group(['namespace' => 'Student', 'prefix' => 'student'], function () {
     Route::post('/login', 'LoginController@login');
-    Route::get('/logout', function() {
+    Route::get('/logout', function () {
         \Auth::logout();
         return response()->json('You were unsuccessful logouted!');
     });
-    Route::get('/refresh', function () {})->middleware('jwt.refresh');
+    Route::get('/refresh', function () {
+    })->middleware('jwt.refresh');
 
-    Route::get('/webservice/pluginfile.php/{n1}/mod_resource/content/{i}/{filename}', function (Request $request) {
-        return response()->streamDownload(function () use ($request){
-            echo file_get_contents('https://pns.hneu.edu.ua/'. preg_replace('~/api/student/~', '', $request->getRequestUri()));
-        }, $request->filename);
-    });
 
     Route::group(['middleware' => 'jwt.auth'], function () {
+
+        Route::get('/webservice/pluginfile.php/{n1}/mod_resource/content/{i}/{filename}', function (Request $request) {
+            $fileUrl = 'https://pns.hneu.edu.ua/' .
+                preg_replace('~/api/student/~', '', $request->path()) .
+                '?' . http_build_query(['token' => auth()->user()->moodle_token]);
+
+            return response()->streamDownload(function () use ($request, $fileUrl) {
+                echo file_get_contents($fileUrl);
+            }, $request->filename);
+        });
+
         Route::group(['prefix' => 'user'], function () {
             Route::get('/me', 'UserController@getMe');
             Route::patch('/me', 'UserController@updateMe');
