@@ -107,7 +107,7 @@ Route::group(['namespace' => 'Student', 'prefix' => 'student'], function () {
 
         Route::get('/webservice/pluginfile.php/{n1}/mod_resource/content/{i}/{filename}', function (Request $request) {
             $fileUrl = 'https://pns.hneu.edu.ua/' .
-                preg_replace('~/api/student/~', '', $request->path()) .
+                preg_replace('~api/student/~', '', $request->path()) .
                 '?' . http_build_query(['token' => auth()->user()->moodle_token]);
 
             return response()->streamDownload(function () use ($request, $fileUrl) {
